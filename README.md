@@ -1,7 +1,7 @@
 
-  # Create professional portfolio
+  # Portfolio
 
-  This is a code bundle for Create professional portfolio. The original project is available at https://www.figma.com/design/DR1a5jGJRNlC9GXfAHekML/Create-professional-portfolio.
+  This is a code bundle for Portfolio. The original project is available at https://www.figma.com/design/DR1a5jGJRNlC9GXfAHekML/Portfolio.
 
   ## Running the code
 
