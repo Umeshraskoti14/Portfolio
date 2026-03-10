@@ -1,6 +1,6 @@
 import { motion, useInView } from 'motion/react';
 import { useRef, useState } from 'react';
-import { Camera, MapPin, Users, Award, BookOpen, Heart, Briefcase, GraduationCap, Trophy, Star } from 'lucide-react';
+import { Camera, MapPin, Users, Award, BookOpen, Heart, Briefcase, GraduationCap, Trophy, Star, Target, Lightbulb } from 'lucide-react';
 import profileImg from 'figma:asset/350375490d348981572bcc1ade79fdd9730425a2.png';
 import kmcImg from 'figma:asset/63b35ce0ab7380ad171c37c929c5ca1a23a179cf.png';
 import manoImg from 'figma:asset/a10c0aa055913800b480435f11f1cb49df00ce42.png';
@@ -9,71 +9,127 @@ import environmentCampaignImg from 'figma:asset/09eeab516a958f508c8c2e24a93d0b4f
 import communityCampaignImg from 'figma:asset/9ec45cbbbc95fb0d1d25d569ed17865ca696fc58.png';
 
 const portfolioData = {
-  'Social Work': {
-    'Social Work Camps': [
-      {
-        title: 'Neighborhood Social Work Camp',
-        description: 'The camp was held in four municipalities of Bhaktapur District (Bhaktapur, Madhyapur Thimi, Suryabinayak, and Chagunarayan) where I served as Group Leader from January 2–6, 2022. Activities included Social Survey, Dialogue with Social Representatives, visiting Model Organizations, Community Engagement, and Closing Ceremony.',
-        image: 'https://images.unsplash.com/photo-1762158008280-3dcb1d1cbd99?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb21tdW5pdHklMjBkZXZlbG9wbWVudCUyMG1lZXRpbmclMjBwZW9wbGV8ZW58MXx8fHwxNzcxMTUxNzY2fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
-        tags: ['Group Leader', 'January 2-6, 2022', 'Bhaktapur District'],
-        icon: Users,
-      },
-      {
-        title: 'Rural Social Work Camp - Ghalegaun, Lamjung',
-        description: 'Served as Camp Coordinator leading rural community development, November 1-5, 2022. Program included Social Mapping, Social Survey on Gender Equality, Dialogue with Local Stakeholders, Community Engagement, Report Presentation, and Closing Ceremony.',
-        image: 'https://images.unsplash.com/photo-1765994898026-4fa84ade4a61?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx2aWxsYWdlJTIwY29tbXVuaXR5JTIwZGV2ZWxvcG1lbnQlMjBuZXBhbHxlbnwxfHx8fDE3NzExNTE5OTV8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
-        tags: ['Camp Coordinator', 'November 1-5, 2022', 'Gender Equality'],
-        icon: MapPin,
-      },
-      {
-        title: 'Urban Social Work Camp - Sauraha, Chitwan',
-        description: 'Head of Idea and Event Management, January 14-18, 2023. Activities included Social Interaction & PRA, Social Survey, School Session and Agency Visit, Panel Discussion, Presentation Competition, and Closing Ceremony.',
-        image: 'https://images.unsplash.com/photo-1758582171503-ce7b5c28bb4d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx2b2x1bnRlZXIlMjBjb29yZGluYXRpb24lMjBoZWxwaW5nJTIwY29tbXVuaXR5fGVufDF8fHx8MTc3MTE1MTc2OHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
-        tags: ['Event Management', 'January 14-18, 2023', 'Urban Development'],
-        icon: Users,
-      },
-      {
-        title: 'Ethnographic Research Camp - Kanyam, Ilam',
-        description: 'Head of Grievances Management, December 16-20, 2024. Conducted Ethnographic Field Research, Workshop & Mini Project, Local Area Exploration, and Closing Ceremony.',
-        image: 'https://images.unsplash.com/photo-1625140064748-5b52e6180047?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxpbGFtJTIwdGVhJTIwZ2FyZGVuJTIwbmVwYWx8ZW58MXx8fHwxNzcxNTc3Nzg0fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
-        tags: ['Ethnographic Research', 'December 16-20, 2024', 'Field Work'],
-        icon: BookOpen,
-      },
-    ],
-    'Internships': [
-      {
-        title: 'Good Neighbors International Nepal',
-        description: 'Completed my internship at the Sponsorship and Child Protection Department of Good Neighbors International Nepal, where I primarily worked in data management. My responsibilities included maintaining beneficiary records, ensuring data accuracy, supporting documentation processes, and contributing to effective child protection and sponsorship reporting systems.',
-        image: ginImg,
-        tags: ['Data Management', 'Child Protection', 'April-October 2025'],
-        icon: Briefcase,
-        link: 'https://www.goodneighbors.org/',
-      },
-      {
-        title: 'Manoshastra Research and Counseling Center',
-        description: 'Interned at Manoshastra Research and Counseling Center, gaining hands-on experience in mental health support. Assisted with client history taking, relaxation therapy sessions, and psychosocial support, while developing skills in empathetic communication, case documentation, and client-centered care.',
-        image: manoImg,
-        tags: ['Mental Health', 'Counseling', 'May-July 2022'],
-        icon: Heart,
-      },
-      {
-        title: 'Kathmandu Metropolitan City',
-        description: 'Worked under the Smart City Project at Kathmandu Metropolitan City, where I was primarily responsible for volunteer recruitment and mobilization. Coordinated and facilitated meetings with Ward Chairpersons and key stakeholders to support project implementation and community engagement.',
-        image: kmcImg,
-        tags: ['Smart City Project', 'Volunteer Mobilization', 'Government'],
-        icon: Users,
-        link: 'https://kathmandu.gov.np/',
-      },
-      {
-        title: 'Metro Police Circle Thimi',
-        description: 'Completed an internship at Metro Police Circle Thimi, gaining practical exposure to community policing and public safety operations. Supported administrative documentation, observed case handling procedures, and engaged in coordination processes related to community security.',
-        image: 'https://images.unsplash.com/photo-1758511718377-e23d0652e531?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhZHZvY2FjeSUyMGNhbXBhaWduJTIwc29jaWFsJTIwanVzdGljZXxlbnwxfHx8fDE3NzExNTE5OTB8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
-        tags: ['Community Policing', 'Public Safety', 'Administrative Support'],
-        icon: Users,
-      },
-    ],
-  },
-  'Leadership Profile': [
+  'Community Impact': [
+    // Social Work Camps
+    {
+      title: 'Neighborhood Social Work Camp',
+      description: 'The camp was held in four municipalities of Bhaktapur District (Bhaktapur, Madhyapur Thimi, Suryabinayak, and Chagunarayan) where I served as Group Leader from January 2–6, 2022. Activities included Social Survey, Dialogue with Social Representatives, visiting Model Organizations, Community Engagement, and Closing Ceremony.',
+      image: 'https://images.unsplash.com/photo-1762158008280-3dcb1d1cbd99?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb21tdW5pdHklMjBkZXZlbG9wbWVudCUyMG1lZXRpbmclMjBwZW9wbGV8ZW58MXx8fHwxNzcxMTUxNzY2fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
+      tags: ['Group Leader', 'January 2-6, 2022', 'Bhaktapur District'],
+      icon: Users,
+    },
+    {
+      title: 'Rural Social Work Camp - Ghalegaun, Lamjung',
+      description: 'Served as Camp Coordinator leading rural community development, November 1-5, 2022. Program included Social Mapping, Social Survey on Gender Equality, Dialogue with Local Stakeholders, Community Engagement, Report Presentation, and Closing Ceremony.',
+      image: 'https://images.unsplash.com/photo-1765994898026-4fa84ade4a61?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx2aWxsYWdlJTIwY29tbXVuaXR5JTIwZGV2ZWxvcG1lbnQlMjBuZXBhbHxlbnwxfHx8fDE3NzExNTE5OTV8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
+      tags: ['Camp Coordinator', 'November 1-5, 2022', 'Gender Equality'],
+      icon: MapPin,
+    },
+    {
+      title: 'Urban Social Work Camp - Sauraha, Chitwan',
+      description: 'Head of Idea and Event Management, January 14-18, 2023. Activities included Social Interaction & PRA, Social Survey, School Session and Agency Visit, Panel Discussion, Presentation Competition, and Closing Ceremony.',
+      image: 'https://images.unsplash.com/photo-1758582171503-ce7b5c28bb4d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx2b2x1bnRlZXIlMjBjb29yZGluYXRpb24lMjBoZWxwaW5nJTIwY29tbXVuaXR5fGVufDF8fHx8MTc3MTE1MTc2OHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
+      tags: ['Event Management', 'January 14-18, 2023', 'Urban Development'],
+      icon: Users,
+    },
+    {
+      title: 'Ethnographic Research Camp - Kanyam, Ilam',
+      description: 'Head of Grievances Management, December 16-20, 2024. Conducted Ethnographic Field Research, Workshop & Mini Project, Local Area Exploration, and Closing Ceremony.',
+      image: 'https://images.unsplash.com/photo-1625140064748-5b52e6180047?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxpbGFtJTIwdGVhJTIwZ2FyZGVuJTIwbmVwYWx8ZW58MXx8fHwxNzcxNTc3Nzg0fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
+      tags: ['Ethnographic Research', 'December 16-20, 2024', 'Field Work'],
+      icon: BookOpen,
+    },
+    // Internships
+    {
+      title: 'Good Neighbors International Nepal',
+      description: 'Completed my internship at the Sponsorship and Child Protection Department of Good Neighbors International Nepal, where I primarily worked in data management. My responsibilities included maintaining beneficiary records, ensuring data accuracy, supporting documentation processes, and contributing to effective child protection and sponsorship reporting systems.',
+      image: ginImg,
+      tags: ['Data Management', 'Child Protection', 'April-October 2025'],
+      icon: Briefcase,
+      link: 'https://www.goodneighbors.org/',
+    },
+    {
+      title: 'Manoshastra Research and Counseling Center',
+      description: 'Interned at Manoshastra Research and Counseling Center, gaining hands-on experience in mental health support. Assisted with client history taking, relaxation therapy sessions, and psychosocial support, while developing skills in empathetic communication, case documentation, and client-centered care.',
+      image: manoImg,
+      tags: ['Mental Health', 'Counseling', 'May-July 2022'],
+      icon: Heart,
+    },
+    {
+      title: 'Kathmandu Metropolitan City',
+      description: 'Worked under the Smart City Project at Kathmandu Metropolitan City, where I was primarily responsible for volunteer recruitment and mobilization. Coordinated and facilitated meetings with Ward Chairpersons and key stakeholders to support project implementation and community engagement.',
+      image: kmcImg,
+      tags: ['Smart City Project', 'Volunteer Mobilization', 'Government'],
+      icon: Users,
+      link: 'https://kathmandu.gov.np/',
+    },
+    {
+      title: 'Metro Police Circle Thimi',
+      description: 'Completed an internship at Metro Police Circle Thimi, gaining practical exposure to community policing and public safety operations. Supported administrative documentation, observed case handling procedures, and engaged in coordination processes related to community security.',
+      image: 'https://images.unsplash.com/photo-1758511718377-e23d0652e531?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhZHZvY2FjeSUyMGNhbXBhaWduJTIwc29jaWFsJTIwanVzdGljZXxlbnwxfHx8fDE3NzExNTE5OTB8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
+      tags: ['Community Policing', 'Public Safety', 'Administrative Support'],
+      icon: Users,
+    },
+    // CSE Facilitation Programs
+    {
+      title: 'Comprehensive Sexuality Education (CSE) Program',
+      description: 'The session on Comprehensive Sexuality Education (CSE) and its key components was facilitated for students of Grades 11 and 12, along with their teachers, with a total of 32 participants in attendance.',
+      image: 'https://images.unsplash.com/photo-1758270704524-596810e891b5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzY2hvb2wlMjBjbGFzc3Jvb20lMjBlZHVjYXRpb24lMjBzdHVkZW50c3xlbnwxfHx8fDE3NzE1Nzc3ODd8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
+      tags: ['CSE Training', 'Grades 11-12', '32 Participants'],
+      icon: BookOpen,
+    },
+    {
+      title: 'Sexual and Reproductive Health and Rights (SRHR) Awareness',
+      description: 'A total of 47 students from Grades 8, 9, and 10 participated in comprehensive Sexual and Reproductive Health and Rights (SRHR) awareness sessions designed to enhance their knowledge, promote informed decision-making, and encourage responsible behavior.',
+      image: 'https://images.unsplash.com/photo-1740645580346-1cf378fea3a7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzZXh1YWxpdHklMjBlZHVjYXRpb24lMjBhd2FyZW5lc3MlMjBzZXNzaW9ufGVufDF8fHx8MTc3MTE1MTk5Mnww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
+      tags: ['SRHR Education', 'Grades 8-10', '47 Students'],
+      icon: Users,
+    },
+    {
+      title: 'Sexuality Education & Reproductive Health Awareness Session',
+      description: '28 grade 10 students engaged in sexuality education and reproductive health awareness sessions.',
+      image: 'https://images.unsplash.com/photo-1740645580346-1cf378fea3a7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzZXh1YWxpdHklMjBlZHVjYXRpb24lMjBhd2FyZW5lc3MlMjBzZXNzaW9ufGVufDF8fHx8MTc3MTE1MTk5Mnww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
+      tags: ['Sexuality Education', 'Grade 10', '28 Students'],
+      icon: BookOpen,
+    },
+    {
+      title: 'SRHR Youth Champion 2023',
+      description: 'As an SRHR Youth Champion since 2023, I have facilitated multiple awareness sessions reaching diverse groups of students and youth, promoting CSE, gender sensitivity, and rights-based approaches. My work focuses on breaking stigma, encouraging open dialogue, and strengthening young people\'s access to accurate and inclusive SRHR information.',
+      image: 'https://images.unsplash.com/photo-1766722906733-609eebf3b63a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjZXJ0aWZpY2F0ZSUyMGF3YXJkJTIwYWNoaWV2ZW1lbnR8ZW58MXx8fHwxNzcxNDc5NjE3fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
+      tags: ['Youth Champion', 'CSE Advocacy', 'Since 2023'],
+      icon: Award,
+    },
+    // New Community Programs
+    {
+      title: 'Capacity Building Training on Installation and Updating Procedure',
+      description: 'A capacity-building training on installation and updating procedures was facilitated in Kaligandaki Rural Municipality at two locations, namely Bhayekot and Dhuwakhola. The training was conducted for local farmers to enhance their technical knowledge and practical skills.',
+      image: 'https://images.unsplash.com/photo-1560264418-c4445382edbc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmYXJtZXIlMjB0cmFpbmluZyUyMG5lcGFsfGVufDF8fHx8MTc0MTY3NDAwMHww&ixlib=rb-4.1.0&q=80&w=1080',
+      tags: ['Capacity Building', 'Kaligandaki', 'Farmer Training'],
+      icon: Target,
+    },
+    {
+      title: 'Sailung Rural Municipality Community Program',
+      description: 'Community development program facilitated in Sailung Rural Municipality, focusing on empowering local communities through skill development and awareness initiatives.',
+      image: 'https://images.unsplash.com/photo-1593113598332-cd288d649433?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3YXRlciUyMGRpc3RyaWJ1dGlvbiUyMGNvbW11bml0eSUyMHNlcnZpY2V8ZW58MXx8fHwxNzcxNTg3Mjg5fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
+      tags: ['Sailung', 'Community Development', 'Rural Program'],
+      icon: Users,
+    },
+    {
+      title: 'Local Liquor Branding - Awareness Session',
+      description: 'A one-day awareness session on the local liquor branding process was conducted in Ramechhap Municipality in collaboration with Ward No. 2 and Ward No. 3. The session aimed to empower marginalized communities and promote systematic income generation through the branding and marketing of local products.',
+      image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxlbW90aW9uYWwlMjBpbnRlbGxpZ2VuY2UlMjB0cmFpbmluZyUyMHdvcmtzaG9wfGVufDF8fHx8MTc3MTU4NzI4OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
+      tags: ['Ramechhap', 'Branding', 'Income Generation'],
+      icon: Lightbulb,
+    },
+    {
+      title: 'Digital Addiction Awareness Session',
+      description: 'Facilitated an awareness program for parents at Manjushree Montessori Preschool, Nagarkot–6, focusing on the impacts of digital addiction in children and promoting responsible digital parenting.',
+      image: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwYXJlbnRzJTIwbWVldGluZyUyMHNjaG9vbHxlbnwxfHx8fDE3NDE2NzQwMDB8MA&ixlib=rb-4.1.0&q=80&w=1080',
+      tags: ['Digital Addiction', 'Parenting', 'Nagarkot'],
+      icon: BookOpen,
+    },
+  ],
+  'Strategic Leadership': [
     {
       title: 'Pre-Induction and LOM Officer Training',
       description: 'The training is conducted annually, specifically for Presidents and Secretaries General, to provide comprehensive insights into the roles and responsibilities of the presidential tenure. The session was facilitated by Rashmi Shilpakar, National Vice President 2019, at CBR, in collaboration with JCI Bhaktapur and JCI Bhaktapur Lady.',
@@ -145,116 +201,113 @@ const portfolioData = {
       icon: Users,
     },
   ],
-  'CSE Dive Sessions': [
+  'Visual Storytelling': [
+    // Himalayan Landscapes
     {
-      title: 'Mahendra Ratna Campus',
-      description: 'The session was organized by the Beyond Beijing Committee Nepal with the objective of raising awareness on Comprehensive Sexuality Education (CSE) among youth. Facilitated by Hira Bohara and Umesh Raskoti for BA 4th year students. We discussed key components of CSE, including SRHR, gender equality, consent, and responsible decision-making, creating an open and respectful learning environment.',
-      image: 'https://images.unsplash.com/photo-1587527824434-8b9fa990e228?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxldGhub2dyYXBoaWMlMjBmaWVsZCUyMHJlc2VhcmNoJTIwZG9jdW1lbnRhdGlvbnxlbnwxfHx8fDE3NzExNTE5OTF8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
-      tags: ['CSE Training', 'BA 4th Year', '32 Students'],
-      icon: GraduationCap,
-    },
-    {
-      title: 'JCI Bhaktapur Junior',
-      description: 'The session was conducted with the objective of ensuring that no one is left behind in access to and understanding of CSE. Delivered to the Board of Directors of JCI Bhaktapur Junior, primarily focused on building a comprehensive understanding of gender concepts, including gender roles, equality, and inclusion. Aimed to strengthen leadership perspectives on gender sensitivity.',
-      image: 'https://images.unsplash.com/photo-1767561070418-cbb62b952a6d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsZWFkZXJzaGlwJTIwYXdhcmQlMjBjZXJlbW9ueSUyMGNlbGVicmF0aW9ufGVufDF8fHx8MTc3MTE1MTc2OHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
-      tags: ['Leadership Training', 'Gender Equality', 'Board of Directors'],
-      icon: Award,
-    },
-  ],
-  'Program Facilitation': [
-    {
-      title: 'Comprehensive Sexuality Education (CSE) Program',
-      description: 'The session on Comprehensive Sexuality Education (CSE) and its key components was facilitated for students of Grades 11 and 12, along with their teachers, with a total of 32 participants in attendance.',
-      image: 'https://images.unsplash.com/photo-1758270704524-596810e891b5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzY2hvb2wlMjBjbGFzc3Jvb20lMjBlZHVjYXRpb24lMjBzdHVkZW50c3xlbnwxfHx8fDE3NzE1Nzc3ODd8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
-      tags: ['CSE Training', 'Grades 11-12', '32 Participants'],
-      icon: BookOpen,
-    },
-    {
-      title: 'Sexual and Reproductive Health and Rights (SRHR) Awareness',
-      description: 'A total of 47 students from Grades 8, 9, and 10 participated in comprehensive Sexual and Reproductive Health and Rights (SRHR) awareness sessions designed to enhance their knowledge, promote informed decision-making, and encourage responsible behavior.',
-      image: 'https://images.unsplash.com/photo-1740645580346-1cf378fea3a7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzZXh1YWxpdHklMjBlZHVjYXRpb24lMjBhd2FyZW5lc3MlMjBzZXNzaW9ufGVufDF8fHx8MTc3MTE1MTk5Mnww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
-      tags: ['SRHR Education', 'Grades 8-10', '47 Students'],
-      icon: Users,
-    },
-    {
-      title: 'Sexuality Education & Reproductive Health Awareness Session',
-      description: '28 grade 10 students engaged in sexuality education and reproductive health awareness sessions.',
-      image: 'https://images.unsplash.com/photo-1740645580346-1cf378fea3a7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzZXh1YWxpdHklMjBlZHVjYXRpb24lMjBhd2FyZW5lc3MlMjBzZXNzaW9ufGVufDF8fHx8MTc3MTE1MTk5Mnww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
-      tags: ['Sexuality Education', 'Grade 10', '28 Students'],
-      icon: BookOpen,
-    },
-    {
-      title: 'SRHR Youth Champion 2023',
-      description: 'As an SRHR Youth Champion since 2023, I have facilitated multiple awareness sessions reaching diverse groups of students and youth, promoting CSE, gender sensitivity, and rights-based approaches. My work focuses on breaking stigma, encouraging open dialogue, and strengthening young people\'s access to accurate and inclusive SRHR information.',
-      image: 'https://images.unsplash.com/photo-1766722906733-609eebf3b63a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjZXJ0aWZpY2F0ZSUyMGF3YXJkJTIwYWNoaWV2ZW1lbnR8ZW58MXx8fHwxNzcxNDc5NjE3fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
-      tags: ['Youth Champion', 'CSE Advocacy', 'Since 2023'],
-      icon: Award,
-    },
-  ],
-  'Photography': [
-    {
-      title: 'Himalayan Landscapes',
-      description: 'Capturing the majestic beauty of Nepal\'s mountain ranges and natural wonders.',
-      image: 'https://images.unsplash.com/photo-1641031214337-572618b6701b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoaW1hbGF5YW4lMjBtb3VudGFpbiUyMGxhbmRzY2FwZSUyMG5lcGFsfGVufDF8fHx8MTc3MTU3Nzc4NHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
-      tags: ['Landscape', 'Nature', 'Mountains'],
+      title: 'Himalayan Landscapes Collection',
+      description: 'Capturing the majestic beauty of Nepal\'s mountain ranges and natural wonders. Professional landscape photography showcasing the Himalayas in their full glory.',
+      images: [
+        'https://drive.google.com/uc?export=view&id=1tKutsJ7-Wn1vwkRvLIpq6MC4dUg5SULl',
+        'https://drive.google.com/uc?export=view&id=1tPPp66hUkBi2UM80GiSpk6owQ7g4QgcU',
+        'https://drive.google.com/uc?export=view&id=1VIgMOzXQ1aISH9FmRgrwGXzEveFT1qxz',
+        'https://drive.google.com/uc?export=view&id=1599Z35KsIty2H2-T0fpDmgilgZOl0db3',
+        'https://drive.google.com/uc?export=view&id=1N7uz6yEi2ah7ZwQBhjB6UwzvPX2p1dFp',
+        'https://drive.google.com/uc?export=view&id=1Ak0TjBsAqxsaiFLDxXp8iQWqUJCDPXnb',
+        'https://drive.google.com/uc?export=view&id=10UCmRCsWTJhFTNBJSpatqSnIFGalfIKZ',
+        'https://drive.google.com/uc?export=view&id=1CprpQ6Y6lntCzpk3x0EdsRltXcJnYaGs',
+        'https://drive.google.com/uc?export=view&id=1dueMRM8QHc5RBCOcZwbiRmTprVYNj2pW',
+        'https://drive.google.com/uc?export=view&id=1-H_X7VbzLSOoI177K1A7epTS1DXJpSxq',
+      ],
+      tags: ['Landscape', 'Mountains', 'Himalayas'],
       icon: Camera,
     },
+    // Rural Nepal Village Life
     {
       title: 'Rural Nepal Village Life',
-      description: 'Documentary photography showcasing the authentic life in Nepal\'s countryside.',
-      image: 'https://images.unsplash.com/photo-1601231519048-a3a92894d166?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxuZXBhbCUyMHZpbGxhZ2UlMjBjb3VudHJ5c2lkZXxlbnwxfHx8fDE3NzE1Nzc3ODV8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
-      tags: ['Documentary', 'Village Life', 'Culture'],
+      description: 'Documentary photography showcasing the authentic life in Nepal\'s countryside. Capturing the essence of rural communities and their daily lives.',
+      images: [
+        'https://drive.google.com/uc?export=view&id=1mXqntCTtYjfSlmtVvg5mFpVXfLnEoYwE',
+        'https://drive.google.com/uc?export=view&id=1G0gvEYVfASuGIZI2CMs1e6OZtq1euLSm',
+        'https://drive.google.com/uc?export=view&id=1kMGl1bKw5GBSy2Lc7F4tDPsCI4xo6xTd',
+        'https://drive.google.com/uc?export=view&id=1ZRcJoEZkfta7l6tsxKvjRflll_pOMnlV',
+        'https://drive.google.com/uc?export=view&id=1Gx_4NJA0C4CP_SBdeKTddcGQ9NQQATHA',
+        'https://drive.google.com/uc?export=view&id=1bKmbG2n3TXqx__Y-FFTtD39d0c4ASCbv',
+        'https://drive.google.com/uc?export=view&id=1pxGdgLKs5mVptkzo6o4BGhyBkAl38EcX',
+        'https://drive.google.com/uc?export=view&id=1Dxw9Tgv474LEgfujNoyMY-ThQw4zHeut',
+        'https://drive.google.com/uc?export=view&id=1V1Ih65w9L6L3gFnMaqwI0uXzm4Y5DJLq',
+        'https://drive.google.com/uc?export=view&id=1dsA_i0tffnAPPsy3Qc5fflQcq782SFMf',
+        'https://drive.google.com/uc?export=view&id=1RaGHqYKQ7o1wc3C2NYj53YM5aF37_O1d',
+        'https://drive.google.com/uc?export=view&id=1U9EoDVljrnkroWB-GatguT5NQjVRN1jc',
+      ],
+      tags: ['Documentary', 'Village Life', 'Rural Nepal'],
       icon: Camera,
     },
+    // Sunrise Mountain Peaks
     {
       title: 'Sunrise Mountain Peaks',
-      description: 'Golden hour photography of Nepal\'s iconic mountain landscapes.',
-      image: 'https://images.unsplash.com/photo-1668312598430-c03eb99962d8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzdW5yaXNlJTIwbW91bnRhaW4lMjBwZWFrfGVufDF8fHx8MTc3MTU3Nzc4NXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
-      tags: ['Landscape', 'Sunrise', 'Golden Hour'],
+      description: 'Golden hour photography of Nepal\'s iconic mountain landscapes. Capturing the magical moments when sunlight kisses the peaks.',
+      images: [
+        'https://drive.google.com/uc?export=view&id=1zXICAbbxh-abDgObHcIo2sNYqdOAEsVe',
+        'https://drive.google.com/uc?export=view&id=1gnjOdLUmZKwMhKbI0Vq-2TNiG1oB2iTl',
+        'https://drive.google.com/uc?export=view&id=1eRlPKikXLg0i44KiWcTw5OcVJXz43BVJ',
+        'https://drive.google.com/uc?export=view&id=1a5qZ57MZCu8Uf3lAjasBGLJRYTk_jW89',
+        'https://drive.google.com/uc?export=view&id=1wLugykTp6fCLU864k2VSpFeTkorjs6aS',
+        'https://drive.google.com/uc?export=view&id=1U4gp9O9AGOPqNOAaXvdkQMelJ2XTXGkd',
+        'https://drive.google.com/uc?export=view&id=1JC4JND_Qe2IQISmG-WcbzDieS12DLRC3',
+        'https://drive.google.com/uc?export=view&id=1eRlPKikXLg0i44KiWcTw5OcVJXz43BVJ',
+      ],
+      tags: ['Sunrise', 'Mountains', 'Golden Hour'],
       icon: Camera,
     },
+    // Forest & Nature
     {
       title: 'Forest & Nature',
-      description: 'Exploring the lush forests and natural beauty of Nepal\'s diverse ecosystems.',
-      image: 'https://images.unsplash.com/photo-1674916251976-b64824a5f3de?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxuYXR1cmUlMjBmb3Jlc3QlMjBsYW5kc2NhcGV8ZW58MXx8fHwxNzcxNTQ1MzI0fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
-      tags: ['Nature', 'Forest', 'Environmental'],
+      description: 'Exploring the lush forests and natural beauty of Nepal\'s diverse ecosystems. Environmental photography celebrating biodiversity.',
+      images: [
+        'https://drive.google.com/uc?export=view&id=14aXIQ5w4AnRKLuvJQXWs6cNTDSFECkiX',
+        'https://drive.google.com/uc?export=view&id=1l4UTdgzRmMFLOjWwQgXuE1PJP6a6Voxt',
+        'https://drive.google.com/uc?export=view&id=1rQB94q8-haep6o8i10HRSOqFCa3A504j',
+        'https://drive.google.com/uc?export=view&id=1N5EwD_o2Ut5kKGuIXebiLi08HPZrax8V',
+        'https://drive.google.com/uc?export=view&id=1anunxPk3_DCy_5nN38YY-Dg_Pu22NEDb',
+        'https://drive.google.com/uc?export=view&id=1Z-YTrNtjaT6m0n45_H1-XZ_KefNKn6U_',
+        'https://drive.google.com/uc?export=view&id=1B3j7vkC89K7gNIJKMVGNL2l9ubY9lJII',
+        'https://drive.google.com/uc?export=view&id=1H91xBcpsLo6me9IWKU-7E5oD0-nR6oSJ',
+      ],
+      tags: ['Nature', 'Forest', 'Environment'],
       icon: Camera,
     },
-    {
-      title: 'Cultural Heritage',
-      description: 'Architectural photography of Nepal\'s temples and cultural landmarks.',
-      image: 'https://images.unsplash.com/photo-1665394183024-7a95b156d427?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxuZXBhbCUyMHRlbXBsZSUyMGFyY2hpdGVjdHVyZXxlbnwxfHx8fDE3NzE1Nzc3ODZ8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
-      tags: ['Architecture', 'Culture', 'Heritage'],
-      icon: Camera,
-    },
+    // Professional Photography
     {
       title: 'Professional Photography',
-      description: 'Fluent with Canon, Nikon, Sony, and Pentax systems for various photography styles.',
-      image: 'https://images.unsplash.com/photo-1751107996077-aee030806ca5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBwaG90b2dyYXBoZXIlMjBlcXVpcG1lbnQlMjBjYW5vbnxlbnwxfHx8fDE3NzExNTE5OTF8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
-      tags: ['Canon', 'Nikon', 'Sony', 'Pentax'],
+      description: 'Professional event and portrait photography using Canon, Nikon, Sony, and Pentax systems. Capturing moments that matter.',
+      images: [
+        'https://drive.google.com/uc?export=view&id=16nhd3lycNuRn6T6eQyATxdkr3c18Rvbl',
+        'https://drive.google.com/uc?export=view&id=13Y365zvOAyIHBnFuU_eHATRu_AXZ-lnk',
+        'https://drive.google.com/uc?export=view&id=1ovMBIpa5-99p111o7Cy6OAir3ZrViVVO',
+        'https://drive.google.com/uc?export=view&id=17qS_9lqY8FNX_mxXilF_F1DDCSXxKwpH',
+        'https://drive.google.com/uc?export=view&id=15UoEHBkje9SqR3yjJ3CV5WCUUP6CWwfH',
+        'https://drive.google.com/uc?export=view&id=1H7qc4-zrPkVP7uPPqzTuUVz_G8sVOGbK',
+        'https://drive.google.com/uc?export=view&id=1MC5vY5rGfn8qfNpVU3Qt3BnHNCnmObzU',
+        'https://drive.google.com/uc?export=view&id=1e-9lfO0EF74IQqdy-8AT4FPLlMZVhMPL',
+        'https://drive.google.com/uc?export=view&id=1qA9Wg8v_BZ56N53Hq4idNSptqli_RRx7',
+        'https://drive.google.com/uc?export=view&id=1KgTHmLtxVZqMu8nMvRXbxQ-NNN-FQKUW',
+      ],
+      tags: ['Professional', 'Events', 'Portraits'],
       icon: Camera,
     },
-  ],
-  'Campaigns': [
+    // Cultural Heritage
     {
-      title: 'Green Initiative Nepal',
-      description: 'Led a campaign to promote environmental awareness and sustainability in Nepal. Organized tree planting drives, waste management workshops, and educational sessions to engage the community in eco-friendly practices.',
-      image: ginImg,
-      tags: ['Environmental Awareness', 'Sustainability', 'Community Engagement'],
-      icon: Camera,
-    },
-    {
-      title: 'Environment Campaign',
-      description: 'Participated in a national environment campaign to raise awareness about climate change and its impacts on Nepal. Created and distributed educational materials, organized public talks, and led community clean-up drives.',
-      image: environmentCampaignImg,
-      tags: ['Climate Change', 'Public Awareness', 'Community Service'],
-      icon: Camera,
-    },
-    {
-      title: 'Community Campaign',
-      description: 'Organized a community campaign to address social issues in rural areas of Nepal. Conducted surveys, facilitated workshops, and implemented projects to improve access to education, healthcare, and basic amenities.',
-      image: communityCampaignImg,
-      tags: ['Social Issues', 'Rural Development', 'Community Projects'],
+      title: 'Cultural Heritage',
+      description: 'Architectural photography of Nepal\'s temples and cultural landmarks. Preserving heritage through imagery.',
+      images: [
+        'https://drive.google.com/uc?export=view&id=1s2EIPxQHSQxH6XWBbxgZkW_MIbIrHvZI',
+        'https://drive.google.com/uc?export=view&id=1hRvyS-VGUaAYCTsHwUmpRCoKOtpdBW_i',
+        'https://drive.google.com/uc?export=view&id=1fpRGRVl9fFkUMEt1GZ-UY3z01ybFNXBg',
+        'https://drive.google.com/uc?export=view&id=1DaPR7kc_JVBrLqE53ROAeXe3mpxDatdn',
+        'https://drive.google.com/uc?export=view&id=1JpU_DFZcZJwpTB6Ul4lCjVPM_60oTTA2',
+        'https://drive.google.com/uc?export=view&id=1gFwLi4HUHP0I5djERmAf2F-JcG0FD5f9',
+      ],
+      tags: ['Heritage', 'Architecture', 'Culture'],
       icon: Camera,
     },
   ],
@@ -266,30 +319,9 @@ export function PortfolioPage() {
   const ref = useRef(null);
   const isInView = useInView(ref, { amount: 0.1, once: false });
   const [activeCategory, setActiveCategory] = useState(categories[0]);
-  const [activeSubCategory, setActiveSubCategory] = useState<string | null>(null);
 
-  // Get current items to display
   const getCurrentItems = () => {
-    const categoryData = portfolioData[activeCategory as keyof typeof portfolioData];
-    
-    if (activeCategory === 'Social Work' && activeSubCategory) {
-      return (categoryData as any)[activeSubCategory] || [];
-    }
-    
-    if (activeCategory === 'Social Work') {
-      // Show all items when no subcategory is selected
-      return [...(categoryData as any)['Social Work Camps'], ...(categoryData as any)['Internships']];
-    }
-    
-    return categoryData;
-  };
-
-  // Get subcategories for Social Work
-  const getSubCategories = () => {
-    if (activeCategory === 'Social Work') {
-      return ['Social Work Camps', 'Internships'];
-    }
-    return [];
+    return portfolioData[activeCategory as keyof typeof portfolioData];
   };
 
   return (
@@ -301,6 +333,7 @@ export function PortfolioPage() {
         animate={{ opacity: isInView ? 1 : 0.3 }}
         transition={{ duration: 0.6 }}
       >
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
@@ -313,7 +346,7 @@ export function PortfolioPage() {
             animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
             transition={{ duration: 0.8 }}
           >
-            My Portfolio
+            Portfolio
           </motion.h1>
           <motion.div
             className="w-24 h-1 bg-gradient-to-r from-purple-600 to-pink-600 mx-auto mb-8"
@@ -321,126 +354,126 @@ export function PortfolioPage() {
             animate={isInView ? { width: 96 } : { width: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           />
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            Explore my journey through social work, advocacy, and photography
-          </p>
+          <motion.p 
+            className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed"
+            initial={{ opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+          >
+            Explore my journey in social activism, leadership, and visual storytelling
+          </motion.p>
         </motion.div>
 
+        {/* Category Navigation */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="flex flex-wrap gap-3 justify-center mb-12"
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="flex flex-wrap justify-center gap-4 mb-12"
         >
-          {categories.map((category) => (
+          {categories.map((category, index) => (
             <motion.button
               key={category}
-              onClick={() => {
-                setActiveCategory(category);
-                setActiveSubCategory(null);
-              }}
-              className={`px-6 py-3 rounded-full text-sm font-semibold transition-all ${
-                activeCategory === category
-                  ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg'
-                  : 'bg-white text-gray-600 hover:bg-gray-100 shadow'
-              }`}
-              whileHover={{ scale: 1.05, y: -2 }}
+              onClick={() => setActiveCategory(category)}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
+              transition={{ duration: 0.4, delay: 0.5 + index * 0.1 }}
+              whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              className={`px-8 py-3 rounded-full font-semibold transition-all shadow-lg ${
+                activeCategory === category
+                  ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-purple-300'
+                  : 'bg-white text-gray-700 hover:bg-gray-50 hover:shadow-xl'
+              }`}
             >
               {category}
             </motion.button>
           ))}
         </motion.div>
 
-        {/* Subcategories for Social Work */}
-        {getSubCategories().length > 0 && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="flex flex-wrap gap-3 justify-center mb-8"
-          >
-            {getSubCategories().map((subCategory) => (
-              <motion.button
-                key={subCategory}
-                onClick={() => setActiveSubCategory(activeSubCategory === subCategory ? null : subCategory)}
-                className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${
-                  activeSubCategory === subCategory
-                    ? 'bg-gradient-to-r from-blue-500 to-indigo-500 text-white shadow-md'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                }`}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                {subCategory}
-              </motion.button>
-            ))}
-          </motion.div>
-        )}
-
-        <motion.div
-          key={`${activeCategory}-${activeSubCategory}`}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -20 }}
-          transition={{ duration: 0.5 }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-        >
+        {/* Portfolio Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {getCurrentItems().map((item: any, index: number) => (
             <motion.div
               key={item.title}
-              initial={{ opacity: 0, y: 50, scale: 0.9 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              whileHover={{ y: -10, scale: 1.02 }}
+              initial={{ opacity: 0, y: 50 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+              transition={{ duration: 0.6, delay: 0.1 * index }}
+              whileHover={{ y: -10 }}
               className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all"
             >
-              <div className="relative h-64 overflow-hidden">
-                <motion.img
-                  src={item.image}
-                  alt={item.title}
-                  className="w-full h-full object-cover"
-                  whileHover={{ scale: 1.1 }}
-                  transition={{ duration: 0.6 }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
-                  <motion.div
-                    initial={{ y: 20, opacity: 0 }}
-                    whileHover={{ y: 0, opacity: 1 }}
-                    className="text-white"
-                  >
-                    <item.icon size={32} />
-                  </motion.div>
+              {/* For Visual Storytelling - show first image from collection */}
+              {item.images ? (
+                <div className="relative h-64 overflow-hidden">
+                  <img
+                    src={item.images[0]}
+                    alt={item.title}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
+                  <div className="absolute top-4 right-4 bg-purple-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                    {item.images.length} Photos
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                  <div className="absolute bottom-4 left-4 right-4">
+                    <div className="flex flex-wrap gap-2">
+                      {item.tags.map((tag: string) => (
+                        <span
+                          key={tag}
+                          className="px-3 py-1 bg-white/90 text-gray-800 rounded-full text-xs font-medium"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <div className="relative h-64 overflow-hidden">
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                  <div className="absolute bottom-4 left-4 right-4">
+                    <div className="flex flex-wrap gap-2">
+                      {item.tags.map((tag: string) => (
+                        <span
+                          key={tag}
+                          className="px-3 py-1 bg-white/90 text-gray-800 rounded-full text-xs font-medium"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
 
               <div className="p-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-3">{item.title}</h3>
-                <p className="text-gray-600 mb-4 text-sm leading-relaxed">{item.description}</p>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {item.tags.map((tag: string) => (
-                    <span
-                      key={tag}
-                      className="px-3 py-1 bg-gradient-to-r from-purple-100 to-pink-100 text-purple-700 rounded-full text-xs font-medium"
-                    >
-                      {tag}
-                    </span>
-                  ))}
+                <div className="flex items-start gap-3 mb-3">
+                  <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <item.icon size={20} className="text-white" />
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 group-hover:text-purple-600 transition-colors">
+                    {item.title}
+                  </h3>
                 </div>
-                {'link' in item && item.link && (
+                <p className="text-gray-600 leading-relaxed">{item.description}</p>
+                {item.link && (
                   <a
                     href={item.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-purple-600 hover:text-purple-700 font-medium text-sm"
+                    className="inline-block mt-4 text-purple-600 hover:text-pink-600 font-semibold transition-colors"
                   >
-                    Visit Website →
+                    Learn More →
                   </a>
                 )}
               </div>
             </motion.div>
           ))}
-        </motion.div>
+        </div>
       </motion.div>
     </div>
   );

@@ -1,7 +1,7 @@
 import { motion, useInView, useMotionValue, useTransform, animate } from 'motion/react';
 import { useRef, useEffect } from 'react';
 import { Award, Target, Users, Heart } from 'lucide-react';
-import profileImg from 'figma:asset/350375490d348981572bcc1ade79fdd9730425a2.png';
+import profileImg from 'figma:asset/af2244bd5f0f1db7dcdb6118c246b6f9400ebecd.png';
 
 function AnimatedCounter({ value, isInView }: { value: number; isInView: boolean }) {
   const count = useMotionValue(0);
@@ -131,13 +131,13 @@ export function AboutPage() {
             <div className="grid grid-cols-2 gap-4">
               <div className="bg-gradient-to-br from-purple-50 to-purple-100 p-4 rounded-xl">
                 <div className="text-3xl font-bold text-purple-600">
-                  <AnimatedCounter value={1500} isInView={isInView} />+
+                  <AnimatedCounter value={1000} isInView={isInView} />+
                 </div>
                 <div className="text-gray-700">People Reached</div>
               </div>
               <div className="bg-gradient-to-br from-pink-50 to-pink-100 p-4 rounded-xl">
                 <div className="text-3xl font-bold text-pink-600">
-                  <AnimatedCounter value={15} isInView={isInView} />+
+                  <AnimatedCounter value={7} isInView={isInView} />
                 </div>
                 <div className="text-gray-700">Projects</div>
               </div>
