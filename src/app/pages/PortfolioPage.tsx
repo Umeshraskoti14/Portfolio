@@ -1,18 +1,14 @@
 import { motion, useInView } from 'motion/react';
-<<<<<<< HEAD
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Camera, MapPin, Users, Award, BookOpen, Heart, Briefcase, GraduationCap, Trophy, Star, Target, Lightbulb, ChevronRight } from 'lucide-react';
-=======
 import { useRef, useState } from 'react';
 import { Camera, MapPin, Users, Award, BookOpen, Heart, Briefcase, GraduationCap, Trophy, Star, Target, Lightbulb } from 'lucide-react';
->>>>>>> 3b038b3839575a4bb7132aafaefd7f9e98b8fa1c
 import profileImg from 'figma:asset/350375490d348981572bcc1ade79fdd9730425a2.png';
 import kmcImg from 'figma:asset/63b35ce0ab7380ad171c37c929c5ca1a23a179cf.png';
 import manoImg from 'figma:asset/a10c0aa055913800b480435f11f1cb49df00ce42.png';
 import ginImg from 'figma:asset/2c4f084427bf94aa4895b8089f02f525068246fe.png';
 import environmentCampaignImg from 'figma:asset/09eeab516a958f508c8c2e24a93d0b4f4601a754.png';
 import communityCampaignImg from 'figma:asset/9ec45cbbbc95fb0d1d25d569ed17865ca696fc58.png';
-<<<<<<< HEAD
 import {
   Dialog,
   DialogContent,
@@ -288,7 +284,6 @@ const communityImpactSections: Array<{
 
 const portfolioData: Record<string, PortfolioItem[]> = {
   "Community Impact": communityImpactSections.flatMap((s) => s.items),
-=======
 
 const portfolioData = {
   'Community Impact': [
@@ -411,7 +406,6 @@ const portfolioData = {
       icon: BookOpen,
     },
   ],
->>>>>>> 3b038b3839575a4bb7132aafaefd7f9e98b8fa1c
   'Strategic Leadership': [
     {
       title: 'Pre-Induction and LOM Officer Training',
@@ -602,19 +596,19 @@ export function PortfolioPage() {
   const ref = useRef(null);
   const isInView = useInView(ref, { amount: 0.1, once: false });
   const [activeCategory, setActiveCategory] = useState(categories[0]);
-<<<<<<< HEAD
+
   const [activeCollection, setActiveCollection] = useState<VisualCollectionItem | null>(null);
-=======
+
 >>>>>>> 3b038b3839575a4bb7132aafaefd7f9e98b8fa1c
 
   const getCurrentItems = () => {
     return portfolioData[activeCategory as keyof typeof portfolioData];
   };
 
-<<<<<<< HEAD
+
   const visibleItems = useMemo(() => getCurrentItems(), [activeCategory]);
 
-=======
+
 >>>>>>> 3b038b3839575a4bb7132aafaefd7f9e98b8fa1c
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white pt-28 pb-20">
@@ -683,7 +677,7 @@ export function PortfolioPage() {
           ))}
         </motion.div>
 
-<<<<<<< HEAD
+
         {activeCategory === "Community Impact" ? (
           <div className="relative">
             <div className="pointer-events-none absolute left-6 top-0 bottom-0 hidden md:block w-px bg-gradient-to-b from-purple-300 via-pink-300 to-transparent" />
@@ -931,7 +925,7 @@ export function PortfolioPage() {
           )}
         </DialogContent>
       </Dialog>
-=======
+
         {/* Portfolio Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {getCurrentItems().map((item: any, index: number) => (
