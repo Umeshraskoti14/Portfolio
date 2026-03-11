@@ -1,0 +1,212 @@
+import { motion, useInView } from 'motion/react';
+import { ArrowRight, Facebook, Instagram, Linkedin, Mail } from 'lucide-react';
+import { useRef } from 'react';
+import { Link } from 'react-router';
+
+export function HomePage() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { amount: 0.2, once: false });
+
+  return (
+    <motion.section
+      className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 via-purple-50 to-pink-50 overflow-hidden pt-20"
+      ref={ref}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: isInView ? 1 : 0.3 }}
+      transition={{ duration: 0.6 }}
+    >
+      {/* Animated Background Elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <motion.div
+          className="absolute top-20 left-10 w-96 h-96 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-50"
+          animate={{
+            x: [0, 100, 0],
+            y: [0, 50, 0],
+            scale: [1, 1.2, 1],
+          }}
+          transition={{
+            duration: 20,
+            repeat: Infinity,
+            ease: 'easeInOut',
+          }}
+        />
+        <motion.div
+          className="absolute top-40 right-10 w-96 h-96 bg-yellow-300 rounded-full mix-blend-multiply filter blur-3xl opacity-50"
+          animate={{
+            x: [0, -100, 0],
+            y: [0, 100, 0],
+            scale: [1, 1.3, 1],
+          }}
+          transition={{
+            duration: 25,
+            repeat: Infinity,
+            ease: 'easeInOut',
+          }}
+        />
+        <motion.div
+          className="absolute bottom-20 left-1/2 w-96 h-96 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-50"
+          animate={{
+            x: [0, 50, 0],
+            y: [0, -50, 0],
+            scale: [1, 1.1, 1],
+          }}
+          transition={{
+            duration: 22,
+            repeat: Infinity,
+            ease: 'easeInOut',
+          }}
+        />
+      </div>
+
+      {/* Content */}
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+          transition={{ duration: 1, ease: 'easeOut' }}
+        >
+          <motion.div
+            className="mb-6"
+            initial={{ opacity: 0, y: 50 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            <span className="inline-block px-6 py-2 bg-white/80 backdrop-blur-sm text-gray-700 rounded-full text-sm md:text-base shadow-lg">
+              Welcome to my portfolio
+            </span>
+          </motion.div>
+
+          <motion.h1
+            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-gray-900 mb-6"
+            initial={{ opacity: 0, y: 50 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
+            <motion.span
+              className="block mb-2"
+              initial={{ opacity: 0, x: -50 }}
+              animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
+            >
+              Umesh
+            </motion.span>
+            <motion.span
+              className="bg-gradient-to-r from-purple-600 via-pink-600 to-purple-600 bg-clip-text text-transparent bg-[length:200%_auto]"
+              animate={{
+                backgroundPosition: ['0%', '100%', '0%'],
+              }}
+              transition={{
+                duration: 5,
+                repeat: Infinity,
+                ease: 'linear',
+              }}
+            >
+              Raskoti
+            </motion.span>
+          </motion.h1>
+
+          <motion.p
+            className="text-2xl sm:text-3xl md:text-4xl text-gray-700 mb-6 font-light"
+            initial={{ opacity: 0, y: 50 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+          >
+            Social Activist & Photographer
+          </motion.p>
+
+          <motion.p
+            className="text-lg sm:text-xl text-gray-600 mb-12 max-w-2xl mx-auto font-medium"
+            initial={{ opacity: 0, y: 50 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+          >
+            Leading with purpose
+          </motion.p>
+
+          <motion.div
+            className="flex flex-wrap gap-6 justify-center mb-12"
+            initial={{ opacity: 0, y: 50 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+            transition={{ duration: 0.8, delay: 1 }}
+          >
+            <motion.div whileHover={{ scale: 1.05, y: -3 }} whileTap={{ scale: 0.95 }}>
+              <Link
+                to="/portfolio"
+                className="px-8 py-4 bg-gray-900 text-white rounded-full hover:bg-gray-800 transition-all shadow-xl hover:shadow-2xl inline-flex items-center gap-2"
+              >
+                View Work
+                <ArrowRight size={20} />
+              </Link>
+            </motion.div>
+            <motion.div whileHover={{ scale: 1.05, y: -3 }} whileTap={{ scale: 0.95 }}>
+              <Link
+                to="/contact"
+                className="px-8 py-4 border-2 border-gray-900 text-gray-900 rounded-full hover:bg-gray-900 hover:text-white transition-all shadow-lg hover:shadow-xl inline-flex items-center gap-2"
+              >
+                Get In Touch
+                <ArrowRight size={20} />
+              </Link>
+            </motion.div>
+          </motion.div>
+
+          <motion.div
+            className="flex gap-6 justify-center"
+            initial={{ opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+            transition={{ duration: 0.8, delay: 1.2 }}
+          >
+            {[
+              { icon: Facebook, href: 'https://facebook.com', label: 'Facebook' },
+              { icon: Instagram, href: 'https://instagram.com', label: 'Instagram' },
+              { icon: Linkedin, href: 'https://linkedin.com', label: 'LinkedIn' },
+              { icon: Mail, href: 'mailto:umeshraskoti14@gmail.com', label: 'Gmail' },
+            ].map((social, index) => (
+              <motion.a
+                key={index}
+                href={social.href.startsWith('http') ? social.href : undefined}
+                {...(social.href.startsWith('http') && {
+                  target: '_blank',
+                  rel: 'noopener noreferrer',
+                })}
+                {...(!social.href.startsWith('http') && {
+                  onClick: (e) => {
+                    e.preventDefault();
+                    window.location.href = social.href;
+                  },
+                })}
+                className="w-12 h-12 flex items-center justify-center rounded-full bg-white/80 backdrop-blur-sm text-gray-600 hover:text-gray-900 hover:bg-white transition-all shadow-lg hover:shadow-xl"
+                whileHover={{ scale: 1.2, rotate: 5, y: -3 }}
+                whileTap={{ scale: 0.9 }}
+                aria-label={social.label}
+                initial={{ opacity: 0, scale: 0 }}
+                animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
+                transition={{ duration: 0.5, delay: 1.4 + index * 0.1 }}
+              >
+                <social.icon size={20} />
+              </motion.a>
+            ))}
+          </motion.div>
+        </motion.div>
+      </div>
+
+      {/* Scroll Indicator */}
+      <motion.div
+        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+        initial={{ opacity: 0 }}
+        animate={isInView ? { opacity: 1, y: [0, 10, 0] } : { opacity: 0 }}
+        transition={{ y: { duration: 2, repeat: Infinity }, opacity: { delay: 1.5 } }}
+      >
+        <div className="flex flex-col items-center gap-2">
+          <span className="text-gray-500 text-sm">Scroll to explore</span>
+          <div className="w-6 h-10 border-2 border-gray-400 rounded-full flex justify-center">
+            <motion.div
+              className="w-1 h-2 bg-gray-600 rounded-full mt-2"
+              animate={{ y: [0, 12, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+            />
+          </div>
+        </div>
+      </motion.div>
+    </motion.section>
+  );
+}
