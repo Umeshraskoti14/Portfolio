@@ -1,12 +1,18 @@
 import { motion, useInView } from 'motion/react';
+<<<<<<< HEAD
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Camera, MapPin, Users, Award, BookOpen, Heart, Briefcase, GraduationCap, Trophy, Star, Target, Lightbulb, ChevronRight } from 'lucide-react';
+=======
+import { useRef, useState } from 'react';
+import { Camera, MapPin, Users, Award, BookOpen, Heart, Briefcase, GraduationCap, Trophy, Star, Target, Lightbulb } from 'lucide-react';
+>>>>>>> 3b038b3839575a4bb7132aafaefd7f9e98b8fa1c
 import profileImg from 'figma:asset/350375490d348981572bcc1ade79fdd9730425a2.png';
 import kmcImg from 'figma:asset/63b35ce0ab7380ad171c37c929c5ca1a23a179cf.png';
 import manoImg from 'figma:asset/a10c0aa055913800b480435f11f1cb49df00ce42.png';
 import ginImg from 'figma:asset/2c4f084427bf94aa4895b8089f02f525068246fe.png';
 import environmentCampaignImg from 'figma:asset/09eeab516a958f508c8c2e24a93d0b4f4601a754.png';
 import communityCampaignImg from 'figma:asset/9ec45cbbbc95fb0d1d25d569ed17865ca696fc58.png';
+<<<<<<< HEAD
 import {
   Dialog,
   DialogContent,
@@ -282,6 +288,130 @@ const communityImpactSections: Array<{
 
 const portfolioData: Record<string, PortfolioItem[]> = {
   "Community Impact": communityImpactSections.flatMap((s) => s.items),
+=======
+
+const portfolioData = {
+  'Community Impact': [
+    // Social Work Camps
+    {
+      title: 'Neighborhood Social Work Camp',
+      description: 'The camp was held in four municipalities of Bhaktapur District (Bhaktapur, Madhyapur Thimi, Suryabinayak, and Chagunarayan) where I served as Group Leader from January 2–6, 2022. Activities included Social Survey, Dialogue with Social Representatives, visiting Model Organizations, Community Engagement, and Closing Ceremony.',
+      image: 'https://images.unsplash.com/photo-1762158008280-3dcb1d1cbd99?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb21tdW5pdHklMjBkZXZlbG9wbWVudCUyMG1lZXRpbmclMjBwZW9wbGV8ZW58MXx8fHwxNzcxMTUxNzY2fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
+      tags: ['Group Leader', 'January 2-6, 2022', 'Bhaktapur District'],
+      icon: Users,
+    },
+    {
+      title: 'Rural Social Work Camp - Ghalegaun, Lamjung',
+      description: 'Served as Camp Coordinator leading rural community development, November 1-5, 2022. Program included Social Mapping, Social Survey on Gender Equality, Dialogue with Local Stakeholders, Community Engagement, Report Presentation, and Closing Ceremony.',
+      image: 'https://images.unsplash.com/photo-1765994898026-4fa84ade4a61?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx2aWxsYWdlJTIwY29tbXVuaXR5JTIwZGV2ZWxvcG1lbnQlMjBuZXBhbHxlbnwxfHx8fDE3NzExNTE5OTV8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
+      tags: ['Camp Coordinator', 'November 1-5, 2022', 'Gender Equality'],
+      icon: MapPin,
+    },
+    {
+      title: 'Urban Social Work Camp - Sauraha, Chitwan',
+      description: 'Head of Idea and Event Management, January 14-18, 2023. Activities included Social Interaction & PRA, Social Survey, School Session and Agency Visit, Panel Discussion, Presentation Competition, and Closing Ceremony.',
+      image: 'https://images.unsplash.com/photo-1758582171503-ce7b5c28bb4d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx2b2x1bnRlZXIlMjBjb29yZGluYXRpb24lMjBoZWxwaW5nJTIwY29tbXVuaXR5fGVufDF8fHx8MTc3MTE1MTc2OHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
+      tags: ['Event Management', 'January 14-18, 2023', 'Urban Development'],
+      icon: Users,
+    },
+    {
+      title: 'Ethnographic Research Camp - Kanyam, Ilam',
+      description: 'Head of Grievances Management, December 16-20, 2024. Conducted Ethnographic Field Research, Workshop & Mini Project, Local Area Exploration, and Closing Ceremony.',
+      image: 'https://images.unsplash.com/photo-1625140064748-5b52e6180047?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxpbGFtJTIwdGVhJTIwZ2FyZGVuJTIwbmVwYWx8ZW58MXx8fHwxNzcxNTc3Nzg0fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
+      tags: ['Ethnographic Research', 'December 16-20, 2024', 'Field Work'],
+      icon: BookOpen,
+    },
+    // Internships
+    {
+      title: 'Good Neighbors International Nepal',
+      description: 'Completed my internship at the Sponsorship and Child Protection Department of Good Neighbors International Nepal, where I primarily worked in data management. My responsibilities included maintaining beneficiary records, ensuring data accuracy, supporting documentation processes, and contributing to effective child protection and sponsorship reporting systems.',
+      image: ginImg,
+      tags: ['Data Management', 'Child Protection', 'April-October 2025'],
+      icon: Briefcase,
+      link: 'https://www.goodneighbors.org/',
+    },
+    {
+      title: 'Manoshastra Research and Counseling Center',
+      description: 'Interned at Manoshastra Research and Counseling Center, gaining hands-on experience in mental health support. Assisted with client history taking, relaxation therapy sessions, and psychosocial support, while developing skills in empathetic communication, case documentation, and client-centered care.',
+      image: manoImg,
+      tags: ['Mental Health', 'Counseling', 'May-July 2022'],
+      icon: Heart,
+    },
+    {
+      title: 'Kathmandu Metropolitan City',
+      description: 'Worked under the Smart City Project at Kathmandu Metropolitan City, where I was primarily responsible for volunteer recruitment and mobilization. Coordinated and facilitated meetings with Ward Chairpersons and key stakeholders to support project implementation and community engagement.',
+      image: kmcImg,
+      tags: ['Smart City Project', 'Volunteer Mobilization', 'Government'],
+      icon: Users,
+      link: 'https://kathmandu.gov.np/',
+    },
+    {
+      title: 'Metro Police Circle Thimi',
+      description: 'Completed an internship at Metro Police Circle Thimi, gaining practical exposure to community policing and public safety operations. Supported administrative documentation, observed case handling procedures, and engaged in coordination processes related to community security.',
+      image: 'https://images.unsplash.com/photo-1758511718377-e23d0652e531?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhZHZvY2FjeSUyMGNhbXBhaWduJTIwc29jaWFsJTIwanVzdGljZXxlbnwxfHx8fDE3NzExNTE5OTB8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
+      tags: ['Community Policing', 'Public Safety', 'Administrative Support'],
+      icon: Users,
+    },
+    // CSE Facilitation Programs
+    {
+      title: 'Comprehensive Sexuality Education (CSE) Program',
+      description: 'The session on Comprehensive Sexuality Education (CSE) and its key components was facilitated for students of Grades 11 and 12, along with their teachers, with a total of 32 participants in attendance.',
+      image: 'https://images.unsplash.com/photo-1758270704524-596810e891b5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzY2hvb2wlMjBjbGFzc3Jvb20lMjBlZHVjYXRpb24lMjBzdHVkZW50c3xlbnwxfHx8fDE3NzE1Nzc3ODd8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
+      tags: ['CSE Training', 'Grades 11-12', '32 Participants'],
+      icon: BookOpen,
+    },
+    {
+      title: 'Sexual and Reproductive Health and Rights (SRHR) Awareness',
+      description: 'A total of 47 students from Grades 8, 9, and 10 participated in comprehensive Sexual and Reproductive Health and Rights (SRHR) awareness sessions designed to enhance their knowledge, promote informed decision-making, and encourage responsible behavior.',
+      image: 'https://images.unsplash.com/photo-1740645580346-1cf378fea3a7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzZXh1YWxpdHklMjBlZHVjYXRpb24lMjBhd2FyZW5lc3MlMjBzZXNzaW9ufGVufDF8fHx8MTc3MTE1MTk5Mnww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
+      tags: ['SRHR Education', 'Grades 8-10', '47 Students'],
+      icon: Users,
+    },
+    {
+      title: 'Sexuality Education & Reproductive Health Awareness Session',
+      description: '28 grade 10 students engaged in sexuality education and reproductive health awareness sessions.',
+      image: 'https://images.unsplash.com/photo-1740645580346-1cf378fea3a7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzZXh1YWxpdHklMjBlZHVjYXRpb24lMjBhd2FyZW5lc3MlMjBzZXNzaW9ufGVufDF8fHx8MTc3MTE1MTk5Mnww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
+      tags: ['Sexuality Education', 'Grade 10', '28 Students'],
+      icon: BookOpen,
+    },
+    {
+      title: 'SRHR Youth Champion 2023',
+      description: 'As an SRHR Youth Champion since 2023, I have facilitated multiple awareness sessions reaching diverse groups of students and youth, promoting CSE, gender sensitivity, and rights-based approaches. My work focuses on breaking stigma, encouraging open dialogue, and strengthening young people\'s access to accurate and inclusive SRHR information.',
+      image: 'https://images.unsplash.com/photo-1766722906733-609eebf3b63a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjZXJ0aWZpY2F0ZSUyMGF3YXJkJTIwYWNoaWV2ZW1lbnR8ZW58MXx8fHwxNzcxNDc5NjE3fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
+      tags: ['Youth Champion', 'CSE Advocacy', 'Since 2023'],
+      icon: Award,
+    },
+    // New Community Programs
+    {
+      title: 'Capacity Building Training on Installation and Updating Procedure',
+      description: 'A capacity-building training on installation and updating procedures was facilitated in Kaligandaki Rural Municipality at two locations, namely Bhayekot and Dhuwakhola. The training was conducted for local farmers to enhance their technical knowledge and practical skills.',
+      image: 'https://images.unsplash.com/photo-1560264418-c4445382edbc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmYXJtZXIlMjB0cmFpbmluZyUyMG5lcGFsfGVufDF8fHx8MTc0MTY3NDAwMHww&ixlib=rb-4.1.0&q=80&w=1080',
+      tags: ['Capacity Building', 'Kaligandaki', 'Farmer Training'],
+      icon: Target,
+    },
+    {
+      title: 'Sailung Rural Municipality Community Program',
+      description: 'Community development program facilitated in Sailung Rural Municipality, focusing on empowering local communities through skill development and awareness initiatives.',
+      image: 'https://images.unsplash.com/photo-1593113598332-cd288d649433?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3YXRlciUyMGRpc3RyaWJ1dGlvbiUyMGNvbW11bml0eSUyMHNlcnZpY2V8ZW58MXx8fHwxNzcxNTg3Mjg5fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
+      tags: ['Sailung', 'Community Development', 'Rural Program'],
+      icon: Users,
+    },
+    {
+      title: 'Local Liquor Branding - Awareness Session',
+      description: 'A one-day awareness session on the local liquor branding process was conducted in Ramechhap Municipality in collaboration with Ward No. 2 and Ward No. 3. The session aimed to empower marginalized communities and promote systematic income generation through the branding and marketing of local products.',
+      image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxlbW90aW9uYWwlMjBpbnRlbGxpZ2VuY2UlMjB0cmFpbmluZyUyMHdvcmtzaG9wfGVufDF8fHx8MTc3MTU4NzI4OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
+      tags: ['Ramechhap', 'Branding', 'Income Generation'],
+      icon: Lightbulb,
+    },
+    {
+      title: 'Digital Addiction Awareness Session',
+      description: 'Facilitated an awareness program for parents at Manjushree Montessori Preschool, Nagarkot–6, focusing on the impacts of digital addiction in children and promoting responsible digital parenting.',
+      image: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwYXJlbnRzJTIwbWVldGluZyUyMHNjaG9vbHxlbnwxfHx8fDE3NDE2NzQwMDB8MA&ixlib=rb-4.1.0&q=80&w=1080',
+      tags: ['Digital Addiction', 'Parenting', 'Nagarkot'],
+      icon: BookOpen,
+    },
+  ],
+>>>>>>> 3b038b3839575a4bb7132aafaefd7f9e98b8fa1c
   'Strategic Leadership': [
     {
       title: 'Pre-Induction and LOM Officer Training',
@@ -472,14 +602,20 @@ export function PortfolioPage() {
   const ref = useRef(null);
   const isInView = useInView(ref, { amount: 0.1, once: false });
   const [activeCategory, setActiveCategory] = useState(categories[0]);
+<<<<<<< HEAD
   const [activeCollection, setActiveCollection] = useState<VisualCollectionItem | null>(null);
+=======
+>>>>>>> 3b038b3839575a4bb7132aafaefd7f9e98b8fa1c
 
   const getCurrentItems = () => {
     return portfolioData[activeCategory as keyof typeof portfolioData];
   };
 
+<<<<<<< HEAD
   const visibleItems = useMemo(() => getCurrentItems(), [activeCategory]);
 
+=======
+>>>>>>> 3b038b3839575a4bb7132aafaefd7f9e98b8fa1c
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white pt-28 pb-20">
       <motion.div 
@@ -547,6 +683,7 @@ export function PortfolioPage() {
           ))}
         </motion.div>
 
+<<<<<<< HEAD
         {activeCategory === "Community Impact" ? (
           <div className="relative">
             <div className="pointer-events-none absolute left-6 top-0 bottom-0 hidden md:block w-px bg-gradient-to-b from-purple-300 via-pink-300 to-transparent" />
@@ -794,6 +931,92 @@ export function PortfolioPage() {
           )}
         </DialogContent>
       </Dialog>
+=======
+        {/* Portfolio Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {getCurrentItems().map((item: any, index: number) => (
+            <motion.div
+              key={item.title}
+              initial={{ opacity: 0, y: 50 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+              transition={{ duration: 0.6, delay: 0.1 * index }}
+              whileHover={{ y: -10 }}
+              className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all"
+            >
+              {/* For Visual Storytelling - show first image from collection */}
+              {item.images ? (
+                <div className="relative h-64 overflow-hidden">
+                  <img
+                    src={item.images[0]}
+                    alt={item.title}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
+                  <div className="absolute top-4 right-4 bg-purple-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                    {item.images.length} Photos
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                  <div className="absolute bottom-4 left-4 right-4">
+                    <div className="flex flex-wrap gap-2">
+                      {item.tags.map((tag: string) => (
+                        <span
+                          key={tag}
+                          className="px-3 py-1 bg-white/90 text-gray-800 rounded-full text-xs font-medium"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div className="relative h-64 overflow-hidden">
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                  <div className="absolute bottom-4 left-4 right-4">
+                    <div className="flex flex-wrap gap-2">
+                      {item.tags.map((tag: string) => (
+                        <span
+                          key={tag}
+                          className="px-3 py-1 bg-white/90 text-gray-800 rounded-full text-xs font-medium"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              <div className="p-6">
+                <div className="flex items-start gap-3 mb-3">
+                  <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <item.icon size={20} className="text-white" />
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 group-hover:text-purple-600 transition-colors">
+                    {item.title}
+                  </h3>
+                </div>
+                <p className="text-gray-600 leading-relaxed">{item.description}</p>
+                {item.link && (
+                  <a
+                    href={item.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block mt-4 text-purple-600 hover:text-pink-600 font-semibold transition-colors"
+                  >
+                    Learn More →
+                  </a>
+                )}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </motion.div>
+>>>>>>> 3b038b3839575a4bb7132aafaefd7f9e98b8fa1c
     </div>
   );
 }

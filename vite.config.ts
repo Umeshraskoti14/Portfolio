@@ -1,12 +1,11 @@
 import { defineConfig } from 'vite'
-import path from 'path'
+import * as path from 'path' // Using * as path for better Vercel compatibility
 import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [
-    // The React and Tailwind plugins are both required for Make, even if
-    // Tailwind is not being actively used – do not remove them
+    // The React and Tailwind plugins are both required for Make
     react(),
     tailwindcss(),
   ],
@@ -14,6 +13,8 @@ export default defineConfig({
     alias: {
       // Alias @ to the src directory
       '@': path.resolve(__dirname, './src'),
+      // Maps Figma's AI paths to your actual GitHub assets folder
+      'figma:asset': path.resolve(__dirname, './src/assets'),
     },
   },
 
