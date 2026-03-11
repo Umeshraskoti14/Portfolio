@@ -129,26 +129,6 @@ export function HomePage() {
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
             transition={{ duration: 0.8, delay: 1 }}
           >
-<<<<<<< HEAD
-            <motion.div whileHover={{ scale: 1.05, y: -3 }} whileTap={{ scale: 0.95 }}>
-              <Link
-                to="/portfolio"
-                className="px-8 py-4 bg-gray-900 text-white rounded-full hover:bg-gray-800 transition-all shadow-xl hover:shadow-2xl inline-flex items-center gap-2"
-              >
-                View Work
-                <ArrowRight size={20} />
-              </Link>
-            </motion.div>
-            <motion.div whileHover={{ scale: 1.05, y: -3 }} whileTap={{ scale: 0.95 }}>
-              <Link
-                to="/contact"
-                className="px-8 py-4 border-2 border-gray-900 text-gray-900 rounded-full hover:bg-gray-900 hover:text-white transition-all shadow-lg hover:shadow-xl inline-flex items-center gap-2"
-              >
-                Get In Touch
-                <ArrowRight size={20} />
-              </Link>
-            </motion.div>
-=======
             <Link to="/portfolio">
               <motion.button
                 className="px-8 py-4 bg-gray-900 text-white rounded-full hover:bg-gray-800 transition-all shadow-xl hover:shadow-2xl flex items-center gap-2"
@@ -169,7 +149,6 @@ export function HomePage() {
                 <ArrowRight size={20} />
               </motion.button>
             </Link>
->>>>>>> 3b038b3839575a4bb7132aafaefd7f9e98b8fa1c
           </motion.div>
 
           <motion.div
