@@ -218,16 +218,12 @@ const portfolioData = {
       title: 'Himalayan Landscapes Collection',
       description: 'Capturing the majestic beauty of Nepal\'s mountain ranges and natural wonders. Professional landscape photography showcasing the Himalayas in their full glory.',
       images: [
-        { src: 'https://drive.google.com/uc?export=download&id=1tKutsJ7-Wn1vwkRvLIpq6MC4dUg5SULl', name: 'Himalaya Peak Sunrise' },
-        { src: 'https://drive.google.com/uc?export=download&id=1tPPp66hUkBi2UM80GiSpk6owQ7g4QgcU', name: 'Mountain Range Panorama' },
-        { src: 'https://drive.google.com/uc?export=download&id=1VIgMOzXQ1aISH9FmRgrwGXzEveFT1qxz', name: 'Clouds Over Ridge' },
-        { src: 'https://drive.google.com/uc?export=download&id=1599Z35KsIty2H2-T0fpDmgilgZOl0db3', name: 'Golden Summit' },
-        { src: 'https://drive.google.com/uc?export=download&id=1N7uz6yEi2ah7ZwQBhjB6UwzvPX2p1dFp', name: 'Snowcap Horizon' },
-        { src: 'https://drive.google.com/uc?export=download&id=1Ak0TjBsAqxsaiFLDxXp8iQWqUJCDPXnb', name: 'High Altitude Peaks' },
-        { src: 'https://drive.google.com/uc?export=download&id=10UCmRCsWTJhFTNBJSpatqSnIFGalfIKZ', name: 'Dawn Over Himalayas' },
-        { src: 'https://drive.google.com/uc?export=download&id=1CprpQ6Y6lntCzpk3x0EdsRltXcJnYaGs', name: 'Mountain Reflection' },
-        { src: 'https://drive.google.com/uc?export=download&id=1dueMRM8QHc5RBCOcZwbiRmTprVYNj2pW', name: 'Skyline Ridge' },
-        { src: 'https://drive.google.com/uc?export=download&id=1-H_X7VbzLSOoI177K1A7epTS1DXJpSxq', name: 'Sunlit Cliffs' },
+        { src: profileImg, name: 'Profile Portrait' },
+        { src: kmcImg, name: 'KMC Event' },
+        { src: manoImg, name: 'Counseling Session' },
+        { src: ginImg, name: 'Campaign Moment' },
+        { src: environmentCampaignImg, name: 'Environment Campaign' },
+        { src: communityCampaignImg, name: 'Community Campaign' },
       ],
       tags: ['Landscape', 'Mountains', 'Himalayas'],
       icon: Camera,
@@ -237,18 +233,12 @@ const portfolioData = {
       title: 'Rural Nepal Village Life',
       description: 'Documentary photography showcasing the authentic life in Nepal\'s countryside. Capturing the essence of rural communities and their daily lives.',
       images: [
-        { src: 'https://drive.google.com/uc?export=download&id=1mXqntCTtYjfSlmtVvg5mFpVXfLnEoYwE', name: 'Family Gathering' },
-        { src: 'https://drive.google.com/uc?export=download&id=1G0gvEYVfASuGIZI2CMs1e6OZtq1euLSm', name: 'Village Sunrise' },
-        { src: 'https://drive.google.com/uc?export=download&id=1kMGl1bKw5GBSy2Lc7F4tDPsCI4xo6xTd', name: 'Children Playing' },
-        { src: 'https://drive.google.com/uc?export=download&id=1ZRcJoEZkfta7l6tsxKvjRflll_pOMnlV', name: 'Field Workers' },
-        { src: 'https://drive.google.com/uc?export=download&id=1Gx_4NJA0C4CP_SBdeKTddcGQ9NQQATHA', name: 'Traditional Fence' },
-        { src: 'https://drive.google.com/uc?export=download&id=1bKmbG2n3TXqx__Y-FFTtD39d0c4ASCbv', name: 'Rural Path' },
-        { src: 'https://drive.google.com/uc?export=download&id=1pxGdgLKs5mVptkzo6o4BGhyBkAl38EcX', name: 'Village Lane' },
-        { src: 'https://drive.google.com/uc?export=download&id=1Dxw9Tgv474LEgfujNoyMY-ThQw4zHeut', name: 'Market Day' },
-        { src: 'https://drive.google.com/uc?export=download&id=1V1Ih65w9L6L3gFnMaqwI0uXzm4Y5DJLq', name: 'Smoke in the Distance' },
-        { src: 'https://drive.google.com/uc?export=download&id=1dsA_i0tffnAPPsy3Qc5fflQcq782SFMf', name: 'Sunset in Village' },
-        { src: 'https://drive.google.com/uc?export=download&id=1RaGHqYKQ7o1wc3C2NYj53YM5aF37_O1d', name: 'Evening Routine' },
-        { src: 'https://drive.google.com/uc?export=download&id=1U9EoDVljrnkroWB-GatguT5NQjVRN1jc', name: 'Water Pump Scene' },
+        { src: profileImg, name: 'Profile Portrait' },
+        { src: kmcImg, name: 'KMC Event' },
+        { src: manoImg, name: 'Counseling Session' },
+        { src: ginImg, name: 'Campaign Moment' },
+        { src: environmentCampaignImg, name: 'Environment Campaign' },
+        { src: communityCampaignImg, name: 'Community Campaign' },
       ],
       tags: ['Documentary', 'Village Life', 'Rural Nepal'],
       icon: Camera,
@@ -258,14 +248,12 @@ const portfolioData = {
       title: 'Sunrise Mountain Peaks',
       description: 'Golden hour photography of Nepal\'s iconic mountain landscapes. Capturing the magical moments when sunlight kisses the peaks.',
       images: [
-        { src: 'https://drive.google.com/uc?export=download&id=1zXICAbbxh-abDgObHcIo2sNYqdOAEsVe', name: 'Golden Ridge' },
-        { src: 'https://drive.google.com/uc?export=download&id=1gnjOdLUmZKwMhKbI0Vq-2TNiG1oB2iTl', name: 'First Light' },
-        { src: 'https://drive.google.com/uc?export=download&id=1eRlPKikXLg0i44KiWcTw5OcVJXz43BVJ', name: 'Morning Layers' },
-        { src: 'https://drive.google.com/uc?export=download&id=1a5qZ57MZCu8Uf3lAjasBGLJRYTk_jW89', name: 'Shadowed Peaks' },
-        { src: 'https://drive.google.com/uc?export=download&id=1wLugykTp6fCLU864k2VSpFeTkorjs6aS', name: 'Sunrise Glow' },
-        { src: 'https://drive.google.com/uc?export=download&id=1U4gp9O9AGOPqNOAaXvdkQMelJ2XTXGkd', name: 'Misty Mountains' },
-        { src: 'https://drive.google.com/uc?export=download&id=1JC4JND_Qe2IQISmG-WcbzDieS12DLRC3', name: 'Dawn Horizon' },
-        { src: 'https://drive.google.com/uc?export=download&id=1eRlPKikXLg0i44KiWcTw5OcVJXz43BVJ', name: 'Twin Peaks' },
+        { src: profileImg, name: 'Profile Portrait' },
+        { src: kmcImg, name: 'KMC Event' },
+        { src: manoImg, name: 'Counseling Session' },
+        { src: ginImg, name: 'Campaign Moment' },
+        { src: environmentCampaignImg, name: 'Environment Campaign' },
+        { src: communityCampaignImg, name: 'Community Campaign' },
       ],
       tags: ['Sunrise', 'Mountains', 'Golden Hour'],
       icon: Camera,
@@ -275,14 +263,12 @@ const portfolioData = {
       title: 'Forest & Nature',
       description: 'Exploring the lush forests and natural beauty of Nepal\'s diverse ecosystems. Environmental photography celebrating biodiversity.',
       images: [
-        { src: 'https://drive.google.com/uc?export=download&id=14aXIQ5w4AnRKLuvJQXWs6cNTDSFECkiX', name: 'Forest Path' },
-        { src: 'https://drive.google.com/uc?export=download&id=1l4UTdgzRmMFLOjWwQgXuE1PJP6a6Voxt', name: 'Misty Trees' },
-        { src: 'https://drive.google.com/uc?export=download&id=1rQB94q8-haep6o8i10HRSOqFCa3A504j', name: 'Sunlight Through Leaves' },
-        { src: 'https://drive.google.com/uc?export=download&id=1N5EwD_o2Ut5kKGuIXebiLi08HPZrax8V', name: 'River Bend' },
-        { src: 'https://drive.google.com/uc?export=download&id=1anunxPk3_DCy_5nN38YY-Dg_Pu22NEDb', name: 'Leafy Canopy' },
-        { src: 'https://drive.google.com/uc?export=download&id=1Z-YTrNtjaT6m0n45_H1-XZ_KefNKn6U_', name: 'Forest Floor' },
-        { src: 'https://drive.google.com/uc?export=download&id=1B3j7vkC89K7gNIJKMVGNL2l9ubY9lJII', name: 'Tree Trunk Detail' },
-        { src: 'https://drive.google.com/uc?export=download&id=1H91xBcpsLo6me9IWKU-7E5oD0-nR6oSJ', name: 'Hidden Trail' },
+        { src: profileImg, name: 'Profile Portrait' },
+        { src: kmcImg, name: 'KMC Event' },
+        { src: manoImg, name: 'Counseling Session' },
+        { src: ginImg, name: 'Campaign Moment' },
+        { src: environmentCampaignImg, name: 'Environment Campaign' },
+        { src: communityCampaignImg, name: 'Community Campaign' },
       ],
       tags: ['Nature', 'Forest', 'Environment'],
       icon: Camera,
@@ -292,16 +278,12 @@ const portfolioData = {
       title: 'Professional Photography',
       description: 'Professional event and portrait photography using Canon, Nikon, Sony, and Pentax systems. Capturing moments that matter.',
       images: [
-        { src: 'https://drive.google.com/uc?export=download&id=16nhd3lycNuRn6T6eQyATxdkr3c18Rvbl', name: 'Event Portrait' },
-        { src: 'https://drive.google.com/uc?export=download&id=13Y365zvOAyIHBnFuU_eHATRu_AXZ-lnk', name: 'Candid Smile' },
-        { src: 'https://drive.google.com/uc?export=download&id=1ovMBIpa5-99p111o7Cy6OAir3ZrViVVO', name: 'Studio Session' },
-        { src: 'https://drive.google.com/uc?export=download&id=17qS_9lqY8FNX_mxXilF_F1DDCSXxKwpH', name: 'Country Wedding' },
-        { src: 'https://drive.google.com/uc?export=download&id=15UoEHBkje9SqR3yjJ3CV5WCUUP6CWwfH', name: 'Portrait Lighting' },
-        { src: 'https://drive.google.com/uc?export=download&id=1H7qc4-zrPkVP7uPPqzTuUVz_G8sVOGbK', name: 'Artistic Composition' },
-        { src: 'https://drive.google.com/uc?export=download&id=1MC5vY5rGfn8qfNpVU3Qt3BnHNCnmObzU', name: 'Event Coverage' },
-        { src: 'https://drive.google.com/uc?export=download&id=1e-9lfO0EF74IQqdy-8AT4FPLlMZVhMPL', name: 'Spotlight Portrait' },
-        { src: 'https://drive.google.com/uc?export=download&id=1qA9Wg8v_BZ56N53Hq4idNSptqli_RRx7', name: 'Group Shot' },
-        { src: 'https://drive.google.com/uc?export=download&id=1KgTHmLtxVZqMu8nMvRXbxQ-NNN-FQKUW', name: 'Studio Lighting' },
+        { src: profileImg, name: 'Profile Portrait' },
+        { src: kmcImg, name: 'KMC Event' },
+        { src: manoImg, name: 'Counseling Session' },
+        { src: ginImg, name: 'Campaign Moment' },
+        { src: environmentCampaignImg, name: 'Environment Campaign' },
+        { src: communityCampaignImg, name: 'Community Campaign' },
       ],
       tags: ['Professional', 'Events', 'Portraits'],
       icon: Camera,
@@ -311,12 +293,12 @@ const portfolioData = {
       title: 'Cultural Heritage',
       description: 'Architectural photography of Nepal\'s temples and cultural landmarks. Preserving heritage through imagery.',
       images: [
-        { src: 'https://drive.google.com/uc?export=download&id=1s2EIPxQHSQxH6XWBbxgZkW_MIbIrHvZI', name: 'Temple Facade' },
-        { src: 'https://drive.google.com/uc?export=download&id=1hRvyS-VGUaAYCTsHwUmpRCoKOtpdBW_i', name: 'Carved Detail' },
-        { src: 'https://drive.google.com/uc?export=download&id=1fpRGRVl9fFkUMEt1GZ-UY3z01ybFNXBg', name: 'Stairway to Shrine' },
-        { src: 'https://drive.google.com/uc?export=download&id=1DaPR7kc_JVBrLqE53ROAeXe3mpxDatdn', name: 'Courtyard View' },
-        { src: 'https://drive.google.com/uc?export=download&id=1JpU_DFZcZJwpTB6Ul4lCjVPM_60oTTA2', name: 'Festival Decorations' },
-        { src: 'https://drive.google.com/uc?export=download&id=1gFwLi4HUHP0I5djERmAf2F-JcG0FD5f9', name: 'Architectural Arches' },
+        { src: profileImg, name: 'Profile Portrait' },
+        { src: kmcImg, name: 'KMC Event' },
+        { src: manoImg, name: 'Counseling Session' },
+        { src: ginImg, name: 'Campaign Moment' },
+        { src: environmentCampaignImg, name: 'Environment Campaign' },
+        { src: communityCampaignImg, name: 'Community Campaign' },
       ],
       tags: ['Heritage', 'Architecture', 'Culture'],
       icon: Camera,
@@ -353,12 +335,20 @@ function GalleryModal({ item, onClose }: { item: any; onClose: () => void }) {
 
   const current = imgs[idx];
 
+  const fallbackImage = communityCampaignImg;
+
   return (
     <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50">
       <div className="relative max-w-3xl w-full">
         <img
           src={current.src}
           alt={current.name ?? item.title}
+          onError={(e) => {
+            const target = e.currentTarget as HTMLImageElement;
+            if (target.src !== fallbackImage) {
+              target.src = fallbackImage;
+            }
+          }}
           className="w-full h-auto rounded-lg"
         />
         <div className="absolute bottom-4 left-4 right-4 text-white text-sm text-center">
@@ -399,6 +389,7 @@ function PortfolioCard({ item, index, isInView, onClick }: {
   const cover = (item.images || [item.image])[coverIdx];
   const coverSrc = typeof cover === 'string' ? cover : cover.src;
   const coverName = typeof cover === 'string' ? undefined : cover.name;
+  const fallbackCover = communityCampaignImg;
 
   return (
     <motion.div
@@ -413,6 +404,12 @@ function PortfolioCard({ item, index, isInView, onClick }: {
         <img
           src={coverSrc}
           alt={item.title}
+          onError={(e) => {
+            const target = e.currentTarget as HTMLImageElement;
+            if (target.src !== fallbackCover) {
+              target.src = fallbackCover;
+            }
+          }}
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
         />
         {item.images && (
