@@ -464,18 +464,20 @@ function PortfolioCard({ item, index, isInView, onClick }: {
   );
 }
 
-const categories = Object.keys(portfolioData);
+type PortfolioData = typeof portfolioData;
+
+const categories = Object.keys(portfolioData) as Array<keyof PortfolioData>;
 
 export function PortfolioPage() {
   const ref = useRef(null);
   const isInView = useInView(ref, { amount: 0.1, once: false });
-  const [activeCategory, setActiveCategory] = useState(categories[0]);
+  const [activeCategory, setActiveCategory] = useState<keyof PortfolioData>(categories[0]);
   const [activeSubcategory, setActiveSubcategory] = useState<string | null>(null);
   const [selectedItem, setSelectedItem] = useState<any>(null);
 
   // whenever category changes, reset subcategory if applicable
   useEffect(() => {
-    const data = portfolioData[activeCategory as keyof typeof portfolioData];
+    const data = portfolioData[activeCategory];
     if (data && !Array.isArray(data)) {
       const keys = Object.keys(data);
       setActiveSubcategory(keys[0] || null);
@@ -484,8 +486,11 @@ export function PortfolioPage() {
     }
   }, [activeCategory]);
 
+  const activeCategoryData = portfolioData[activeCategory];
+  const subcategories = !Array.isArray(activeCategoryData) ? Object.keys(activeCategoryData) : [];
+
   const getCurrentItems = () => {
-    const data = portfolioData[activeCategory as keyof typeof portfolioData];
+    const data = activeCategoryData;
     if (Array.isArray(data)) return data;
     if (activeSubcategory) return (data as any)[activeSubcategory] || [];
     return [];
@@ -566,7 +571,7 @@ export function PortfolioPage() {
             transition={{ duration: 0.6, delay: 0.7 }}
             className="flex flex-col md:flex-row justify-center gap-4 mb-12"
           >
-            {Object.keys(portfolioData[activeCategory] as any).map((sub) => (
+            {subcategories.map((sub) => (
               <motion.button
                 key={sub}
                 onClick={() => setActiveSubcategory(sub)}
