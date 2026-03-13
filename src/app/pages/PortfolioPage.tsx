@@ -385,6 +385,21 @@ function GalleryModal({ item, startIndex = 0, onClose }: { item: any; startIndex
 
   const fallbackImage = communityCampaignImg;
 
+  // Preload all images in the collection for faster navigation
+  useEffect(() => {
+    const preloads: HTMLImageElement[] = [];
+    imgs.forEach((img) => {
+      const preload = new Image();
+      preload.src = img.src;
+      preloads.push(preload);
+    });
+    return () => {
+      preloads.forEach((img) => {
+        img.src = '';
+      });
+    };
+  }, [imgs]);
+
   return (
     <motion.div
       className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4"
@@ -406,6 +421,8 @@ function GalleryModal({ item, startIndex = 0, onClose }: { item: any; startIndex
           key={current.src}
           src={current.src}
           alt={current.name ?? item.title}
+          loading="eager"
+          decoding="async"
           onClick={onClose}
           onError={(e) => {
             const target = e.currentTarget as HTMLImageElement;
@@ -480,6 +497,8 @@ function PortfolioCard({ item, index, isInView, onClick }: {
         <img
           src={coverSrc}
           alt={item.title}
+          loading="lazy"
+          decoding="async"
           onError={(e) => {
             const target = e.currentTarget as HTMLImageElement;
             if (target.src !== fallbackCover) {
