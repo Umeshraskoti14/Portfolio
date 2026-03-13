@@ -387,7 +387,7 @@ function GalleryModal({ item, startIndex = 0, onClose }: { item: any; startIndex
 
   return (
     <motion.div
-      className="fixed inset-0 bg-black/80 flex items-center justify-center z-50"
+      className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -395,7 +395,7 @@ function GalleryModal({ item, startIndex = 0, onClose }: { item: any; startIndex
       onClick={onClose}
     >
       <motion.div
-        className="relative max-w-3xl w-full"
+        className="relative max-w-[95vw] max-h-[90vh] w-full overflow-hidden"
         initial={{ scale: 0.95, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.95, opacity: 0 }}
@@ -413,7 +413,7 @@ function GalleryModal({ item, startIndex = 0, onClose }: { item: any; startIndex
               target.src = fallbackImage;
             }
           }}
-          className="w-full max-h-[80vh] object-contain rounded-lg"
+          className="w-full max-h-[85vh] object-contain rounded-lg"
           initial={{ opacity: 0, scale: 0.98 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.2 }}
