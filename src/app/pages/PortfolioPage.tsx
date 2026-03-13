@@ -365,8 +365,13 @@ function useSlideshow(images: Array<string | { src: string; name?: string }>) {
 }
 
 // modal component to show gallery when an item is clicked
-function GalleryModal({ item, onClose }: { item: any; onClose: () => void }) {
-  const [idx, setIdx] = useState(0);
+function GalleryModal({ item, startIndex = 0, onClose }: { item: any; startIndex?: number; onClose: () => void }) {
+  const [idx, setIdx] = useState(startIndex);
+
+  useEffect(() => {
+    setIdx(startIndex);
+  }, [item, startIndex]);
+
   if (!item) return null;
 
   const imgs: Array<{ src: string; name?: string }> = (item.images || [item.image]).map(
@@ -387,6 +392,7 @@ function GalleryModal({ item, onClose }: { item: any; onClose: () => void }) {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.2 }}
+      onClick={onClose}
     >
       <motion.div
         className="relative max-w-3xl w-full"
@@ -394,18 +400,20 @@ function GalleryModal({ item, onClose }: { item: any; onClose: () => void }) {
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.95, opacity: 0 }}
         transition={{ duration: 0.2 }}
+        onClick={(e) => e.stopPropagation()}
       >
         <motion.img
           key={current.src}
           src={current.src}
           alt={current.name ?? item.title}
+          onClick={onClose}
           onError={(e) => {
             const target = e.currentTarget as HTMLImageElement;
             if (target.src !== fallbackImage) {
               target.src = fallbackImage;
             }
           }}
-          className="w-full h-auto rounded-lg"
+          className="w-full max-h-[80vh] object-contain rounded-lg"
           initial={{ opacity: 0, scale: 0.98 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.2 }}
@@ -414,19 +422,28 @@ function GalleryModal({ item, onClose }: { item: any; onClose: () => void }) {
           {current.name ?? item.title}
         </div>
         <button
-          onClick={prev}
+          onClick={(e) => {
+            e.stopPropagation();
+            prev();
+          }}
           className="absolute left-2 top-1/2 -translate-y-1/2 text-white text-3xl"
         >
           ‹
         </button>
         <button
-          onClick={next}
+          onClick={(e) => {
+            e.stopPropagation();
+            next();
+          }}
           className="absolute right-2 top-1/2 -translate-y-1/2 text-white text-3xl"
         >
           ›
         </button>
         <button
-          onClick={onClose}
+          onClick={(e) => {
+            e.stopPropagation();
+            onClose();
+          }}
           className="absolute top-2 right-2 text-white text-2xl"
         >
           ×
@@ -441,7 +458,7 @@ function PortfolioCard({ item, index, isInView, onClick }: {
   item: any;
   index: number;
   isInView: boolean;
-  onClick: () => void;
+  onClick: (startIndex: number) => void;
 }) {
   // determine which image to show; cycle if there are multiple
   const coverIdx = useSlideshow(item.images || [item.image]);
@@ -456,7 +473,7 @@ function PortfolioCard({ item, index, isInView, onClick }: {
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
       transition={{ duration: 0.6, delay: 0.1 * index }}
       whileHover={{ y: -10 }}
-      onClick={onClick}
+      onClick={() => onClick(coverIdx)}
       className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all cursor-pointer"
     >
       <div className="relative h-64 overflow-hidden">
@@ -529,7 +546,7 @@ export function PortfolioPage() {
   const isInView = useInView(ref, { amount: 0.1, once: false });
   const [activeCategory, setActiveCategory] = useState<keyof PortfolioData>(categories[0]);
   const [activeSubcategory, setActiveSubcategory] = useState<string | null>(null);
-  const [selectedItem, setSelectedItem] = useState<any>(null);
+  const [selectedItem, setSelectedItem] = useState<{ item: any; startIndex: number } | null>(null);
 
   // whenever category changes, reset subcategory if applicable
   useEffect(() => {
@@ -653,7 +670,7 @@ export function PortfolioPage() {
               item={item}
               index={index}
               isInView={isInView}
-              onClick={() => setSelectedItem(item)}
+              onClick={(startIndex) => setSelectedItem({ item, startIndex })}
             />
           ))}
         </div>
@@ -661,7 +678,11 @@ export function PortfolioPage() {
         {/* gallery modal */}
         <AnimatePresence>
           {selectedItem && (
-            <GalleryModal item={selectedItem} onClose={() => setSelectedItem(null)} />
+            <GalleryModal
+              item={selectedItem.item}
+              startIndex={selectedItem.startIndex}
+              onClose={() => setSelectedItem(null)}
+            />
           )}
         </AnimatePresence>
       </motion.div>
