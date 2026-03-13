@@ -187,14 +187,25 @@ export function AboutPage() {
           <p className="text-lg mb-8 opacity-90">
             Passionate about making a difference through social work, advocacy, and visual storytelling.
           </p>
-          <motion.a
-            href="/contact"
-            className="inline-block px-8 py-4 bg-white text-purple-600 rounded-full font-semibold hover:bg-gray-100 transition-colors shadow-xl"
-            whileHover={{ scale: 1.05, y: -3 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            Start a Conversation
-          </motion.a>
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
+            <motion.a
+              href="/contact"
+              className="inline-block px-8 py-4 bg-white text-purple-600 rounded-full font-semibold hover:bg-gray-100 transition-colors shadow-xl"
+              whileHover={{ scale: 1.05, y: -3 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Start a Conversation
+            </motion.a>
+            <motion.a
+              href="/Umesh_Raskoti_CV.pdf"
+              download
+              className="inline-block px-8 py-4 bg-white/20 text-white rounded-full font-semibold hover:bg-white/30 transition-colors shadow-xl"
+              whileHover={{ scale: 1.05, y: -3 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Download CV
+            </motion.a>
+          </div>
         </motion.div>
       </motion.div>
     </div>
