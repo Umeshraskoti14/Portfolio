@@ -1,4 +1,4 @@
-import { motion, useInView } from 'motion/react';
+import { AnimatePresence, motion, useInView } from 'motion/react';
 import { useRef, useState, useEffect } from 'react';
 import { Camera, MapPin, Users, Award, BookOpen, Heart, Briefcase, GraduationCap, Trophy, Star, Target, Lightbulb } from 'lucide-react';
 import profileImg from 'figma:asset/350375490d348981572bcc1ade79fdd9730425a2.png';
@@ -76,35 +76,35 @@ const portfolioData = {
       {
         title: 'Eight‑Day CSE Training – Life Project',
         description: 'Facilitated an eight-day training session on Comprehensive Sexuality Education (CSE) and its key components for four youth participants of the Life Project. The session aimed to strengthen their knowledge and capacity on CSE, enabling them to better understand and promote its components.',
-        image: 'https://images.unsplash.com/photo-1758270704524-596810e891b5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzY2hvb2wlMjBjbGFzc3Jvb20lMjBlZHVjYXRpb24lMjBzdHVkZW50c3xlbnwxfHx8fDE3NzE1Nzc3ODd8MA&ixlib=rb-4.1.0&q=80&w=1080',
+        image: '/assets/community/Capacity Building and Awareness/Training on CSE and Its Components.jpg',
         tags: ['CSE Training', 'Life Project', 'Youth Capacity'],
         icon: BookOpen,
       },
       {
         title: 'Comprehensive Sexuality Education (CSE) Program',
         description: 'The session on Comprehensive Sexuality Education (CSE) and its key components was facilitated for students of Grades 11 and 12, along with their teachers, with a total of 32 participants in attendance.',
-        image: 'https://images.unsplash.com/photo-1758270704524-596810e891b5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzY2hvb2wlMjBjbGFzc3Jvb20lMjBlZHVjYXRpb24lMjBzdHVkZW50c3xlbnwxfHx8fDE3NzE1Nzc3ODd8MA&ixlib=rb-4.1.0&q=80&w=1080',
+        image: '/assets/community/Capacity Building and Awareness/SRHR Youth Champion.jpg',
         tags: ['CSE Training', 'Grades 11-12', '32 Participants'],
         icon: BookOpen,
       },
       {
         title: 'Sexual and Reproductive Health and Rights (SRHR) Awareness',
         description: 'A total of 47 students from Grades 8, 9, and 10 participated in comprehensive Sexual and Reproductive Health and Rights (SRHR) awareness sessions designed to enhance their knowledge, promote informed decision-making, and encourage responsible behavior.',
-        image: 'https://images.unsplash.com/photo-1740645580346-1cf378fea3a7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzZXh1YWxpdHklMjBlZHVjYXRpb24lMjBhd2FyZW5lc3MlMjBzZXNzaW9ufGVufDF8fHx8MTc3MTE1MTk5Mnww&ixlib=rb-4.1.0&q=80&w=1080',
+        image: '/assets/community/Capacity Building and Awareness/JCI Bhaktapur Junior.JPG',
         tags: ['SRHR Education', 'Grades 8-10', '47 Students'],
         icon: Users,
       },
       {
         title: 'Sexuality Education & Reproductive Health Awareness Session',
         description: '28 grade 10 students engaged in sexuality education and reproductive health awareness sessions.',
-        image: 'https://images.unsplash.com/photo-1740645580346-1cf378fea3a7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzZXh1YWxpdHklMjBlZHVjYXRpb24lMjBhd2FyZW5lc3MlMjBzZXNzaW9ufGVufDF8fHx8MTc3MTE1MTk5Mnww&ixlib=rb-4.1.0&q=80&w=1080',
+        image: '/assets/community/Capacity Building and Awareness/Gundu Secondary.jpg',
         tags: ['Sexuality Education', 'Grade 10', '28 Students'],
         icon: BookOpen,
       },
       {
         title: 'SRHR Youth Champion 2023',
         description: 'As an SRHR Youth Champion since 2023, I have facilitated multiple awareness sessions reaching diverse groups of students and youth, promoting CSE, gender sensitivity, and rights-based approaches. My work focuses on breaking stigma, encouraging open dialogue, and strengthening young people\'s access to accurate and inclusive SRHR information.',
-        image: 'https://images.unsplash.com/photo-1766722906733-609eebf3b63a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjZXJ0aWZpY2F0ZSUyMGF3YXJkJTIwYWNoaWV2ZW1lbnR8ZW58MXx8fHwxNzcxNDc5NjE3fDA&ixlib=rb-4.1.0&q=80&w=1080',
+        image: '/assets/community/Capacity Building and Awareness/Sexuality Education & Reproductive Health Awareness Session.jpg',
         tags: ['Youth Champion', 'CSE Advocacy', 'Since 2023'],
         icon: Award,
       },
@@ -144,70 +144,70 @@ const portfolioData = {
     {
       title: 'Pre-Induction and LOM Officer Training',
       description: 'The training is conducted annually, specifically for Presidents and Secretaries General, to provide comprehensive insights into the roles and responsibilities of the presidential tenure. The session was facilitated by Rashmi Shilpakar, National Vice President 2019, at CBR, in collaboration with JCI Bhaktapur and JCI Bhaktapur Lady.',
-      image: 'https://images.unsplash.com/photo-1591115765373-5207764f72e7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsZWFkZXJzaGlwJTIwdHJhaW5pbmclMjBzZXNzaW9ufGVufDF8fHx8MTc3MTU4NzI4N3ww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
+      image: '/assets/leadership/Pre Induction.jpg',
       tags: ['Leadership Training', 'Presidential Role', 'JCI'],
       icon: Award,
     },
     {
       title: 'President Meet - Historic First',
       description: 'The President\'s Meet marked a historic first in the history of Nepal Junior Jaycees. The event was hosted by JCI Dhulabari Junior at Kanyam, Ilam. All chapter presidents were invited and actively participated in the two-day program, which provided an opportunity for comprehensive training, peer-to-peer learning, and the sharing of leadership experiences.',
-      image: 'https://images.unsplash.com/photo-1625140064748-5b52e6180047?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxpbGFtJTIwdGVhJTIwZ2FyZGVuJTIwbmVwYWx8ZW58MXx8fHwxNzcxNTc3Nzg0fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
+      image: '/assets/leadership/President Meet.jpg',
       tags: ['Historic First', 'Presidents Meeting', 'Kanyam, Ilam'],
       icon: Trophy,
     },
     {
       title: 'JCI Nepal Area C Conference 2023',
       description: 'The 2023 JCI Nepal Area "C" Conference was held on April 28–29, 2023 at Hotel View Bhrikuti in Godawari, Lalitpur District. The conference brought together members and leaders from multiple chapters within Area C. The primary objective was to strengthen leadership capabilities, foster collaboration, and enhance strategic vision among JCI members, aligned with the national theme "As One: 1 Family, 1 Team, 1 Goal."',
-      image: 'https://images.unsplash.com/photo-1511578314322-379afb476865?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb25mZXJlbmNlJTIwbWVldGluZyUyMGxlYWRlcnNoaXB8ZW58MXx8fHwxNzcxNTg3Mjg4fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
+      image: '/assets/leadership/Area C conference.jpg',
       tags: ['Conference', 'April 28-29, 2023', 'Area C'],
       icon: Users,
     },
     {
       title: '50th JCI Nepal National Convention',
       description: 'The 50th National Convention of JCI Nepal was held from December 15–18, 2023 at the Butwal International Convention Center (BICC) in Butwal. This landmark event marked a significant milestone in the organization\'s history, bringing together members from across the country under the national theme "As One: 1 Family, 1 Team, 1 Goal." The four-day convention featured comprehensive leadership forums, strategic sessions, capacity-building workshops, panel discussions, and networking opportunities.',
-      image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxuYXRpb25hbCUyMGNvbnZlbnRpb24lMjBjZWxlYnJhdGlvbnxlbnwxfHx8fDE3NzE1ODcyODh8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
+      image: '/assets/leadership/50th Convention.jpg',
       tags: ['50th Convention', 'December 15-18, 2023', 'National Event'],
       icon: Star,
     },
     {
       title: 'Water Distribution - Gaijatra Festival',
       description: 'The program was organized by JCI Bhaktapur Junior with the support of JCI Bhaktapur and JCI Bhaktapur Lady during the cultural festival of Gaijatra in Bhaktapur. The primary objective was to provide safe drinking water to visitors, particularly those who were new to Bhaktapur and participating in the festival. The initiative aimed to promote public health, ensure visitor comfort, and demonstrate youth-led community service.',
-      image: 'https://images.unsplash.com/photo-1593113598332-cd288d649433?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3YXRlciUyMGRpc3RyaWJ1dGlvbiUyMGNvbW11bml0eSUyMHNlcnZpY2V8ZW58MXx8fHwxNzcxNTg3Mjg5fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
+      image: '/assets/leadership/Water Distribution.jpg',
       tags: ['Community Service', 'Gaijatra Festival', 'Bhaktapur'],
       icon: Heart,
     },
     {
       title: 'Developing Emotional Intelligence',
       description: 'The program was organized in collaboration with multiple chapters within Area C and was primarily led by JCI Bhaktapur Junior. The session was facilitated by psychologist Prava Prajapati. The main objective was to enhance participants\' understanding of emotions and develop emotional intelligence. The session focused on self-awareness, emotional regulation, empathy, and effective interpersonal communication.',
-      image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxlbW90aW9uYWwlMjBpbnRlbGxpZ2VuY2UlMjB0cmFpbmluZyUyMHdvcmtzaG9wfGVufDF8fHx8MTc3MTU4NzI4OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
+      image: '/assets/leadership/Developing Emotional Intelligence.jpg',
       tags: ['Emotional Intelligence', 'Area C Collaboration', 'Facilitated by Psychologist'],
       icon: Heart,
     },
     {
       title: 'International Vice President Visit',
       description: 'Each year, JCI assigns a Vice President to conduct official chapter visits to monitor progress, provide guidance, and strengthen organizational alignment. During my leadership tenure, our chapter had the distinct opportunity to welcome the International Vice President, marking a significant milestone for the organization. The visit provided valuable insights, strategic feedback, and motivation to enhance chapter performance and leadership effectiveness.',
-      image: 'https://images.unsplash.com/photo-1557426272-fc759fdf7a8d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxpbnRlcm5hdGlvbmFsJTIwbGVhZGVyc2hpcCUyMG1lZXRpbmd8ZW58MXx8fHwxNzcxNTg3MjkwfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
+      image: '/assets/leadership/Welcome International Assign Vice President.jpg',
       tags: ['International Level', 'JCI Vice President', 'Chapter Visit'],
       icon: Trophy,
     },
     {
       title: '12th National Junior Jaycees Leaders\' Academy 2023',
       description: 'The 12th National Junior Jaycees Leaders\' Academy 2023 was hosted by Dharan Junior Jaycees under the patronage of Dharan Jaycees from November 8–10, 2023. The three-day academy focused on strengthening leadership capacity, teamwork, and communication skills among Junior Jaycees across Nepal. The program featured motivational sessions, leadership trainings, team-building activities, inter-area engagement, and a national oratory competition.',
-      image: 'https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsZWFkZXJzaGlwJTIwYWNhZGVteSUyMHRyYWluaW5nfGVufDF8fHx8MTc3MTU4NzI5MHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
+      image: '/assets/leadership/Leaders Academy.jpg',
       tags: ['Leaders Academy', 'November 8-10, 2023', 'National Event'],
       icon: GraduationCap,
     },
     {
       title: '41st Installation and Award Distribution Ceremony',
       description: 'The 41st Installation and Award Distribution Ceremony was organized as a formal leadership transition and recognition event. The Chief Guest was Santosh Pariyar, Member of Parliament. The Special Guests included Bikash Manandhar, National President of JCI Nepal, and Rajaram Gautam, National Vice President. The ceremony was held at Sweet Home and marked the formal installation of new leadership along with the recognition and award distribution.',
-      image: 'https://images.unsplash.com/photo-1767561070418-cbb62b952a6d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsZWFkZXJzaGlwJTIwYXdhcmQlMjBjZXJlbW9ueSUyMGNlbGVicmF0aW9ufGVufDF8fHx8MTc3MTE1MTc2OHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
+      image: '/assets/leadership/Installation and Award distribution Ceremony.jpg',
       tags: ['41st Installation', 'Award Ceremony', 'Leadership Transition'],
       icon: Award,
     },
     {
       title: 'Area C Multi-Chapter Training',
       description: 'The training was hosted by JCI Banepa Junior in collaboration with Area C chapters, including JCI Bhaktapur Junior. Centered on the theme "Leadership Within You," the program emphasized self-awareness, personal accountability, and values-based leadership as foundations for effective organizational impact. The training was facilitated by the National Past President of JCI Nepal. The Mayor of Banepa Municipality attended as the Chief Guest.',
-      image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsZWFkZXJzaGlwJTIwdHJhaW5pbmclMjBncm91cHxlbnwxfHx8fDE3NzE1ODcyOTF8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
+      image: '/assets/leadership/Multichapter.jpg',
       tags: ['Multi-Chapter', 'Area C', 'Leadership Within You'],
       icon: Users,
     },
@@ -381,9 +381,22 @@ function GalleryModal({ item, onClose }: { item: any; onClose: () => void }) {
   const fallbackImage = communityCampaignImg;
 
   return (
-    <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50">
-      <div className="relative max-w-3xl w-full">
-        <img
+    <motion.div
+      className="fixed inset-0 bg-black/80 flex items-center justify-center z-50"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.2 }}
+    >
+      <motion.div
+        className="relative max-w-3xl w-full"
+        initial={{ scale: 0.95, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.95, opacity: 0 }}
+        transition={{ duration: 0.2 }}
+      >
+        <motion.img
+          key={current.src}
           src={current.src}
           alt={current.name ?? item.title}
           onError={(e) => {
@@ -393,6 +406,9 @@ function GalleryModal({ item, onClose }: { item: any; onClose: () => void }) {
             }
           }}
           className="w-full h-auto rounded-lg"
+          initial={{ opacity: 0, scale: 0.98 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.2 }}
         />
         <div className="absolute bottom-4 left-4 right-4 text-white text-sm text-center">
           {current.name ?? item.title}
@@ -415,8 +431,8 @@ function GalleryModal({ item, onClose }: { item: any; onClose: () => void }) {
         >
           ×
         </button>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }
 
@@ -643,9 +659,11 @@ export function PortfolioPage() {
         </div>
 
         {/* gallery modal */}
-        {selectedItem && (
-          <GalleryModal item={selectedItem} onClose={() => setSelectedItem(null)} />
-        )}
+        <AnimatePresence>
+          {selectedItem && (
+            <GalleryModal item={selectedItem} onClose={() => setSelectedItem(null)} />
+          )}
+        </AnimatePresence>
       </motion.div>
     </div>
   );
