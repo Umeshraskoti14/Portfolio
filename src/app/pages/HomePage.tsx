@@ -2,7 +2,7 @@ import { motion, useInView } from 'motion/react';
 import { ArrowRight, Facebook, Instagram, Linkedin, Mail } from 'lucide-react';
 import { useRef } from 'react';
 import { About } from '../components/About';
-import { Portfolio } from '../components/Portfolio';
+import { PortfolioPage } from './PortfolioPage';
 import { Skills } from '../components/Skills';
 import { Contact } from '../components/Contact';
 
@@ -215,7 +215,7 @@ export function HomePage() {
       </motion.section>
 
       <About />
-      <Portfolio />
+      <PortfolioPage />
       <Skills />
       <Contact />
     </div>

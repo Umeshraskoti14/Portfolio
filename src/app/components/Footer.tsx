@@ -35,19 +35,18 @@ export function Footer() {
             className="flex gap-6"
           >
             {[
-              { name: 'Home', path: '/' },
-              { name: 'About', path: '/about' },
-              { name: 'Portfolio', path: '/portfolio' },
-              { name: 'Contact', path: '/contact' }
+              { name: 'Home', href: '#home' },
+              { name: 'About', href: '#about' },
+              { name: 'Portfolio', href: '#portfolio' },
+              { name: 'Contact', href: '#contact' }
             ].map((item) => (
-              <Link key={item.name} to={item.path}>
+              <a key={item.name} href={item.href} className="text-gray-400 hover:text-white transition-colors cursor-pointer">
                 <motion.div
-                  className="text-gray-400 hover:text-white transition-colors cursor-pointer"
                   whileHover={{ y: -2 }}
                 >
                   {item.name}
                 </motion.div>
-              </Link>
+              </a>
             ))}
           </motion.div>
 
