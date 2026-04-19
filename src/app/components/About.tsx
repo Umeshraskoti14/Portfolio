@@ -1,6 +1,7 @@
 import { motion, useInView } from 'motion/react';
 import { useRef } from 'react';
 import { Code2, Palette, Rocket, Users } from 'lucide-react';
+import profilePic from '../../assets/Umesh.png';
 
 const features = [
   {
@@ -55,8 +56,8 @@ export function About() {
             className="relative h-96 rounded-2xl overflow-hidden shadow-2xl"
           >
             <img
-              src="/assets/community/Capacity Building and Awareness/Digital Addicition.jpg"
-              alt="Community Service"
+              src={profilePic}
+              alt="Umesh Raskoti"
               className="w-full h-full object-cover"
               onError={(e) => {
                 const img = e.target as HTMLImageElement;
