@@ -17,6 +17,7 @@ const portfolioData = {
     'Professional Internships': [
       { title: 'Child Protection & Data Management', description: 'Completed my internship at the Sponsorship and Child Protection Department of Good Neighbors International Nepal, where I primarily worked in data management. My responsibilities included maintaining beneficiary records, ensuring data accuracy, supporting documentation processes, and contributing to effective child protection and sponsorship reporting systems.', image: ginImg, tags: ['Data Management', 'Child Protection', 'April-October 2025'], icon: Briefcase, link: 'https://www.goodneighbors.org/' },
       { title: 'Mental Health & Counseling Support', description: 'Interned at Manoshastra Research and Counseling Center, gaining hands-on experience in mental health support. Assisted with client history taking, relaxation therapy sessions, and psychosocial support, while developing skills in empathetic communication, case documentation, and client-centered care.', image: manoImg, tags: ['Mental Health', 'Counseling', 'May-July 2022'], icon: Heart },
+      { title: 'Community Safety & Policing Internship', description: 'Completed an internship at Metro Police Circle Thimi, gaining practical exposure to community policing and public safety operations. Supported administrative documentation, observed case handling procedures, and engaged in coordination processes related to community security.', image: '/assets/community/Internship/Metro Police Circle Thimi.jpg', tags: ['Community Policing', 'Public Safety', 'Administrative Support'], icon: Users },
       { title: 'Smart City Project & Governance', description: 'Worked under the Smart City Project at Kathmandu Metropolitan City, where I was primarily responsible for volunteer recruitment and mobilization. Coordinated and facilitated meetings with Ward Chairpersons and key stakeholders to support project implementation and community engagement.', image: kmcImg, tags: ['Smart City Project', 'Volunteer Mobilization', 'Government'], icon: Users, link: 'https://kathmandu.gov.np/' },
     ],
     'Educational Advocacy (CSE & SRHR)': [
@@ -35,10 +36,10 @@ const portfolioData = {
       { title: 'Executive Vice President - JCI Bhaktapur', description: 'Served as Executive Vice President of JCI Bhaktapur, leading strategic initiatives and organizational development. Focused on member engagement, program implementation, and chapter growth within the JCI network.', image: '/assets/leadership/Pre Induction.jpg', tags: ['Executive Leadership', 'JCI Bhaktapur', 'Strategic Initiatives'], icon: Award },
       { title: 'Presidential Tenure - JCI Bhaktapur Junior', description: 'Led JCI Bhaktapur Junior as President, overseeing all chapter operations, member development, and community impact programs. Coordinated with national leadership and implemented strategic goals for organizational excellence.', image: '/assets/leadership/President Meet.jpg', tags: ['Presidential Leadership', 'Chapter Operations', 'Member Development'], icon: Trophy },
       { title: 'International Relations - IVP Official Visit', description: 'Coordinated and hosted the official visit of the JCI International Vice President to Nepal. This historic milestone provided valuable strategic insights, feedback, and motivation to enhance chapter performance and leadership effectiveness at the international level.', image: '/assets/leadership/Welcome International Assign Vice President.jpg', tags: ['International Level', 'JCI Vice President', 'Chapter Visit'], icon: Trophy },
+      { title: 'Festival Documentation - Gaijatra & Cultural Events', description: 'Capturing the vibrant essence of Nepali cultural festivals and traditional ceremonies. Documenting community celebrations, traditional rituals, and the living cultural heritage of Nepal through authentic festival photography.', images: [{ src: '/assets/leadership/Water Distribution.jpg', name: 'Gaijatra Festival 1' }, { src: '/assets/leadership/Installation and Award distribution Ceremony.jpg', name: 'Cultural Event 1' }, { src: '/assets/leadership/Developing Emotional Intelligence.jpg', name: 'Cultural Event 2' }], tags: ['Festival', 'Culture', 'Community Events'], icon: Camera },
     ],
     'Governance & Urban Projects': [
       { title: 'Smart City Project Coordination', description: 'Worked under the Smart City Project at Kathmandu Metropolitan City, where I was primarily responsible for volunteer recruitment and mobilization. Coordinated and facilitated meetings with Ward Chairpersons and key stakeholders to support project implementation and community engagement.', image: kmcImg, tags: ['Smart City Project', 'Volunteer Mobilization', 'Government'], icon: Users, link: 'https://kathmandu.gov.np/' },
-      { title: 'Community Safety & Policing Internship', description: 'Completed an internship at Metro Police Circle Thimi, gaining practical exposure to community policing and public safety operations. Supported administrative documentation, observed case handling procedures, and engaged in coordination processes related to community security.', image: '/assets/community/Internship/Metro Police Circle Thimi.jpg', tags: ['Community Policing', 'Public Safety', 'Administrative Support'], icon: Users },
       { title: 'Urban Development & Public Health', description: 'The program was organized by JCI Bhaktapur Junior with the support of JCI Bhaktapur and JCI Bhaktapur Lady during the cultural festival of Gaijatra in Bhaktapur. The primary objective was to provide safe drinking water to visitors, particularly those who were new to Bhaktapur and participating in the festival.', image: '/assets/leadership/Water Distribution.jpg', tags: ['Community Service', 'Gaijatra Festival', 'Bhaktapur'], icon: Heart },
     ],
     'Strategic Training & Conventions': [
@@ -50,7 +51,6 @@ const portfolioData = {
   'Visual Storytelling': {
     'Cultural Heritage': [
       { title: 'Architectural Photography - Temples & Landmarks', description: 'Documenting Nepal\'s rich architectural heritage through professional photography of ancient temples, cultural landmarks, and historical sites. Preserving the visual legacy of traditional Nepali architecture and cultural monuments.', images: [{ src: '/assets/storytelling/heritage/heritage-1.jpg', name: 'Heritage 1' }, { src: '/assets/storytelling/heritage/heritage-2.jpg', name: 'Heritage 2' }, { src: '/assets/storytelling/heritage/heritage-3.JPG', name: 'Heritage 3' }, { src: '/assets/storytelling/heritage/heritage-4.jpg', name: 'Heritage 4' }, { src: '/assets/storytelling/heritage/heritage-5.JPG', name: 'Heritage 5' }, { src: '/assets/storytelling/heritage/heritage-6.JPG', name: 'Heritage 6' }, { src: '/assets/storytelling/heritage/heritage-7.jpg', name: 'Heritage 7' }, { src: '/assets/storytelling/heritage/heritage-8.jpg', name: 'Heritage 8' }, { src: '/assets/storytelling/heritage/heritage-9.jpg', name: 'Heritage 9' }], tags: ['Heritage', 'Architecture', 'Culture'], icon: Camera },
-      { title: 'Festival Documentation - Gaijatra & Cultural Events', description: 'Capturing the vibrant essence of Nepali cultural festivals and traditional ceremonies. Documenting community celebrations, traditional rituals, and the living cultural heritage of Nepal through authentic festival photography.', images: [{ src: '/assets/leadership/Water Distribution.jpg', name: 'Gaijatra Festival 1' }, { src: '/assets/leadership/Installation and Award distribution Ceremony.jpg', name: 'Cultural Event 1' }, { src: '/assets/leadership/Developing Emotional Intelligence.jpg', name: 'Cultural Event 2' }], tags: ['Festival', 'Culture', 'Community Events'], icon: Camera },
     ],
     'Landscape & Nature': [
       { title: 'Himalayan Landscapes', description: 'Capturing the majestic beauty of Nepal\'s mountain ranges and natural wonders. Professional landscape photography showcasing the Himalayas in their full glory.', images: [{ src: '/assets/storytelling/himalayas/himalayas-1.jpg', name: 'Himalayas 1' }, { src: '/assets/storytelling/himalayas/himalayas-2.jpg', name: 'Himalayas 2' }, { src: '/assets/storytelling/himalayas/himalayas-3.jpg', name: 'Himalayas 3' }, { src: '/assets/storytelling/himalayas/himalayas-4.jpg', name: 'Himalayas 4' }, { src: '/assets/storytelling/himalayas/himalayas-5.jpg', name: 'Himalayas 5' }, { src: '/assets/storytelling/himalayas/himalayas-6.jpg', name: 'Himalayas 6' }, { src: '/assets/storytelling/himalayas/himalayas-7.jpg', name: 'Himalayas 7' }, { src: '/assets/storytelling/himalayas/himalayas-8.JPG', name: 'Himalayas 8' }, { src: '/assets/storytelling/himalayas/himalayas-9.JPG', name: 'Himalayas 9' }, { src: '/assets/storytelling/himalayas/himalayas-10.jpg', name: 'Himalayas 10' }, { src: '/assets/storytelling/himalayas/himalayas-11.jpg', name: 'Himalayas 11' }], tags: ['Landscape', 'Mountains', 'Himalayas'], icon: Camera },
@@ -97,19 +97,47 @@ function GalleryModal({ item, startIndex = 0, onClose }: { item: any; startIndex
 }
 
 function PortfolioCard({ item, index, isInView, onClick }: { item: any; index: number; isInView: boolean; onClick: (startIndex: number) => void }) {
-  const coverIdx = useSlideshow(item.images || [item.image]);
-  const cover = (item.images || [item.image])[coverIdx];
+  const images = item.images || (item.image ? [item.image] : []);
+  const coverIdx = useSlideshow(images);
+  const cover = images[coverIdx];
   const coverSrc = typeof cover === 'string' ? cover : cover.src;
   const coverName = typeof cover === 'string' ? undefined : cover.name;
+  const previewImages = item.images ? item.images.slice(0, 4) : [];
+  const extraPhotos = item.images && item.images.length > 4 ? item.images.length - 4 : 0;
+
   return (
     <motion.div initial={{ opacity: 0, y: 50 }} animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }} transition={{ duration: 0.6, delay: 0.1 * index }} whileHover={{ y: -10 }} onClick={() => onClick(coverIdx)} className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all cursor-pointer">
-      <div className="relative h-64 overflow-hidden">
+      <div className="relative h-72 overflow-hidden">
         <img src={coverSrc} alt={item.title} loading="lazy" decoding="async" onError={(e) => { const t = e.currentTarget as HTMLImageElement; if (t.src !== communityCampaignImg) t.src = communityCampaignImg; }} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
         {item.images && <div className="absolute top-4 right-4 bg-purple-600 text-white px-3 py-1 rounded-full text-sm font-semibold">{item.images.length} Photos</div>}
         {coverName && <div className="absolute top-4 left-4 bg-black/60 text-white px-3 py-1 rounded-full text-xs">{coverName}</div>}
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-        <div className="absolute bottom-4 left-4 right-4"><div className="flex flex-wrap gap-2">{item.tags.map((tag: string) => <span key={tag} className="px-3 py-1 bg-white/90 text-gray-800 rounded-full text-xs font-medium">{tag}</span>)}</div></div>
       </div>
+
+      {previewImages.length > 0 && (
+        <div className="p-4 bg-gray-50">
+          <div className="flex items-center justify-between mb-3">
+            <div className="text-sm font-semibold text-gray-700">Collection previews</div>
+            <div className="text-xs text-gray-500">Click to view gallery</div>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+            {previewImages.map((img: any, idx: number) => {
+              const src = typeof img === 'string' ? img : img.src;
+              const name = typeof img === 'string' ? undefined : img.name;
+              const isLast = idx === previewImages.length - 1 && extraPhotos > 0;
+              return (
+                <div key={src} className="relative overflow-hidden rounded-2xl h-24 bg-gray-200">
+                  <img src={src} alt={name ?? `${item.title} preview ${idx + 1}`} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                  {isLast && (
+                    <div className="absolute inset-0 bg-black/60 flex items-center justify-center text-white text-sm font-semibold">+{extraPhotos}</div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
       <div className="p-6">
         <div className="flex items-start gap-3 mb-3">
           <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center flex-shrink-0"><item.icon size={20} className="text-white" /></div>
@@ -170,7 +198,7 @@ export function PortfolioPage() {
         </motion.div>
 
         {activeSubcategory && (
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.7 }} className="flex flex-col md:flex-row justify-center gap-4 mb-12">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.7 }} className="sticky top-24 z-40 flex flex-col md:flex-row justify-center gap-4 mb-12 bg-white pb-6 pt-4 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8 shadow-lg">
             {subcategories.map((sub) => (
               <motion.button key={sub} onClick={() => setActiveSubcategory(sub)} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className={`px-6 py-2 rounded-full font-medium transition-all shadow-md ${activeSubcategory === sub ? 'bg-purple-600 text-white' : 'bg-white text-gray-700 hover:bg-gray-50'}`}>
                 {sub}
@@ -179,11 +207,139 @@ export function PortfolioPage() {
           </motion.div>
         )}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {getCurrentItems().map((item: any, index: number) => (
-            <PortfolioCard key={item.title} item={item} index={index} isInView={isInView} onClick={(startIndex) => setSelectedItem({ item, startIndex })} />
-          ))}
-        </div>
+        {getCurrentItems().some((item: any) => item.images) ? (
+          <div className="space-y-10">
+            {getCurrentItems().map((item: any, index: number) => {
+              const images = item.images || (item.image ? [item.image] : []);
+              const cover = images[0] || item.image;
+              return (
+                <motion.div
+                  key={item.title}
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+                  transition={{ duration: 0.6, delay: 0.1 * index }}
+                  className="space-y-6"
+                >
+                  <div className="text-center mb-8">
+                    <h3 className="text-3xl font-bold text-gray-900 mb-2">{item.title}</h3>
+                    <p className="text-gray-600 mb-4">{item.description}</p>
+                    <div className="flex flex-wrap items-center gap-2 justify-center">
+                      {item.tags.map((tag: string) => (
+                        <span key={tag} className="rounded-full bg-gray-100 px-4 py-2 text-sm text-gray-700">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4">
+                    {images.map((img: any, imgIndex: number) => {
+                      const src = typeof img === 'string' ? img : img.src;
+                      const name = typeof img === 'string' ? undefined : img.name;
+                      const randomHeight = [280, 320, 360, 280, 340][imgIndex % 5];
+                      return (
+                        <motion.button
+                          key={src}
+                          onClick={() => setSelectedItem({ item, startIndex: imgIndex })}
+                          initial={{ opacity: 0, scale: 0.9 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          transition={{ duration: 0.4, delay: imgIndex * 0.05 }}
+                          className="relative overflow-hidden rounded-2xl group focus:outline-none break-inside-avoid"
+                          style={{ height: randomHeight }}
+                        >
+                          <img
+                            src={src}
+                            alt={name ?? item.title}
+                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            loading="lazy"
+                            decoding="async"
+                            onError={(e) => { const t = e.currentTarget as HTMLImageElement; if (t.src !== communityCampaignImg) t.src = communityCampaignImg; }}
+                          />
+                          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300 flex items-center justify-center">
+                            <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-white text-center">
+                              <Camera size={32} className="mx-auto mb-2" />
+                              <p className="text-sm font-medium">{name ?? `Photo ${imgIndex + 1}`}</p>
+                            </div>
+                          </div>
+                        </motion.button>
+                      );
+                    })}
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+        ) : (
+          <div className="space-y-10">
+            {getCurrentItems().map((item: any, index: number) => {
+              const images = item.images || (item.image ? [item.image] : []);
+              const cover = images[0] || item.image;
+              return (
+                <motion.div
+                  key={item.title}
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+                  transition={{ duration: 0.6, delay: 0.1 * index }}
+                  className="group overflow-hidden rounded-[2rem] bg-white shadow-2xl"
+                >
+                  <div className="grid grid-cols-1 lg:grid-cols-[1.3fr_0.7fr]">
+                    <div className="relative h-96 overflow-hidden cursor-pointer" onClick={() => setSelectedItem({ item, startIndex: 0 })}>
+                      <img
+                        src={typeof cover === 'string' ? cover : cover.src}
+                        alt={item.title}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        loading="lazy"
+                        decoding="async"
+                        onError={(e) => { const t = e.currentTarget as HTMLImageElement; if (t.src !== communityCampaignImg) t.src = communityCampaignImg; }}
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+                      <div className="absolute bottom-6 left-6 text-white">
+                        <p className="text-sm uppercase tracking-[0.25em] text-gray-200">Collection</p>
+                        <h3 className="text-3xl font-bold tracking-tight">{item.title}</h3>
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-2 p-4 md:p-6">
+                      {images.slice(0, 4).map((img: any, thumbIndex: number) => {
+                        const src = typeof img === 'string' ? img : img.src;
+                        const isLast = thumbIndex === 3 && images.length > 4;
+                        return (
+                          <button key={src} onClick={() => setSelectedItem({ item, startIndex: thumbIndex })} className="relative h-40 overflow-hidden rounded-3xl bg-gray-200 focus:outline-none">
+                            <img
+                              src={src}
+                              alt={item.title}
+                              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                              loading="lazy"
+                              decoding="async"
+                              onError={(e) => { const t = e.currentTarget as HTMLImageElement; if (t.src !== communityCampaignImg) t.src = communityCampaignImg; }}
+                            />
+                            {isLast && (
+                              <div className="absolute inset-0 bg-black/55 flex items-center justify-center text-white text-lg font-semibold">+{images.length - 4}</div>
+                            )}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                  <div className="p-8">
+                    <div className="flex flex-wrap items-center gap-3 mb-4">
+                      {item.tags.map((tag: string) => (
+                        <span key={tag} className="rounded-full bg-gray-100 px-4 py-2 text-sm text-gray-700">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                    <p className="text-gray-600 leading-relaxed">{item.description}</p>
+                    {item.link && (
+                      <a href={item.link} target="_blank" rel="noopener noreferrer" className="mt-6 inline-block text-purple-600 hover:text-pink-600 font-semibold transition-colors">
+                        Learn More →
+                      </a>
+                    )}
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+        )}
 
         <AnimatePresence>
           {selectedItem && (
