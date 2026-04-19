@@ -88,11 +88,11 @@ export function About() {
               while documenting their stories.
             </p>
             <a
-              href="/Umesh_Raskoti_CV.pdf"
+              href="/Umesh_Raskoti_Resume.pdf"
               download
               className="inline-flex items-center justify-center px-6 py-3 mb-6 bg-purple-600 text-white rounded-full font-semibold hover:bg-purple-700 transition"
             >
-              Download CV
+              Download Resume
             </a>
             <div className="flex flex-wrap gap-3">
               {['Social Work', 'SRHR Advocacy', 'Program Management', 'Data Analysis', 'Community Development'].map((tech, index) => (

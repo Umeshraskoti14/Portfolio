@@ -90,7 +90,7 @@ export function AboutPage() {
               <img
                 src={profileImg}
                 alt="Umesh Raskoti - Social Activist & Photographer"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover object-center"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
             </div>
@@ -197,13 +197,13 @@ export function AboutPage() {
               Start a Conversation
             </motion.a>
             <motion.a
-              href="/Umesh_Raskoti_CV.pdf"
+              href="/Umesh_Raskoti_Resume.pdf"
               download
               className="inline-block px-8 py-4 bg-white/20 text-white rounded-full font-semibold hover:bg-white/30 transition-colors shadow-xl"
               whileHover={{ scale: 1.05, y: -3 }}
               whileTap={{ scale: 0.95 }}
             >
-              Download CV
+              Download Resume
             </motion.a>
           </div>
         </motion.div>
