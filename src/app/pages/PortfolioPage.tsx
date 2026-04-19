@@ -74,11 +74,21 @@ function useSlideshow(images: Array<string | { src: string; name?: string }>) {
   return index;
 }
 
+function uniqueImages(images: Array<string | { src: string; name?: string }>) {
+  const seen = new Set<string>();
+  return images.filter((img) => {
+    const src = typeof img === 'string' ? img : img.src;
+    if (seen.has(src)) return false;
+    seen.add(src);
+    return true;
+  });
+}
+
 function GalleryModal({ item, startIndex = 0, onClose }: { item: any; startIndex?: number; onClose: () => void }) {
   const [idx, setIdx] = useState(startIndex);
   useEffect(() => { setIdx(startIndex); }, [item, startIndex]);
   if (!item) return null;
-  const imgs: Array<{ src: string; name?: string }> = (item.images || [item.image]).map((img: any) => (typeof img === 'string' ? { src: img } : img));
+  const imgs: Array<{ src: string; name?: string }> = uniqueImages((item.images || [item.image]).map((img: any) => (typeof img === 'string' ? { src: img } : img)));
   const prev = () => setIdx((i) => (i - 1 + imgs.length) % imgs.length);
   const next = () => setIdx((i) => (i + 1) % imgs.length);
   const current = imgs[idx];
@@ -97,29 +107,24 @@ function GalleryModal({ item, startIndex = 0, onClose }: { item: any; startIndex
 }
 
 function PortfolioCard({ item, index, isInView, onClick }: { item: any; index: number; isInView: boolean; onClick: (startIndex: number) => void }) {
-  const images = item.images || (item.image ? [item.image] : []);
+  const images = uniqueImages(item.images || (item.image ? [item.image] : []));
   const coverIdx = useSlideshow(images);
   const cover = images[coverIdx];
   const coverSrc = typeof cover === 'string' ? cover : cover.src;
   const coverName = typeof cover === 'string' ? undefined : cover.name;
-  const previewImages = item.images ? item.images.slice(0, 4) : [];
-  const extraPhotos = item.images && item.images.length > 4 ? item.images.length - 4 : 0;
+  const previewImages = images.slice(0, 4);
+  const extraPhotos = images.length > 4 ? images.length - 4 : 0;
 
   return (
     <motion.div initial={{ opacity: 0, y: 50 }} animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }} transition={{ duration: 0.6, delay: 0.1 * index }} whileHover={{ y: -10 }} onClick={() => onClick(coverIdx)} className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all cursor-pointer">
       <div className="relative h-72 overflow-hidden">
         <img src={coverSrc} alt={item.title} loading="lazy" decoding="async" onError={(e) => { const t = e.currentTarget as HTMLImageElement; if (t.src !== communityCampaignImg) t.src = communityCampaignImg; }} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
         {item.images && <div className="absolute top-4 right-4 bg-purple-600 text-white px-3 py-1 rounded-full text-sm font-semibold">{item.images.length} Photos</div>}
-        {coverName && <div className="absolute top-4 left-4 bg-black/60 text-white px-3 py-1 rounded-full text-xs">{coverName}</div>}
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
       </div>
 
       {previewImages.length > 0 && (
         <div className="p-4 bg-gray-50">
-          <div className="flex items-center justify-between mb-3">
-            <div className="text-sm font-semibold text-gray-700">Collection previews</div>
-            <div className="text-xs text-gray-500">Click to view gallery</div>
-          </div>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
             {previewImages.map((img: any, idx: number) => {
               const src = typeof img === 'string' ? img : img.src;
@@ -198,9 +203,9 @@ export function PortfolioPage() {
         </motion.div>
 
         {activeSubcategory && (
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.7 }} className="sticky top-24 z-40 flex flex-col md:flex-row justify-center gap-4 mb-12 bg-white pb-6 pt-4 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8 shadow-lg">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.7 }} className="sticky top-24 z-40 flex flex-col md:flex-row justify-center gap-4 mb-12 bg-white/95 backdrop-blur-xl border border-slate-200 pb-6 pt-4 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8 shadow-xl">
             {subcategories.map((sub) => (
-              <motion.button key={sub} onClick={() => setActiveSubcategory(sub)} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className={`px-6 py-2 rounded-full font-medium transition-all shadow-md ${activeSubcategory === sub ? 'bg-purple-600 text-white' : 'bg-white text-gray-700 hover:bg-gray-50'}`}>
+              <motion.button key={sub} onClick={() => setActiveSubcategory(sub)} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className={`px-5 py-3 rounded-full transition-all text-xs uppercase tracking-[0.28em] shadow-lg ${activeSubcategory === sub ? 'bg-gradient-to-r from-emerald-600 to-cyan-500 text-white border border-transparent' : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-50'}`}>
                 {sub}
               </motion.button>
             ))}
@@ -210,7 +215,7 @@ export function PortfolioPage() {
         {getCurrentItems().some((item: any) => item.images) ? (
           <div className="space-y-10">
             {getCurrentItems().map((item: any, index: number) => {
-              const images = item.images || (item.image ? [item.image] : []);
+              const images = uniqueImages(item.images || (item.image ? [item.image] : []));
               const cover = images[0] || item.image;
               return (
                 <motion.div
@@ -257,8 +262,7 @@ export function PortfolioPage() {
                           />
                           <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300 flex items-center justify-center">
                             <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-white text-center">
-                              <Camera size={32} className="mx-auto mb-2" />
-                              <p className="text-sm font-medium">{name ?? `Photo ${imgIndex + 1}`}</p>
+                              <Camera size={32} className="mx-auto" />
                             </div>
                           </div>
                         </motion.button>
@@ -294,7 +298,6 @@ export function PortfolioPage() {
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
                       <div className="absolute bottom-6 left-6 text-white">
-                        <p className="text-sm uppercase tracking-[0.25em] text-gray-200">Collection</p>
                         <h3 className="text-3xl font-bold tracking-tight">{item.title}</h3>
                       </div>
                     </div>
