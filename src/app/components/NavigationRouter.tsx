@@ -1,20 +1,26 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Menu, X } from 'lucide-react';
-import { Link, useLocation } from 'react-router';
 
 const navItems = [
-  { name: 'Home', path: '/' },
-  { name: 'About', path: '/about' },
-  { name: 'Portfolio', path: '/portfolio' },
-  { name: 'Skills', path: '/skills' },
-  { name: 'Contact', path: '/contact' },
+  { name: 'Home', href: '#home' },
+  { name: 'About', href: '#about' },
+  { name: 'Portfolio', href: '#portfolio' },
+  { name: 'Skills', href: '#skills' },
+  { name: 'Contact', href: '#contact' },
 ];
 
 export function NavigationRouter() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const location = useLocation();
+
+  const scrollToSection = (href: string) => {
+    const element = document.querySelector(href);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+    setIsMobileMenuOpen(false);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,11 +29,6 @@ export function NavigationRouter() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  useEffect(() => {
-    setIsMobileMenuOpen(false);
-    window.scrollTo(0, 0);
-  }, [location]);
 
   return (
     <>
@@ -41,39 +42,33 @@ export function NavigationRouter() {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16 md:h-20">
-            <Link to="/">
-              <motion.div
-                className="text-xl md:text-2xl font-bold text-gray-900"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Umesh Raskoti
-              </motion.div>
-            </Link>
+            <motion.button
+              onClick={() => scrollToSection('#home')}
+              className="text-xl md:text-2xl font-bold text-gray-900"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Umesh Raskoti
+            </motion.button>
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex space-x-8">
               {navItems.map((item, index) => (
-                <Link key={item.name} to={item.path}>
+                <button
+                  key={item.name}
+                  onClick={() => scrollToSection(item.href)}
+                  className="relative group text-gray-700 hover:text-gray-900 transition-colors"
+                >
                   <motion.div
-                    className={`relative group ${
-                      location.pathname === item.path
-                        ? 'text-gray-900 font-semibold'
-                        : 'text-gray-700 hover:text-gray-900'
-                    } transition-colors`}
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.1 }}
                     whileHover={{ y: -2 }}
                   >
                     {item.name}
-                    <span
-                      className={`absolute bottom-0 left-0 h-0.5 bg-gray-900 transition-all ${
-                        location.pathname === item.path ? 'w-full' : 'w-0 group-hover:w-full'
-                      }`}
-                    />
+                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gray-900 transition-all group-hover:w-full" />
                   </motion.div>
-                </Link>
+                </button>
               ))}
             </div>
 
@@ -101,20 +96,19 @@ export function NavigationRouter() {
           >
             <div className="flex flex-col items-center justify-center h-full space-y-8">
               {navItems.map((item, index) => (
-                <Link key={item.name} to={item.path}>
+                <button
+                  key={item.name}
+                  onClick={() => scrollToSection(item.href)}
+                  className="text-2xl text-gray-600 hover:text-gray-900 transition-colors"
+                >
                   <motion.div
-                    className={`text-2xl transition-colors ${
-                      location.pathname === item.path
-                        ? 'text-gray-900 font-bold'
-                        : 'text-gray-600 hover:text-gray-900'
-                    }`}
                     initial={{ opacity: 0, x: 50 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.1 }}
                   >
                     {item.name}
                   </motion.div>
-                </Link>
+                </button>
               ))}
             </div>
           </motion.div>
