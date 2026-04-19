@@ -206,9 +206,9 @@ function PortfolioCard({ item, index, isInView, onClick }: { item: any; index: n
   const extraPhotos = images.length > 4 ? images.length - 4 : 0;
 
   return (
-    <motion.div initial={{ opacity: 0, y: 50 }} animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }} transition={{ duration: 0.6, delay: 0.1 * index }} whileHover={{ y: -10 }} onClick={() => onClick(coverIdx)} className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all cursor-pointer">
+    <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55, delay: 0.08 * index, ease: 'easeOut' }} whileHover={{ y: -8 }} onClick={() => onClick(coverIdx)} className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all cursor-pointer">
       <div className="relative h-72 overflow-hidden">
-        <img src={coverSrc} alt={item.title} loading="lazy" decoding="async" onError={(e) => { const t = e.currentTarget as HTMLImageElement; if (t.src !== communityCampaignImg) t.src = communityCampaignImg; }} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+        <img src={coverSrc} alt={item.title} loading="lazy" decoding="async" fetchPriority="high" onError={(e) => { const t = e.currentTarget as HTMLImageElement; if (t.src !== communityCampaignImg) t.src = communityCampaignImg; }} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
         {item.images && <div className="absolute top-4 right-4 bg-purple-600 text-white px-3 py-1 rounded-full text-sm font-semibold">{item.images.length} Photos</div>}
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
       </div>
@@ -250,7 +250,7 @@ const categories = Object.keys(portfolioData) as Array<keyof PortfolioData>;
 
 export function PortfolioPage() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { amount: 0.1, once: false });
+  const isInView = useInView(ref, { amount: 0.1, once: true });
   const [activeCategory, setActiveCategory] = useState<keyof PortfolioData>(categories[0]);
   const [activeSubcategory, setActiveSubcategory] = useState<string | null>(null);
   const [selectedItem, setSelectedItem] = useState<{ item: any; startIndex: number } | null>(null);
@@ -287,7 +287,7 @@ export function PortfolioPage() {
 
         <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.4 }} className="flex flex-wrap justify-center gap-4 mb-12">
           {categories.map((category, index) => (
-            <motion.button key={category} onClick={() => setActiveCategory(category)} initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.4, delay: 0.5 + index * 0.1 }} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className={`px-8 py-3 rounded-full font-semibold transition-all shadow-lg ${activeCategory === category ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-purple-300' : 'bg-white text-gray-700 hover:bg-gray-50 hover:shadow-xl'}`}>
+            <motion.button key={category} onClick={() => setActiveCategory(category)} initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.45, delay: 0.5 + index * 0.08, ease: 'easeOut' }} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className={`px-8 py-3 rounded-full font-semibold uppercase text-[0.78rem] tracking-[0.28em] transition-all shadow-lg ${activeCategory === category ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-purple-300' : 'bg-white text-gray-700 hover:bg-gray-50 hover:shadow-xl'}`}>
               {category}
             </motion.button>
           ))}
@@ -296,7 +296,7 @@ export function PortfolioPage() {
         {activeSubcategory && (
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.7 }} className="sticky top-24 z-40 flex flex-col md:flex-row justify-center gap-4 mb-12 bg-white/95 backdrop-blur-xl border border-slate-200 pb-6 pt-4 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8 shadow-xl">
             {subcategories.map((sub) => (
-              <motion.button key={sub} onClick={() => setActiveSubcategory(sub)} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className={`px-4 py-2 rounded-full transition-all text-[0.68rem] md:text-[0.75rem] uppercase tracking-[0.22em] font-semibold shadow-sm backdrop-blur-sm ${activeSubcategory === sub ? 'bg-gradient-to-r from-emerald-600 to-cyan-500 text-white border border-transparent shadow-cyan-200/40' : 'bg-white/90 text-slate-700 border border-slate-200/80 hover:bg-slate-100'}`}>
+              <motion.button key={sub} onClick={() => setActiveSubcategory(sub)} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className={`px-4 py-2 rounded-full transition-all text-[0.68rem] md:text-[0.75rem] lowercase italic tracking-[0.16em] font-medium shadow-sm backdrop-blur-sm ${activeSubcategory === sub ? 'bg-gradient-to-r from-emerald-600 to-cyan-500 text-white border border-transparent shadow-cyan-200/40' : 'bg-white/90 text-slate-700 border border-slate-200/80 hover:bg-slate-100'}`}>
                 {sub}
               </motion.button>
             ))}
