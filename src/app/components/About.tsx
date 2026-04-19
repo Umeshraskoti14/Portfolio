@@ -55,9 +55,13 @@ export function About() {
             className="relative h-96 rounded-2xl overflow-hidden shadow-2xl"
           >
             <img
-              src="https://images.unsplash.com/photo-1673280401347-309363111070?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzb2NpYWwlMjB3b3JrJTIwY29tbXVuaXR5JTIwc2VydmljZXxlbnwxfHx8fDE3NzExNTE3Njd8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+              src="/assets/community/Capacity Building and Awareness/Digital Addicition.jpg"
               alt="Community Service"
               className="w-full h-full object-cover"
+              onError={(e) => {
+                const img = e.target as HTMLImageElement;
+                img.style.backgroundColor = '#f3f4f6';
+              }}
             />
           </motion.div>
 
