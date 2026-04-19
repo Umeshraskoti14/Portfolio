@@ -84,6 +84,96 @@ function uniqueImages(images: Array<string | { src: string; name?: string }>) {
   });
 }
 
+function CustomCursor() {
+  const dotRef = useRef<HTMLDivElement | null>(null);
+  const outlineRef = useRef<HTMLDivElement | null>(null);
+  const animationRef = useRef<number | null>(null);
+  const mousePos = useRef({ x: 0, y: 0 });
+  const cursorPos = useRef({ x: 0, y: 0 });
+  const scrollStart = useRef(0);
+  const scrollVelocity = useRef(0);
+  const hoverRef = useRef(false);
+
+  useEffect(() => {
+    if (!window.matchMedia('(pointer:fine)').matches) return;
+
+    mousePos.current = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+    cursorPos.current = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+    scrollStart.current = window.scrollY;
+
+    const isInteractive = (target: EventTarget | null) => {
+      return (
+        target instanceof HTMLElement &&
+        !!target.closest('a, button, input, textarea, select, label, [role="button"], [role="link"], [data-cursor-interactive]')
+      );
+    };
+
+    const setCursorVisibility = (visible: boolean) => {
+      if (dotRef.current) dotRef.current.style.opacity = visible ? '1' : '0';
+      if (outlineRef.current) outlineRef.current.style.opacity = visible ? '1' : '0';
+    };
+
+    const handleMouseMove = (e: MouseEvent) => {
+      mousePos.current = { x: e.clientX, y: e.clientY };
+      if (dotRef.current) {
+        dotRef.current.style.left = `${e.clientX}px`;
+        dotRef.current.style.top = `${e.clientY}px`;
+      }
+      const hover = isInteractive(e.target);
+      if (hover !== hoverRef.current) {
+        hoverRef.current = hover;
+        outlineRef.current?.classList.toggle('custom-cursor-active', hover);
+      }
+    };
+
+    const handleScroll = () => {
+      const nextScroll = window.scrollY;
+      scrollVelocity.current = nextScroll - scrollStart.current;
+      scrollStart.current = nextScroll;
+    };
+
+    const handleMouseEnter = () => setCursorVisibility(true);
+    const handleMouseLeave = () => setCursorVisibility(false);
+
+    const animate = () => {
+      cursorPos.current.x += (mousePos.current.x - cursorPos.current.x) * 0.18;
+      cursorPos.current.y += (mousePos.current.y - cursorPos.current.y) * 0.18;
+
+      if (outlineRef.current) {
+        outlineRef.current.style.left = `${cursorPos.current.x}px`;
+        outlineRef.current.style.top = `${cursorPos.current.y}px`;
+        outlineRef.current.style.transform = `translate(-50%, -50%) scale(${hoverRef.current ? 1.35 : 1}) rotate(${scrollVelocity.current * 2}deg)`;
+      }
+
+      scrollVelocity.current *= 0.92;
+      animationRef.current = requestAnimationFrame(animate);
+    };
+
+    setCursorVisibility(true);
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('mouseenter', handleMouseEnter);
+    window.addEventListener('mouseleave', handleMouseLeave);
+
+    animationRef.current = requestAnimationFrame(animate);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('mouseenter', handleMouseEnter);
+      window.removeEventListener('mouseleave', handleMouseLeave);
+      if (animationRef.current) cancelAnimationFrame(animationRef.current);
+    };
+  }, []);
+
+  return (
+    <div className="pointer-events-none fixed inset-0 z-[9999]">
+      <div ref={outlineRef} className="custom-cursor-outline" />
+      <div ref={dotRef} className="custom-cursor-dot" />
+    </div>
+  );
+}
+
 function GalleryModal({ item, startIndex = 0, onClose }: { item: any; startIndex?: number; onClose: () => void }) {
   const [idx, setIdx] = useState(startIndex);
   useEffect(() => { setIdx(startIndex); }, [item, startIndex]);
@@ -186,7 +276,8 @@ export function PortfolioPage() {
   };
 
   return (
-    <div id="portfolio" className="min-h-screen bg-gradient-to-b from-gray-50 to-white pt-28 pb-20">
+    <div id="portfolio" className="cursor-none min-h-screen bg-gradient-to-b from-gray-50 to-white pt-28 pb-20">
+      <CustomCursor />
       <motion.div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" ref={ref} initial={{ opacity: 0 }} animate={{ opacity: isInView ? 1 : 0.3 }} transition={{ duration: 0.6 }}>
         <motion.div initial={{ opacity: 0, y: 50 }} animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }} transition={{ duration: 0.8 }} className="text-center mb-16">
           <motion.h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6" initial={{ opacity: 0, scale: 0.9 }} animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }} transition={{ duration: 0.8 }}>Portfolio</motion.h1>
@@ -205,7 +296,7 @@ export function PortfolioPage() {
         {activeSubcategory && (
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.7 }} className="sticky top-24 z-40 flex flex-col md:flex-row justify-center gap-4 mb-12 bg-white/95 backdrop-blur-xl border border-slate-200 pb-6 pt-4 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8 shadow-xl">
             {subcategories.map((sub) => (
-              <motion.button key={sub} onClick={() => setActiveSubcategory(sub)} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className={`px-5 py-3 rounded-full transition-all text-xs uppercase tracking-[0.28em] shadow-lg ${activeSubcategory === sub ? 'bg-gradient-to-r from-emerald-600 to-cyan-500 text-white border border-transparent' : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-50'}`}>
+              <motion.button key={sub} onClick={() => setActiveSubcategory(sub)} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className={`px-4 py-2 rounded-full transition-all text-[0.68rem] md:text-[0.75rem] uppercase tracking-[0.22em] font-semibold shadow-sm backdrop-blur-sm ${activeSubcategory === sub ? 'bg-gradient-to-r from-emerald-600 to-cyan-500 text-white border border-transparent shadow-cyan-200/40' : 'bg-white/90 text-slate-700 border border-slate-200/80 hover:bg-slate-100'}`}>
                 {sub}
               </motion.button>
             ))}
