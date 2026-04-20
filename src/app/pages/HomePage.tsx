@@ -20,76 +20,43 @@ export function HomePage() {
         animate={{ opacity: isInView ? 1 : 0.3 }}
         transition={{ duration: 0.6 }}
       >
-        {/* Aurora Borealis Inspired Flowing Background */}
+        {/* Animated Background Elements */}
         <div className="absolute inset-0 overflow-hidden">
-          {/* Aurora Wave 1 - Cyan to Blue */}
           <motion.div
-            className="absolute -top-40 -left-40 w-96 h-96 bg-gradient-to-r from-cyan-300 via-blue-400 to-purple-400 rounded-full mix-blend-screen filter blur-3xl opacity-40"
+            className="absolute top-20 left-10 w-96 h-96 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-50"
             animate={{
-              x: [0, 150, -50, 100],
-              y: [0, 200, -100, 50],
-              scale: [1, 1.2, 0.9, 1.1],
+              x: [0, 100, 0],
+              y: [0, 50, 0],
+              scale: [1, 1.2, 1],
             }}
             transition={{
-              duration: 35,
+              duration: 20,
               repeat: Infinity,
               ease: 'easeInOut',
             }}
           />
-          
-          {/* Aurora Wave 2 - Purple to Pink */}
           <motion.div
-            className="absolute top-1/4 right-0 w-80 h-80 bg-gradient-to-l from-purple-300 via-pink-400 to-rose-300 rounded-full mix-blend-screen filter blur-3xl opacity-35"
+            className="absolute top-40 right-10 w-96 h-96 bg-yellow-300 rounded-full mix-blend-multiply filter blur-3xl opacity-50"
             animate={{
-              x: [0, -200, 80, -100],
-              y: [0, -150, 100, -50],
-              scale: [1, 1.15, 0.85, 1.05],
+              x: [0, -100, 0],
+              y: [0, 100, 0],
+              scale: [1, 1.3, 1],
             }}
             transition={{
-              duration: 40,
+              duration: 25,
               repeat: Infinity,
               ease: 'easeInOut',
             }}
           />
-          
-          {/* Aurora Wave 3 - Indigo to Violet */}
           <motion.div
-            className="absolute -bottom-32 left-1/3 w-96 h-96 bg-gradient-to-t from-indigo-400 via-violet-300 to-purple-300 rounded-full mix-blend-screen filter blur-3xl opacity-30"
+            className="absolute bottom-20 left-1/2 w-96 h-96 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-50"
             animate={{
-              x: [0, 100, -150, 50],
-              y: [0, 100, -200, -50],
-              scale: [1, 1.25, 0.9, 1.1],
+              x: [0, 50, 0],
+              y: [0, -50, 0],
+              scale: [1, 1.1, 1],
             }}
             transition={{
-              duration: 38,
-              repeat: Infinity,
-              ease: 'easeInOut',
-            }}
-          />
-          
-          {/* Aurora Wave 4 - Blue to Cyan */}
-          <motion.div
-            className="absolute top-0 right-1/4 w-72 h-72 bg-gradient-to-b from-blue-300 via-cyan-400 to-emerald-300 rounded-full mix-blend-lighten filter blur-3xl opacity-25"
-            animate={{
-              x: [0, -120, 180, -60],
-              y: [0, 180, -120, 80],
-              scale: [1, 1.1, 0.95, 1.15],
-            }}
-            transition={{
-              duration: 42,
-              repeat: Infinity,
-              ease: 'easeInOut',
-            }}
-          />
-          
-          {/* Ambient Light Layer */}
-          <motion.div
-            className="absolute inset-0 bg-gradient-to-b from-blue-200/10 via-transparent to-purple-200/10"
-            animate={{
-              opacity: [0.2, 0.4, 0.2],
-            }}
-            transition={{
-              duration: 12,
+              duration: 22,
               repeat: Infinity,
               ease: 'easeInOut',
             }}

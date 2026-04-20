@@ -9,11 +9,8 @@ html {
 /* Dark Mode Support */
 html.dark {
   color-scheme: dark;
-}
-
-html.dark {
-  background-color: #111827;
-  color: #f3f4f6;
+  background-color: #0f172a;
+  color: #e5e7eb;
 }
 
 html.dark body {
@@ -26,7 +23,12 @@ html.dark section {
   color: #e5e7eb;
 }
 
-html.dark h1, html.dark h2, html.dark h3, html.dark h4, html.dark h5, html.dark h6 {
+html.dark h1,
+html.dark h2,
+html.dark h3,
+html.dark h4,
+html.dark h5,
+html.dark h6 {
   color: #f3f4f6;
 }
 
@@ -40,6 +42,15 @@ html.dark a {
 
 html.dark a:hover {
   color: #93c5fd;
+}
+
+html.dark button {
+  background-color: #374151;
+  color: #e5e7eb;
+}
+
+html.dark button:hover {
+  background-color: #4b5563;
 }
 
 .custom-cursor-dot,

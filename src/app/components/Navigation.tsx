@@ -26,10 +26,20 @@ export function Navigation() {
   useEffect(() => {
     if (isDarkMode) {
       document.documentElement.classList.add('dark');
+      localStorage.setItem('darkMode', 'true');
     } else {
       document.documentElement.classList.remove('dark');
+      localStorage.setItem('darkMode', 'false');
     }
   }, [isDarkMode]);
+
+  useEffect(() => {
+    const savedDarkMode = localStorage.getItem('darkMode') === 'true';
+    setIsDarkMode(savedDarkMode);
+    if (savedDarkMode) {
+      document.documentElement.classList.add('dark');
+    }
+  }, []);
 
   const scrollToSection = (href: string) => {
     const element = document.querySelector(href);
@@ -46,22 +56,24 @@ export function Navigation() {
         animate={{ y: 0 }}
         transition={{ duration: 0.5 }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled 
-            ? isDarkMode 
-              ? 'bg-gray-900/90 backdrop-blur-md shadow-lg border-b border-gray-700' 
+          isScrolled
+            ? isDarkMode
+              ? 'bg-gray-900/90 backdrop-blur-md shadow-lg border-b border-gray-700'
               : 'bg-white/90 backdrop-blur-md shadow-lg'
+            : isDarkMode
+            ? 'bg-gray-900/50'
             : 'bg-transparent'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16 md:h-20 gap-4">
+          <div className="flex justify-between items-center h-16 md:h-20">
             <motion.a
               href="#home"
               onClick={(e) => {
                 e.preventDefault();
                 scrollToSection('#home');
               }}
-              className={`text-xl md:text-2xl font-bold ${
+              className={`text-xl md:text-2xl font-bold transition-colors ${
                 isDarkMode ? 'text-white' : 'text-gray-900'
               }`}
               whileHover={{ scale: 1.05 }}
@@ -71,7 +83,7 @@ export function Navigation() {
             </motion.a>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-8">
+            <div className="hidden md:flex items-center space-x-6">
               {navItems.map((item, index) => (
                 <motion.a
                   key={item.name}
@@ -81,8 +93,8 @@ export function Navigation() {
                     scrollToSection(item.href);
                   }}
                   className={`transition-colors relative group ${
-                    isDarkMode 
-                      ? 'text-gray-300 hover:text-white' 
+                    isDarkMode
+                      ? 'text-gray-300 hover:text-white'
                       : 'text-gray-700 hover:text-gray-900'
                   }`}
                   initial={{ opacity: 0, y: -20 }}
@@ -91,15 +103,32 @@ export function Navigation() {
                   whileHover={{ y: -2 }}
                 >
                   {item.name}
-                  <span className={`absolute bottom-0 left-0 w-0 h-0.5 transition-all group-hover:w-full ${
-                    isDarkMode ? 'bg-white' : 'bg-gray-900'
-                  }`} />
+                  <span
+                    className={`absolute bottom-0 left-0 w-0 h-0.5 transition-all group-hover:w-full ${
+                      isDarkMode ? 'bg-white' : 'bg-gray-900'
+                    }`}
+                  />
                 </motion.a>
               ))}
+
+              {/* Dark Mode Toggle Button */}
+              <motion.button
+                onClick={() => setIsDarkMode(!isDarkMode)}
+                className={`p-2 rounded-full transition-colors ml-2 ${
+                  isDarkMode
+                    ? 'bg-gray-800 text-yellow-400 hover:bg-gray-700'
+                    : 'bg-gray-100 text-gray-900 hover:bg-gray-200'
+                }`}
+                whileHover={{ scale: 1.1, rotate: 20 }}
+                whileTap={{ scale: 0.9 }}
+                title={isDarkMode ? 'Light Mode' : 'Dark Mode'}
+              >
+                {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
+              </motion.button>
             </div>
 
-            {/* Theme Toggle & Mobile Menu */}
-            <div className="flex items-center gap-4">
+            {/* Mobile Menu & Dark Mode Buttons */}
+            <div className="md:hidden flex items-center gap-3">
               <motion.button
                 onClick={() => setIsDarkMode(!isDarkMode)}
                 className={`p-2 rounded-full transition-colors ${
@@ -107,15 +136,15 @@ export function Navigation() {
                     ? 'bg-gray-800 text-yellow-400 hover:bg-gray-700'
                     : 'bg-gray-100 text-gray-900 hover:bg-gray-200'
                 }`}
-                whileHover={{ scale: 1.1 }}
+                whileHover={{ scale: 1.1, rotate: 20 }}
                 whileTap={{ scale: 0.9 }}
                 title={isDarkMode ? 'Light Mode' : 'Dark Mode'}
               >
                 {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
               </motion.button>
-              
+
               <motion.button
-                className={`md:hidden p-2 rounded-lg transition-colors ${
+                className={`p-2 rounded-full transition-colors ${
                   isDarkMode
                     ? 'text-gray-300 hover:bg-gray-800'
                     : 'text-gray-900 hover:bg-gray-100'
@@ -137,7 +166,7 @@ export function Navigation() {
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: '100%' }}
           transition={{ type: 'tween' }}
-          className={`fixed inset-0 z-40 md:hidden pt-20 ${
+          className={`fixed inset-0 z-40 md:hidden pt-20 transition-colors ${
             isDarkMode ? 'bg-gray-900' : 'bg-white'
           }`}
         >
