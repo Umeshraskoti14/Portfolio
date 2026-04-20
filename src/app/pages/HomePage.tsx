@@ -20,43 +20,91 @@ export function HomePage() {
         animate={{ opacity: isInView ? 1 : 0.3 }}
         transition={{ duration: 0.6 }}
       >
-        {/* Animated Background Elements */}
+        {/* Enhanced Animated Background with Glowing Orbs */}
         <div className="absolute inset-0 overflow-hidden">
+          {/* Primary Glowing Orbs */}
           <motion.div
-            className="absolute top-20 left-10 w-96 h-96 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-50"
+            className="absolute top-10 left-5 w-80 h-80 bg-gradient-to-br from-purple-400 via-purple-300 to-blue-300 rounded-full mix-blend-multiply filter blur-3xl opacity-60 shadow-2xl"
             animate={{
-              x: [0, 100, 0],
-              y: [0, 50, 0],
-              scale: [1, 1.2, 1],
+              x: [0, 150, -100, 80, 0],
+              y: [0, 100, -80, 60, 0],
+              scale: [1, 1.3, 1.1, 1.2, 1],
             }}
             transition={{
-              duration: 20,
+              duration: 28,
               repeat: Infinity,
               ease: 'easeInOut',
             }}
           />
+          
+          {/* Secondary Glowing Orb with Lighting Effect */}
           <motion.div
-            className="absolute top-40 right-10 w-96 h-96 bg-yellow-300 rounded-full mix-blend-multiply filter blur-3xl opacity-50"
+            className="absolute top-32 right-20 w-96 h-96 bg-gradient-to-br from-pink-400 via-rose-300 to-orange-300 rounded-full mix-blend-screen filter blur-3xl opacity-55 shadow-2xl"
             animate={{
-              x: [0, -100, 0],
-              y: [0, 100, 0],
-              scale: [1, 1.3, 1],
+              x: [0, -180, 120, -60, 0],
+              y: [0, 80, -100, 70, 0],
+              scale: [1, 1.25, 1.15, 1.1, 1],
             }}
             transition={{
-              duration: 25,
+              duration: 32,
               repeat: Infinity,
               ease: 'easeInOut',
             }}
           />
+          
+          {/* Tertiary Glowing Orb */}
           <motion.div
-            className="absolute bottom-20 left-1/2 w-96 h-96 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-50"
+            className="absolute -bottom-10 -left-20 w-96 h-96 bg-gradient-to-br from-cyan-400 via-blue-300 to-purple-300 rounded-full mix-blend-screen filter blur-3xl opacity-50 shadow-2xl"
             animate={{
-              x: [0, 50, 0],
-              y: [0, -50, 0],
-              scale: [1, 1.1, 1],
+              x: [0, 100, -150, 50, 0],
+              y: [0, -100, 80, -60, 0],
+              scale: [1, 1.2, 1.1, 1.15, 1],
             }}
             transition={{
-              duration: 22,
+              duration: 30,
+              repeat: Infinity,
+              ease: 'easeInOut',
+            }}
+          />
+          
+          {/* Accent Travelling Light Orb */}
+          <motion.div
+            className="absolute top-1/4 left-1/3 w-64 h-64 bg-gradient-to-br from-yellow-300 via-orange-300 to-red-300 rounded-full mix-blend-add filter blur-2xl opacity-45 shadow-xl"
+            animate={{
+              x: [0, 200, -200, 100, 0],
+              y: [0, -150, 150, -80, 0],
+              scale: [1, 1.4, 1.2, 1.3, 1],
+            }}
+            transition={{
+              duration: 26,
+              repeat: Infinity,
+              ease: 'easeInOut',
+            }}
+          />
+          
+          {/* Fast Moving Light Accent */}
+          <motion.div
+            className="absolute bottom-1/3 right-1/4 w-48 h-48 bg-gradient-to-br from-violet-400 to-pink-300 rounded-full mix-blend-lighten filter blur-2xl opacity-40 shadow-lg"
+            animate={{
+              x: [0, 250, -250, 150, 0],
+              y: [0, 120, -120, 80, 0],
+              scale: [1, 1.5, 1, 1.2, 1],
+            }}
+            transition={{
+              duration: 24,
+              repeat: Infinity,
+              ease: 'easeInOut',
+            }}
+          />
+          
+          {/* Ultra Blur Background Depth Layer */}
+          <motion.div
+            className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-100/20 to-transparent pointer-events-none"
+            animate={{
+              opacity: [0.3, 0.6, 0.3],
+            }}
+            transition={{
+              duration: 8,
               repeat: Infinity,
               ease: 'easeInOut',
             }}
