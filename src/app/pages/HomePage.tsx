@@ -20,91 +20,76 @@ export function HomePage() {
         animate={{ opacity: isInView ? 1 : 0.3 }}
         transition={{ duration: 0.6 }}
       >
-        {/* Enhanced Animated Background with Glowing Orbs */}
+        {/* Aurora Borealis Inspired Flowing Background */}
         <div className="absolute inset-0 overflow-hidden">
-          {/* Primary Glowing Orbs */}
+          {/* Aurora Wave 1 - Cyan to Blue */}
           <motion.div
-            className="absolute top-10 left-5 w-80 h-80 bg-gradient-to-br from-purple-400 via-purple-300 to-blue-300 rounded-full mix-blend-multiply filter blur-3xl opacity-60 shadow-2xl"
+            className="absolute -top-40 -left-40 w-96 h-96 bg-gradient-to-r from-cyan-300 via-blue-400 to-purple-400 rounded-full mix-blend-screen filter blur-3xl opacity-40"
             animate={{
-              x: [0, 150, -100, 80, 0],
-              y: [0, 100, -80, 60, 0],
-              scale: [1, 1.3, 1.1, 1.2, 1],
+              x: [0, 150, -50, 100],
+              y: [0, 200, -100, 50],
+              scale: [1, 1.2, 0.9, 1.1],
             }}
             transition={{
-              duration: 28,
+              duration: 35,
               repeat: Infinity,
               ease: 'easeInOut',
             }}
           />
           
-          {/* Secondary Glowing Orb with Lighting Effect */}
+          {/* Aurora Wave 2 - Purple to Pink */}
           <motion.div
-            className="absolute top-32 right-20 w-96 h-96 bg-gradient-to-br from-pink-400 via-rose-300 to-orange-300 rounded-full mix-blend-screen filter blur-3xl opacity-55 shadow-2xl"
+            className="absolute top-1/4 right-0 w-80 h-80 bg-gradient-to-l from-purple-300 via-pink-400 to-rose-300 rounded-full mix-blend-screen filter blur-3xl opacity-35"
             animate={{
-              x: [0, -180, 120, -60, 0],
-              y: [0, 80, -100, 70, 0],
-              scale: [1, 1.25, 1.15, 1.1, 1],
+              x: [0, -200, 80, -100],
+              y: [0, -150, 100, -50],
+              scale: [1, 1.15, 0.85, 1.05],
             }}
             transition={{
-              duration: 32,
+              duration: 40,
               repeat: Infinity,
               ease: 'easeInOut',
             }}
           />
           
-          {/* Tertiary Glowing Orb */}
+          {/* Aurora Wave 3 - Indigo to Violet */}
           <motion.div
-            className="absolute -bottom-10 -left-20 w-96 h-96 bg-gradient-to-br from-cyan-400 via-blue-300 to-purple-300 rounded-full mix-blend-screen filter blur-3xl opacity-50 shadow-2xl"
+            className="absolute -bottom-32 left-1/3 w-96 h-96 bg-gradient-to-t from-indigo-400 via-violet-300 to-purple-300 rounded-full mix-blend-screen filter blur-3xl opacity-30"
             animate={{
-              x: [0, 100, -150, 50, 0],
-              y: [0, -100, 80, -60, 0],
-              scale: [1, 1.2, 1.1, 1.15, 1],
+              x: [0, 100, -150, 50],
+              y: [0, 100, -200, -50],
+              scale: [1, 1.25, 0.9, 1.1],
             }}
             transition={{
-              duration: 30,
+              duration: 38,
               repeat: Infinity,
               ease: 'easeInOut',
             }}
           />
           
-          {/* Accent Travelling Light Orb */}
+          {/* Aurora Wave 4 - Blue to Cyan */}
           <motion.div
-            className="absolute top-1/4 left-1/3 w-64 h-64 bg-gradient-to-br from-yellow-300 via-orange-300 to-red-300 rounded-full mix-blend-add filter blur-2xl opacity-45 shadow-xl"
+            className="absolute top-0 right-1/4 w-72 h-72 bg-gradient-to-b from-blue-300 via-cyan-400 to-emerald-300 rounded-full mix-blend-lighten filter blur-3xl opacity-25"
             animate={{
-              x: [0, 200, -200, 100, 0],
-              y: [0, -150, 150, -80, 0],
-              scale: [1, 1.4, 1.2, 1.3, 1],
+              x: [0, -120, 180, -60],
+              y: [0, 180, -120, 80],
+              scale: [1, 1.1, 0.95, 1.15],
             }}
             transition={{
-              duration: 26,
+              duration: 42,
               repeat: Infinity,
               ease: 'easeInOut',
             }}
           />
           
-          {/* Fast Moving Light Accent */}
+          {/* Ambient Light Layer */}
           <motion.div
-            className="absolute bottom-1/3 right-1/4 w-48 h-48 bg-gradient-to-br from-violet-400 to-pink-300 rounded-full mix-blend-lighten filter blur-2xl opacity-40 shadow-lg"
+            className="absolute inset-0 bg-gradient-to-b from-blue-200/10 via-transparent to-purple-200/10"
             animate={{
-              x: [0, 250, -250, 150, 0],
-              y: [0, 120, -120, 80, 0],
-              scale: [1, 1.5, 1, 1.2, 1],
+              opacity: [0.2, 0.4, 0.2],
             }}
             transition={{
-              duration: 24,
-              repeat: Infinity,
-              ease: 'easeInOut',
-            }}
-          />
-          
-          {/* Ultra Blur Background Depth Layer */}
-          <motion.div
-            className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-100/20 to-transparent pointer-events-none"
-            animate={{
-              opacity: [0.3, 0.6, 0.3],
-            }}
-            transition={{
-              duration: 8,
+              duration: 12,
               repeat: Infinity,
               ease: 'easeInOut',
             }}

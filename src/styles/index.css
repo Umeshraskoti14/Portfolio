@@ -6,6 +6,42 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Dark Mode Support */
+html.dark {
+  color-scheme: dark;
+}
+
+html.dark {
+  background-color: #111827;
+  color: #f3f4f6;
+}
+
+html.dark body {
+  background-color: #0f172a;
+  color: #e5e7eb;
+}
+
+html.dark section {
+  background-color: #1f2937;
+  color: #e5e7eb;
+}
+
+html.dark h1, html.dark h2, html.dark h3, html.dark h4, html.dark h5, html.dark h6 {
+  color: #f3f4f6;
+}
+
+html.dark p {
+  color: #d1d5db;
+}
+
+html.dark a {
+  color: #60a5fa;
+}
+
+html.dark a:hover {
+  color: #93c5fd;
+}
+
 .custom-cursor-dot,
 .custom-cursor-outline {
   pointer-events: none;
