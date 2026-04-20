@@ -55,7 +55,7 @@ const portfolioData = {
     'Landscape & Nature': [
       { title: 'Himalayan Landscapes', description: 'Capturing the majestic beauty of Nepal\'s mountain ranges and natural wonders. Professional landscape photography showcasing the Himalayas in their full glory.', images: [{ src: '/assets/storytelling/himalayas/himalayas-1.jpg', name: 'Himalayas 1' }, { src: '/assets/storytelling/himalayas/himalayas-2.jpg', name: 'Himalayas 2' }, { src: '/assets/storytelling/himalayas/himalayas-3.jpg', name: 'Himalayas 3' }, { src: '/assets/storytelling/himalayas/himalayas-4.jpg', name: 'Himalayas 4' }, { src: '/assets/storytelling/himalayas/himalayas-5.jpg', name: 'Himalayas 5' }, { src: '/assets/storytelling/himalayas/himalayas-6.jpg', name: 'Himalayas 6' }, { src: '/assets/storytelling/himalayas/himalayas-7.jpg', name: 'Himalayas 7' }, { src: '/assets/storytelling/himalayas/himalayas-8.JPG', name: 'Himalayas 8' }, { src: '/assets/storytelling/himalayas/himalayas-9.JPG', name: 'Himalayas 9' }, { src: '/assets/storytelling/himalayas/himalayas-10.jpg', name: 'Himalayas 10' }, { src: '/assets/storytelling/himalayas/himalayas-11.jpg', name: 'Himalayas 11' }], tags: ['Landscape', 'Mountains', 'Himalayas'], icon: Camera },
       { title: 'Golden Hour - Sunrise Mountain Peaks', description: 'Golden hour photography of Nepal\'s iconic mountain landscapes. Capturing the magical moments when sunlight kisses the peaks.', images: [{ src: '/assets/storytelling/sunrise/sunrise1.JPG', name: 'Sunrise 1' }, { src: '/assets/storytelling/sunrise/sunrise2.jpg', name: 'Sunrise 2' }, { src: '/assets/storytelling/sunrise/sunrise3.jpg', name: 'Sunrise 3' }, { src: '/assets/storytelling/sunrise/sunrise4.jpg', name: 'Sunrise 4' }, { src: '/assets/storytelling/sunrise/sunrise5.jpg', name: 'Sunrise 5' }, { src: '/assets/storytelling/sunrise/sunrise6.jpg', name: 'Sunrise 6' }, { src: '/assets/storytelling/sunrise/sunrise7.jpg', name: 'Sunrise 7' }, { src: '/assets/storytelling/sunrise/sunrise8.jpg', name: 'Sunrise 8' }, { src: '/assets/storytelling/sunrise/sunrise9.JPG', name: 'Sunrise 9' }, { src: '/assets/storytelling/sunrise/sunrise10.jpg', name: 'Sunrise 10' }, { src: '/assets/storytelling/sunrise/sunrise11.jpg', name: 'Sunrise 11' }, { src: '/assets/storytelling/sunrise/sunrise12.jpg', name: 'Sunrise 12' }, { src: '/assets/storytelling/sunrise/sunrise13.jpg', name: 'Sunrise 13' }, { src: '/assets/storytelling/sunrise/sunrise14.jpg', name: 'Sunrise 14' }, { src: '/assets/storytelling/sunrise/sunrise15.jpg', name: 'Sunrise 15' }, { src: '/assets/storytelling/sunrise/sunrise16.jpg', name: 'Sunrise 16' }], tags: ['Sunrise', 'Mountains', 'Golden Hour'], icon: Camera },
-      { title: 'Forest & Nature Biodiversity', description: 'Exploring the lush forests and natural beauty of Nepal\'s diverse ecosystems. Environmental photography celebrating biodiversity.', images: [{ src: '/assets/storytelling/nature/nature1.jpg', name: 'Nature 1' }, { src: '/assets/storytelling/nature/nature2.jpg', name: 'Nature 2' }, { src: '/assets/storytelling/nature/nature3.JPG', name: 'Nature 3' }, { src: '/assets/storytelling/nature/nature4.jpg', name: 'Nature 4' }, { src: '/assets/storytelling/nature/nature5.jpg', name: 'Nature 5' }, { src: '/assets/storytelling/nature/nature6.jpg', name: 'Nature 6' }, { src: '/assets/storytelling/nature/nature7.jpg', name: 'Nature 7' }, { src: '/assets/storytelling/nature/nature8.JPG', name: 'Nature 8' }, { src: '/assets/storytelling/nature/nature9.jpg', name: 'Nature 9' }, { src: '/assets/storytelling/nature/nature10.jpg', name: 'Nature 10' }, { src: '/assets/storytelling/nature/nature11.jpg', name: 'Nature 11' }, { src: '/assets/storytelling/nature/nature12.jpg', name: 'Nature 12' }, { src: '/assets/storytelling/nature/nature13.jpg', name: 'Nature 13' }, { src: '/assets/storytelling/nature/nature14.jpg', name: 'Nature 14' }], tags: ['Nature', 'Forest', 'Environment'], icon: Camera },
+      { title: 'Forest & Nature Biodiversity', description: 'Exploring the lush forests and natural beauty of Nepal\'s diverse ecosystems. Environmental photography celebrating biodiversity.', images: [{ src: '/assets/storytelling/nature/nature1.jpg', name: 'Dense Forest Canopy' }, { src: '/assets/storytelling/nature/nature3.JPG', name: 'Moss-Covered Trees' }, { src: '/assets/storytelling/nature/nature5.jpg', name: 'Alpine Meadow Flora' }, { src: '/assets/storytelling/nature/nature6.jpg', name: 'Forest Stream Habitat' }, { src: '/assets/storytelling/nature/nature7.jpg', name: 'Rocky Forest Gorge' }, { src: '/assets/storytelling/nature/nature8.JPG', name: 'Green Valley Forest' }, { src: '/assets/storytelling/nature/nature9.jpg', name: 'Forest Detail Close-up' }, { src: '/assets/storytelling/nature/nature11.jpg', name: 'Morning Mist Forest' }, { src: '/assets/storytelling/nature/nature14.jpg', name: 'Biodiversity Rich Scene' }], tags: ['Nature', 'Forest', 'Environment'], icon: Camera },
     ],
     'Documentary Photography': [
       { title: 'Rural Nepal Village Life', description: 'Documentary photography showcasing the authentic life in Nepal\'s countryside. Capturing the essence of rural communities and their daily lives.', images: [{ src: '/assets/storytelling/rural/rural1.jpg', name: 'Rural 1' }, { src: '/assets/storytelling/rural/rural2.jpg', name: 'Rural 2' }, { src: '/assets/storytelling/rural/rural3.jpg', name: 'Rural 3' }, { src: '/assets/storytelling/rural/rural4.jpg', name: 'Rural 4' }, { src: '/assets/storytelling/rural/rural5.jpg', name: 'Rural 5' }, { src: '/assets/storytelling/rural/rural6.JPG', name: 'Rural 6' }, { src: '/assets/storytelling/rural/rural7.JPG', name: 'Rural 7' }, { src: '/assets/storytelling/rural/rural8.JPG', name: 'Rural 8' }, { src: '/assets/storytelling/rural/rural9.jpg', name: 'Rural 9' }, { src: '/assets/storytelling/rural/rural10.jpg', name: 'Rural 10' }, { src: '/assets/storytelling/rural/rural11.JPG', name: 'Rural 11' }, { src: '/assets/storytelling/rural/rural12.jpg', name: 'Rural 12' }, { src: '/assets/storytelling/rural/rural13.jpg', name: 'Rural 13' }, { src: '/assets/storytelling/rural/rural14.JPG', name: 'Rural 14' }, { src: '/assets/storytelling/rural/rural15.jpg', name: 'Rural 15' }, { src: '/assets/storytelling/rural/rural16.jpeg', name: 'Rural 16' }, { src: '/assets/storytelling/rural/rural17.jpg', name: 'Rural 17' }, { src: '/assets/storytelling/rural/rural18.jpg', name: 'Rural 18' }, { src: '/assets/storytelling/rural/rural19.jpg', name: 'Rural 19' }, { src: '/assets/storytelling/rural/rural20.jpg', name: 'Rural 20' }, { src: '/assets/storytelling/rural/rural21.jpg', name: 'Rural 21' }, { src: '/assets/storytelling/rural/rural22.jpg', name: 'Rural 22' }, { src: '/assets/storytelling/rural/rural23.jpg', name: 'Rural 23' }, { src: '/assets/storytelling/rural/rural24.JPG', name: 'Rural 24' }, { src: '/assets/storytelling/rural/rural25.JPG', name: 'Rural 25' }, { src: '/assets/storytelling/rural/rural26.jpg', name: 'Rural 26' }], tags: ['Documentary', 'Village Life', 'Rural Nepal'], icon: Camera },
@@ -309,29 +309,35 @@ export function PortfolioPage() {
           <div className="space-y-10">
             <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4">
               {visualGalleryItems.map((imgItem, imgIndex) => (
-                <button
+                <motion.div
                   key={`${imgItem.src}-${imgIndex}`}
-                  onClick={() => setSelectedItem({ item: imgItem.item, startIndex: imgItem.index })}
-                  className="group relative overflow-hidden rounded-[2rem] break-inside-avoid transition-shadow duration-300 hover:shadow-2xl"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.6, delay: imgIndex * 0.05 }}
                 >
-                  <img
-                    src={imgItem.src}
-                    alt={imgItem.name ?? imgItem.item.title}
-                    className="w-full h-auto object-cover rounded-[2rem] transition-transform duration-500 group-hover:scale-105 group-hover:brightness-110"
-                    loading="lazy"
-                    decoding="async"
-                    onError={(e) => { const t = e.currentTarget as HTMLImageElement; if (t.src !== communityCampaignImg) t.src = communityCampaignImg; }}
-                  />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
-                  <div className="pointer-events-none absolute bottom-4 left-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-sm font-semibold">
-                    {imgItem.name ?? imgItem.item.title}
-                  </div>
-                </button>
+                  <button
+                    onClick={() => setSelectedItem({ item: imgItem.item, startIndex: imgItem.index })}
+                    className="group relative overflow-hidden rounded-[2rem] break-inside-avoid transition-shadow duration-300 hover:shadow-2xl w-full"
+                  >
+                    <img
+                      src={imgItem.src}
+                      alt={imgItem.name ?? imgItem.item.title}
+                      className="w-full h-auto object-cover rounded-[2rem] transition-transform duration-500 group-hover:scale-105 group-hover:brightness-110"
+                      loading="lazy"
+                      decoding="async"
+                      onError={(e) => { const t = e.currentTarget as HTMLImageElement; if (t.src !== communityCampaignImg) t.src = communityCampaignImg; }}
+                    />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
+                    <div className="pointer-events-none absolute bottom-4 left-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-sm font-semibold">
+                      {imgItem.name ?? imgItem.item.title}
+                    </div>
+                  </button>
+                </motion.div>
               ))}
             </div>
           </div>
         ) : (
-          <div className="grid gap-8 lg:grid-cols-2">
+          <div className="space-y-8">
             {currentItems.map((item: any, index: number) => {
               const images = uniqueImages(item.images || (item.image ? [item.image] : []));
               const cover = images[0] || item.image;
@@ -344,31 +350,33 @@ export function PortfolioPage() {
                   transition={{ duration: 0.6, delay: 0.1 * index }}
                   className="group overflow-hidden rounded-[2rem] bg-white shadow-2xl"
                 >
-                  <div className="relative h-96 overflow-hidden cursor-pointer">
-                    <img
-                      src={coverSrc}
-                      alt={item.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      loading="lazy"
-                      decoding="async"
-                      onError={(e) => { const t = e.currentTarget as HTMLImageElement; if (t.src !== communityCampaignImg) t.src = communityCampaignImg; }}
-                    />
-                  </div>
-                  <div className="p-8">
-                    <h3 className="text-3xl font-bold text-gray-900 mb-4">{item.title}</h3>
-                    <p className="text-gray-600 leading-relaxed mb-6">{item.description}</p>
-                    <div className="flex flex-wrap items-center gap-3 mb-6">
-                      {item.tags.map((tag: string) => (
-                        <span key={tag} className="rounded-full bg-gray-100 px-4 py-2 text-sm text-gray-700">
-                          {tag}
-                        </span>
-                      ))}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
+                    <div className="relative h-64 md:h-full overflow-hidden cursor-pointer order-2 md:order-1">
+                      <img
+                        src={coverSrc}
+                        alt={item.title}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        loading="lazy"
+                        decoding="async"
+                        onError={(e) => { const t = e.currentTarget as HTMLImageElement; if (t.src !== communityCampaignImg) t.src = communityCampaignImg; }}
+                      />
                     </div>
-                    {item.link && (
-                      <a href={item.link} target="_blank" rel="noopener noreferrer" className="inline-block text-purple-600 hover:text-pink-600 font-semibold transition-colors">
-                        Learn More →
-                      </a>
-                    )}
+                    <div className="p-8 flex flex-col justify-center order-1 md:order-2">
+                      <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">{item.title}</h3>
+                      <p className="text-gray-600 leading-relaxed mb-6 text-sm md:text-base">{item.description}</p>
+                      <div className="flex flex-wrap items-center gap-3 mb-6">
+                        {item.tags.map((tag: string) => (
+                          <span key={tag} className="rounded-full bg-gray-100 px-3 py-1 text-xs md:text-sm text-gray-700">
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                      {item.link && (
+                        <a href={item.link} target="_blank" rel="noopener noreferrer" className="inline-block text-purple-600 hover:text-pink-600 font-semibold transition-colors text-sm md:text-base">
+                          Learn More →
+                        </a>
+                      )}
+                    </div>
                   </div>
                 </motion.div>
               );

@@ -68,7 +68,7 @@ export function About() {
             <img
               src={profilePic}
               alt="Umesh Raskoti"
-              className="w-full h-full object-cover"
+              className="w-full h-full object-contain"
               onError={(e) => {
                 const img = e.target as HTMLImageElement;
                 img.style.backgroundColor = '#f3f4f6';
@@ -92,7 +92,14 @@ export function About() {
               creative storytelling through photography.
             </p>
 
-            <div className="grid grid-cols-2 gap-4 mt-6">
+            <p className="text-gray-600 mb-6">
+              From coordinating rural social work camps in Ghalegaun and Kanyam to facilitating SRHR 
+              awareness sessions, and capturing compelling visual stories through my lens (fluent with 
+              Canon, Nikon, Sony, and Pentax systems), I strive to create meaningful impact in communities 
+              while documenting their stories.
+            </p>
+
+            <div className="grid grid-cols-2 gap-4 mb-6">
               <div className="bg-gradient-to-br from-purple-50 to-purple-100 p-4 rounded-xl">
                 <div className="text-3xl font-bold text-purple-600">
                   <AnimatedCounter value={5} isInView={isInView} />+
@@ -113,12 +120,6 @@ export function About() {
               </div>
             </div>
 
-            <p className="text-gray-600 mb-6">
-              From coordinating rural social work camps in Ghalegaun and Kanyam to facilitating SRHR 
-              awareness sessions, and capturing compelling visual stories through my lens (fluent with 
-              Canon, Nikon, Sony, and Pentax systems), I strive to create meaningful impact in communities 
-              while documenting their stories.
-            </p>
             <a
               href="/Umesh_Raskoti_Resume.pdf"
               download
