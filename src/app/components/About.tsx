@@ -1,7 +1,22 @@
-import { motion, useInView } from 'motion/react';
-import { useRef } from 'react';
+import { motion, useInView, useMotionValue, useTransform, animate } from 'motion/react';
+import { useRef, useEffect } from 'react';
 import { Code2, Palette, Rocket, Users } from 'lucide-react';
 import profilePic from '../../assets/Umesh.png';
+
+function AnimatedCounter({ value, isInView }: { value: number; isInView: boolean }) {
+  const count = useMotionValue(0);
+  const rounded = useTransform(count, Math.round);
+
+  useEffect(() => {
+    if (isInView) {
+      const animation = animate(count, value, { duration: 2, ease: 'easeOut' });
+      return animation.stop;
+    }
+    return undefined;
+  }, [isInView, value, count]);
+
+  return <motion.span>{rounded}</motion.span>;
+}
 
 const features = [
   {
@@ -41,11 +56,6 @@ export function About() {
         >
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">About Me</h2>
           <div className="w-20 h-1 bg-gray-900 mx-auto mb-8" />
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            I'm a passionate developer and designer with a keen eye for detail and a love for creating 
-            beautiful, functional web experiences. With years of experience in modern web technologies, 
-            I bring ideas to life through code and design.
-          </p>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
@@ -81,6 +91,28 @@ export function About() {
               Award (2023) by JCI Nepal and Best Social Survey Award, I combine field expertise with 
               creative storytelling through photography.
             </p>
+
+            <div className="grid grid-cols-2 gap-4 mt-6">
+              <div className="bg-gradient-to-br from-purple-50 to-purple-100 p-4 rounded-xl">
+                <div className="text-3xl font-bold text-purple-600">
+                  <AnimatedCounter value={5} isInView={isInView} />+
+                </div>
+                <div className="text-gray-700 font-medium">Years Experience</div>
+              </div>
+              <div className="bg-gradient-to-br from-pink-50 to-pink-100 p-4 rounded-xl">
+                <div className="text-3xl font-bold text-pink-600">
+                  <AnimatedCounter value={1000} isInView={isInView} />+
+                </div>
+                <div className="text-gray-700 font-medium">People Reached</div>
+              </div>
+              <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-4 rounded-xl col-span-2">
+                <div className="text-3xl font-bold text-blue-600">
+                  <AnimatedCounter value={7} isInView={isInView} />
+                </div>
+                <div className="text-gray-700 font-medium">Strategic Projects</div>
+              </div>
+            </div>
+
             <p className="text-gray-600 mb-6">
               From coordinating rural social work camps in Ghalegaun and Kanyam to facilitating SRHR 
               awareness sessions, and capturing compelling visual stories through my lens (fluent with 

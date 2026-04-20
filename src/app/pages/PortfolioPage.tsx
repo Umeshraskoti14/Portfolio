@@ -64,16 +64,6 @@ const portfolioData = {
   },
 };
 
-function useSlideshow(images: Array<string | { src: string; name?: string }>) {
-  const [index, setIndex] = useState(0);
-  useEffect(() => {
-    if (images.length <= 1) return;
-    const timer = setInterval(() => setIndex((i) => (i + 1) % images.length), 3000);
-    return () => clearInterval(timer);
-  }, [images.length]);
-  return index;
-}
-
 function uniqueImages(images: Array<string | { src: string; name?: string }>) {
   const seen = new Set<string>();
   return images.filter((img) => {
@@ -275,6 +265,18 @@ export function PortfolioPage() {
     return [];
   };
 
+  const currentItems = getCurrentItems();
+  const visualGalleryItems = activeCategory === 'Visual Storytelling'
+    ? currentItems.flatMap((item: any) =>
+        uniqueImages(item.images || []).map((img: any, index: number) => ({
+          src: typeof img === 'string' ? img : img.src,
+          name: typeof img === 'string' ? undefined : img.name,
+          item,
+          index,
+        }))
+      )
+    : [];
+
   return (
     <div id="portfolio" className="cursor-none min-h-screen bg-gradient-to-b from-gray-50 to-white pt-28 pb-20">
       <CustomCursor />
@@ -303,72 +305,37 @@ export function PortfolioPage() {
           </motion.div>
         )}
 
-        {getCurrentItems().some((item: any) => item.images) ? (
+        {activeCategory === 'Visual Storytelling' ? (
           <div className="space-y-10">
-            {getCurrentItems().map((item: any, index: number) => {
-              const images = uniqueImages(item.images || (item.image ? [item.image] : []));
-              const cover = images[0] || item.image;
-              return (
-                <motion.div
-                  key={item.title}
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-                  transition={{ duration: 0.6, delay: 0.1 * index }}
-                  className="space-y-6"
+            <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4">
+              {visualGalleryItems.map((imgItem, imgIndex) => (
+                <button
+                  key={`${imgItem.src}-${imgIndex}`}
+                  onClick={() => setSelectedItem({ item: imgItem.item, startIndex: imgItem.index })}
+                  className="group relative overflow-hidden rounded-[2rem] break-inside-avoid transition-shadow duration-300 hover:shadow-2xl"
                 >
-                  <div className="text-center mb-8">
-                    <h3 className="text-3xl font-bold text-gray-900 mb-2">{item.title}</h3>
-                    <p className="text-gray-600 mb-4">{item.description}</p>
-                    <div className="flex flex-wrap items-center gap-2 justify-center">
-                      {item.tags.map((tag: string) => (
-                        <span key={tag} className="rounded-full bg-gray-100 px-4 py-2 text-sm text-gray-700">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
+                  <img
+                    src={imgItem.src}
+                    alt={imgItem.name ?? imgItem.item.title}
+                    className="w-full h-auto object-cover rounded-[2rem] transition-transform duration-500 group-hover:scale-105 group-hover:brightness-110"
+                    loading="lazy"
+                    decoding="async"
+                    onError={(e) => { const t = e.currentTarget as HTMLImageElement; if (t.src !== communityCampaignImg) t.src = communityCampaignImg; }}
+                  />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
+                  <div className="pointer-events-none absolute bottom-4 left-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-sm font-semibold">
+                    {imgItem.name ?? imgItem.item.title}
                   </div>
-
-                  <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4">
-                    {images.map((img: any, imgIndex: number) => {
-                      const src = typeof img === 'string' ? img : img.src;
-                      const name = typeof img === 'string' ? undefined : img.name;
-                      const randomHeight = [280, 320, 360, 280, 340][imgIndex % 5];
-                      return (
-                        <motion.button
-                          key={src}
-                          onClick={() => setSelectedItem({ item, startIndex: imgIndex })}
-                          initial={{ opacity: 0, scale: 0.9 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          transition={{ duration: 0.4, delay: imgIndex * 0.05 }}
-                          className="relative overflow-hidden rounded-2xl group focus:outline-none break-inside-avoid"
-                          style={{ height: randomHeight }}
-                        >
-                          <img
-                            src={src}
-                            alt={name ?? item.title}
-                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                            loading="lazy"
-                            decoding="async"
-                            onError={(e) => { const t = e.currentTarget as HTMLImageElement; if (t.src !== communityCampaignImg) t.src = communityCampaignImg; }}
-                          />
-                          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300 flex items-center justify-center">
-                            <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-white text-center">
-                              <Camera size={32} className="mx-auto" />
-                            </div>
-                          </div>
-                        </motion.button>
-                      );
-                    })}
-                  </div>
-                </motion.div>
-              );
-            })}
+                </button>
+              ))}
+            </div>
           </div>
         ) : (
-          <div className="space-y-10">
-            {getCurrentItems().map((item: any, index: number) => {
-              const images = item.images || (item.image ? [item.image] : []);
+          <div className="grid gap-8 lg:grid-cols-2">
+            {currentItems.map((item: any, index: number) => {
+              const images = uniqueImages(item.images || (item.image ? [item.image] : []));
               const cover = images[0] || item.image;
+              const coverSrc = typeof cover === 'string' ? cover : cover.src;
               return (
                 <motion.div
                   key={item.title}
@@ -377,54 +344,28 @@ export function PortfolioPage() {
                   transition={{ duration: 0.6, delay: 0.1 * index }}
                   className="group overflow-hidden rounded-[2rem] bg-white shadow-2xl"
                 >
-                  <div className="grid grid-cols-1 lg:grid-cols-[1.3fr_0.7fr]">
-                    <div className="relative h-96 overflow-hidden cursor-pointer" onClick={() => setSelectedItem({ item, startIndex: 0 })}>
-                      <img
-                        src={typeof cover === 'string' ? cover : cover.src}
-                        alt={item.title}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                        loading="lazy"
-                        decoding="async"
-                        onError={(e) => { const t = e.currentTarget as HTMLImageElement; if (t.src !== communityCampaignImg) t.src = communityCampaignImg; }}
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
-                      <div className="absolute bottom-6 left-6 text-white">
-                        <h3 className="text-3xl font-bold tracking-tight">{item.title}</h3>
-                      </div>
-                    </div>
-                    <div className="grid grid-cols-2 gap-2 p-4 md:p-6">
-                      {images.slice(0, 4).map((img: any, thumbIndex: number) => {
-                        const src = typeof img === 'string' ? img : img.src;
-                        const isLast = thumbIndex === 3 && images.length > 4;
-                        return (
-                          <button key={src} onClick={() => setSelectedItem({ item, startIndex: thumbIndex })} className="relative h-40 overflow-hidden rounded-3xl bg-gray-200 focus:outline-none">
-                            <img
-                              src={src}
-                              alt={item.title}
-                              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                              loading="lazy"
-                              decoding="async"
-                              onError={(e) => { const t = e.currentTarget as HTMLImageElement; if (t.src !== communityCampaignImg) t.src = communityCampaignImg; }}
-                            />
-                            {isLast && (
-                              <div className="absolute inset-0 bg-black/55 flex items-center justify-center text-white text-lg font-semibold">+{images.length - 4}</div>
-                            )}
-                          </button>
-                        );
-                      })}
-                    </div>
+                  <div className="relative h-96 overflow-hidden cursor-pointer">
+                    <img
+                      src={coverSrc}
+                      alt={item.title}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      loading="lazy"
+                      decoding="async"
+                      onError={(e) => { const t = e.currentTarget as HTMLImageElement; if (t.src !== communityCampaignImg) t.src = communityCampaignImg; }}
+                    />
                   </div>
                   <div className="p-8">
-                    <div className="flex flex-wrap items-center gap-3 mb-4">
+                    <h3 className="text-3xl font-bold text-gray-900 mb-4">{item.title}</h3>
+                    <p className="text-gray-600 leading-relaxed mb-6">{item.description}</p>
+                    <div className="flex flex-wrap items-center gap-3 mb-6">
                       {item.tags.map((tag: string) => (
                         <span key={tag} className="rounded-full bg-gray-100 px-4 py-2 text-sm text-gray-700">
                           {tag}
                         </span>
                       ))}
                     </div>
-                    <p className="text-gray-600 leading-relaxed">{item.description}</p>
                     {item.link && (
-                      <a href={item.link} target="_blank" rel="noopener noreferrer" className="mt-6 inline-block text-purple-600 hover:text-pink-600 font-semibold transition-colors">
+                      <a href={item.link} target="_blank" rel="noopener noreferrer" className="inline-block text-purple-600 hover:text-pink-600 font-semibold transition-colors">
                         Learn More →
                       </a>
                     )}
