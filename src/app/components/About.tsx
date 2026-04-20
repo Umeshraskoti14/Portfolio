@@ -63,12 +63,12 @@ export function About() {
             initial={{ opacity: 0, x: -50 }}
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative h-96 rounded-2xl overflow-hidden shadow-2xl"
+            className="relative rounded-2xl overflow-hidden shadow-2xl aspect-square bg-gray-100 flex items-center justify-center"
           >
             <img
               src={profilePic}
               alt="Umesh Raskoti"
-              className="w-full h-full object-contain"
+              className="w-full h-full object-contain p-4"
               onError={(e) => {
                 const img = e.target as HTMLImageElement;
                 img.style.backgroundColor = '#f3f4f6';
@@ -106,12 +106,17 @@ export function About() {
                 </div>
                 <div className="text-gray-700 font-medium">Years Experience</div>
               </div>
-              <div className="bg-gradient-to-br from-pink-50 to-pink-100 p-4 rounded-xl">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.6, delay: 0.5 }}
+                className="bg-gradient-to-br from-pink-50 to-pink-100 p-4 rounded-xl"
+              >
                 <div className="text-3xl font-bold text-pink-600">
                   <AnimatedCounter value={1000} isInView={isInView} />+
                 </div>
                 <div className="text-gray-700 font-medium">People Reached</div>
-              </div>
+              </motion.div>
               <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-4 rounded-xl col-span-2">
                 <div className="text-3xl font-bold text-blue-600">
                   <AnimatedCounter value={7} isInView={isInView} />
