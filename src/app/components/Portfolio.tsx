@@ -120,17 +120,17 @@ const RowCard = ({ project, index, isInView }: RowCardProps) => {
     <motion.div
       initial={{ opacity: 0, y: 50 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-      transition={{ duration: 0.6, delay: 0.4 + (index % 8) * 0.1 }}
-      className="border-b border-gray-200 hover:bg-gray-50 transition-colors py-8 md:py-10"
+      transition={{ duration: 0.55, ease: 'easeOut', delay: 0.15 + (index % 8) * 0.06 }}
+      className="w-full rounded-2xl border border-gray-200 bg-gray-50/60 p-4 sm:p-5 md:p-6 hover:bg-gray-50 transition-colors"
     >
-      <div className={`flex flex-col ${isEvenIndex ? 'md:flex-row' : 'md:flex-row-reverse'} gap-6 md:gap-8 items-stretch`}>
+      <div className={`flex w-full flex-col ${isEvenIndex ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-5 md:gap-6 items-stretch`}>
         {/* Image Container */}
-        <div className="w-full md:w-5/12 flex-shrink-0 rounded-lg overflow-hidden shadow-md">
+        <div className="w-full lg:w-[42%] flex-shrink-0 rounded-xl overflow-hidden border border-gray-200 bg-gray-100">
           <motion.img
             src={project.image}
             alt={project.title}
-            className="w-full h-64 md:h-72 object-cover"
-            whileHover={{ scale: 1.05 }}
+            className="w-full aspect-[4/3] md:aspect-[16/10] lg:aspect-[5/4] object-cover"
+            whileHover={{ scale: 1.03 }}
             transition={{ duration: 0.4 }}
             onError={(e) => {
               const img = e.target as HTMLImageElement;
@@ -140,21 +140,21 @@ const RowCard = ({ project, index, isInView }: RowCardProps) => {
         </div>
 
         {/* Content Container */}
-        <div className="w-full md:w-7/12 flex flex-col justify-center">
+        <div className="w-full lg:w-[58%] min-w-0 flex flex-col justify-center">
           <motion.h3 
-            className="text-2xl md:text-3xl font-bold text-gray-900 mb-3"
+            className="text-xl md:text-2xl font-bold text-gray-900 mb-3 break-words"
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-            transition={{ duration: 0.6, delay: 0.5 + (index % 8) * 0.1 }}
+            transition={{ duration: 0.45, delay: 0.22 + (index % 8) * 0.06 }}
           >
             {project.title}
           </motion.h3>
           
           <motion.p 
-            className="text-gray-600 text-base md:text-lg mb-4 leading-relaxed"
+            className="text-gray-600 text-sm md:text-base mb-4 leading-relaxed break-words"
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-            transition={{ duration: 0.6, delay: 0.55 + (index % 8) * 0.1 }}
+            transition={{ duration: 0.45, delay: 0.28 + (index % 8) * 0.06 }}
           >
             {project.description}
           </motion.p>
@@ -163,12 +163,12 @@ const RowCard = ({ project, index, isInView }: RowCardProps) => {
             className="flex flex-wrap gap-2"
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-            transition={{ duration: 0.6, delay: 0.6 + (index % 8) * 0.1 }}
+            transition={{ duration: 0.45, delay: 0.34 + (index % 8) * 0.06 }}
           >
             {project.tags.map((tag) => (
               <span
                 key={tag}
-                className="px-3 py-1 bg-gray-200 text-gray-700 rounded-full text-xs font-medium"
+                className="px-3 py-1 bg-gray-200 text-gray-700 rounded-full text-xs font-medium break-words max-w-full"
               >
                 {tag}
               </span>
@@ -295,7 +295,7 @@ export function Portfolio() {
 
         {/* Row-Based Layout for Community Impact and Strategic Leadership */}
         {isRowBasedCategory || isAllWithRowBased ? (
-          <div className="space-y-0 border-t border-gray-200">
+          <div className="space-y-5">
             {isRowBasedCategory 
               ? filteredProjects.map((project, index) => (
                   <RowCard key={project.title} project={project} index={index} isInView={isInView} />
@@ -305,8 +305,8 @@ export function Portfolio() {
                   {/* Community Impact Section */}
                   {filteredProjects.some(p => p.category === 'Community Impact') && (
                     <div>
-                      <motion.h3 
-                        className="text-2xl font-bold text-gray-900 py-6 px-4 md:px-0 bg-gray-50"
+                      <motion.h3
+                        className="text-2xl font-bold text-gray-900 pt-2 pb-3"
                         initial={{ opacity: 0 }}
                         animate={isInView ? { opacity: 1 } : { opacity: 0 }}
                         transition={{ duration: 0.6 }}
@@ -324,8 +324,8 @@ export function Portfolio() {
                   {/* Strategic Leadership Section */}
                   {filteredProjects.some(p => p.category === 'Strategic Leadership') && (
                     <div>
-                      <motion.h3 
-                        className="text-2xl font-bold text-gray-900 py-6 px-4 md:px-0 bg-gray-50 mt-8"
+                      <motion.h3
+                        className="text-2xl font-bold text-gray-900 pt-8 pb-3"
                         initial={{ opacity: 0 }}
                         animate={isInView ? { opacity: 1 } : { opacity: 0 }}
                         transition={{ duration: 0.6, delay: 0.2 }}
