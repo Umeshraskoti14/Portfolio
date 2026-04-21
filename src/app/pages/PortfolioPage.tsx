@@ -362,40 +362,13 @@ export function PortfolioPage() {
           <motion.p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed" initial={{ opacity: 0 }} animate={isInView ? { opacity: 1 } : { opacity: 0 }} transition={{ duration: 0.8, delay: 0.3 }}>Explore my journey in social activism, leadership, and visual storytelling</motion.p>
         </motion.div>
 
-        <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.4 }} className="flex flex-wrap justify-center gap-4 mb-12">
+        <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.4 }} className="flex flex-wrap justify-center gap-3 mb-12">
           {categories.map((category, index) => (
-            <motion.button key={category} onClick={() => setActiveCategory(category)} initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.45, delay: 0.5 + index * 0.08, ease: 'easeOut' }} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className={`px-8 py-3 rounded-full font-semibold uppercase text-[0.78rem] tracking-[0.28em] transition-all shadow-lg ${activeCategory === category ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-purple-300' : 'bg-white text-gray-700 hover:bg-gray-50 hover:shadow-xl'}`}>
+            <motion.button key={category} onClick={() => setActiveCategory(category)} initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.45, delay: 0.5 + index * 0.08, ease: 'easeOut' }} whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.95 }} className={`px-6 py-2.5 rounded-full font-semibold uppercase text-[0.72rem] tracking-[0.2em] transition-all border ${activeCategory === category ? 'bg-slate-900 text-white border-slate-900 shadow-md' : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'}`}>
               {category}
             </motion.button>
           ))}
         </motion.div>
-
-        {activeSubcategory && (
-          <motion.div
-            initial={{ opacity: 0, y: 20, scale: 0.98 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 0.45, delay: 0.5, ease: 'easeOut' }}
-            className="sticky top-20 z-40 mb-10 px-2 sm:px-0"
-          >
-            <div className="mx-auto flex w-full max-w-full items-center gap-2 overflow-x-auto rounded-2xl border border-white/40 bg-white/35 px-2 py-2 shadow-[0_10px_30px_rgba(15,23,42,0.16)] backdrop-blur-xl sm:inline-flex sm:w-auto sm:flex-wrap sm:justify-center sm:overflow-visible sm:px-3">
-            {subcategories.map((sub) => (
-              <motion.button
-                key={sub}
-                onClick={() => setActiveSubcategory(sub)}
-                whileHover={{ scale: 1.04, y: -1 }}
-                whileTap={{ scale: 0.98 }}
-                className={`shrink-0 whitespace-nowrap rounded-full px-3 py-1.5 text-[0.62rem] md:text-[0.68rem] font-medium italic tracking-[0.1em] transition-all ${
-                  activeSubcategory === sub
-                    ? 'border border-transparent bg-gradient-to-r from-emerald-600 to-cyan-500 text-white shadow-md'
-                    : 'border border-white/60 bg-white/60 text-slate-700 hover:bg-white/80'
-                }`}
-              >
-                {sub.replace(/\b\w/g, (char) => char.toUpperCase())}
-              </motion.button>
-            ))}
-            </div>
-          </motion.div>
-        )}
 
         {activeCategory === 'Visual Storytelling' ? (
           <div className="space-y-10">
@@ -429,7 +402,8 @@ export function PortfolioPage() {
             </div>
           </div>
         ) : (
-          <div className="rounded-3xl border border-slate-200 bg-white px-6 py-6 shadow-sm md:px-8">
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
+            <div className={`${activeSubcategory ? 'lg:col-span-9 lg:order-1' : 'lg:col-span-12'} rounded-3xl border border-slate-200 bg-white px-6 py-6 shadow-sm md:px-8`}>
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
             {rowItems.map((item: any, index: number) => {
               const images = uniqueImages(item.images || (item.image ? [item.image] : []));
@@ -457,6 +431,7 @@ export function PortfolioPage() {
                       onError={(e) => { const t = e.currentTarget as HTMLImageElement; if (t.src !== communityCampaignImg) t.src = communityCampaignImg; }}
                     />
                   </div>
+
                   <div className="flex items-start justify-between gap-4">
                     <h3 className="text-lg font-semibold text-slate-900 md:text-xl">{item.title}</h3>
                     <button
@@ -482,6 +457,36 @@ export function PortfolioPage() {
               );
             })}
             </div>
+            </div>
+
+            {activeSubcategory && (
+              <motion.aside
+                initial={{ opacity: 0, x: 16 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.35, ease: 'easeOut' }}
+                className="lg:col-span-3 lg:order-2"
+              >
+                <div className="lg:sticky lg:top-24 lg:mr-[-2rem] rounded-l-2xl rounded-r-none border border-r-0 border-slate-200 bg-white/95 p-3 shadow-sm backdrop-blur-md">
+                  <div className="flex gap-2 overflow-x-auto lg:flex-col lg:overflow-visible">
+                    {subcategories.map((sub) => (
+                      <motion.button
+                        key={sub}
+                        onClick={() => setActiveSubcategory(sub)}
+                        whileHover={{ x: -2 }}
+                        whileTap={{ scale: 0.98 }}
+                        className={`shrink-0 whitespace-nowrap rounded-xl px-3 py-2 text-left text-xs md:text-sm font-medium transition-all ${
+                          activeSubcategory === sub
+                            ? 'bg-purple-600 text-white shadow-sm'
+                            : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-50'
+                        }`}
+                      >
+                        {sub.replace(/\b\w/g, (char) => char.toUpperCase())}
+                      </motion.button>
+                    ))}
+                  </div>
+                </div>
+              </motion.aside>
+            )}
           </div>
         )}
 
