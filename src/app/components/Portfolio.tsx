@@ -54,7 +54,7 @@ const projects = [
     category: 'Strategic Leadership',
   },
   {
-    title: 'Child Protection & Data Management (Good Neighbors International Nepal)',
+    title: 'Good Neighbors International Nepal',
     description: "Good Neighbors International is a global humanitarian organization focused on child rights and well-being. During a six-month internship with Good Neighbors International Nepal in the Sponsorship and Child Protection Department, I screened, verified, and updated records for approximately 1,400 children in the Child Management System (CMS). I handled Gift Money Letters (GML), Annual Child Letters (ACL) Type A and Type B, and Home Visit Data; reviewed records for completeness and consistency; translated content from Nepali to English with cultural sensitivity; and participated in team meetings and benchmarking workshops to learn child protection frameworks and best practices.",
     image: '/assets/community/Capacity Building and Awareness/Kaligandaki Rural Municipality.JPG',
     tags: ['Child Protection', 'Data Management', 'Sponsorship', 'Case Documentation'],
