@@ -371,12 +371,29 @@ export function PortfolioPage() {
         </motion.div>
 
         {activeSubcategory && (
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.7 }} className="sticky top-24 z-40 flex flex-col md:flex-row justify-center gap-4 mb-12 bg-white/95 backdrop-blur-xl border border-slate-200 pb-6 pt-4 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8 shadow-xl">
+          <motion.div
+            initial={{ opacity: 0, y: 20, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.45, delay: 0.5, ease: 'easeOut' }}
+            className="sticky top-20 z-40 mb-10 px-2 sm:px-0"
+          >
+            <div className="mx-auto flex w-full max-w-full items-center gap-2 overflow-x-auto rounded-2xl border border-white/40 bg-white/35 px-2 py-2 shadow-[0_10px_30px_rgba(15,23,42,0.16)] backdrop-blur-xl sm:inline-flex sm:w-auto sm:flex-wrap sm:justify-center sm:overflow-visible sm:px-3">
             {subcategories.map((sub) => (
-              <motion.button key={sub} onClick={() => setActiveSubcategory(sub)} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className={`px-4 py-2 rounded-full transition-all text-[0.68rem] md:text-[0.75rem] italic tracking-[0.16em] font-medium shadow-sm backdrop-blur-sm ${activeSubcategory === sub ? 'bg-gradient-to-r from-emerald-600 to-cyan-500 text-white border border-transparent shadow-cyan-200/40' : 'bg-white/90 text-slate-700 border border-slate-200/80 hover:bg-slate-100'}`}>
+              <motion.button
+                key={sub}
+                onClick={() => setActiveSubcategory(sub)}
+                whileHover={{ scale: 1.04, y: -1 }}
+                whileTap={{ scale: 0.98 }}
+                className={`shrink-0 whitespace-nowrap rounded-full px-3 py-1.5 text-[0.62rem] md:text-[0.68rem] font-medium italic tracking-[0.1em] transition-all ${
+                  activeSubcategory === sub
+                    ? 'border border-transparent bg-gradient-to-r from-emerald-600 to-cyan-500 text-white shadow-md'
+                    : 'border border-white/60 bg-white/60 text-slate-700 hover:bg-white/80'
+                }`}
+              >
                 {sub.replace(/\b\w/g, (char) => char.toUpperCase())}
               </motion.button>
             ))}
+            </div>
           </motion.div>
         )}
 
