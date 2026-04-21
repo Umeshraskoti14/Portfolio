@@ -15,10 +15,36 @@ const portfolioData = {
       { title: 'Ethnographic Research Camp - Kanyam, Ilam', description: 'Head of Grievances Management, December 16-20, 2024. Conducted Ethnographic Field Research, Workshop & Mini Project, Local Area Exploration, and Closing Ceremony.', image: '/assets/community/Social work camp/Ethnographic.jpg', tags: ['Ethnographic Research', 'December 16-20, 2024', 'Field Work'], icon: BookOpen },
     ],
     'Professional Internships': [
-      { title: 'Child Protection & Data Management', description: 'Completed my internship at the Sponsorship and Child Protection Department of Good Neighbors International Nepal, where I primarily worked in data management. My responsibilities included maintaining beneficiary records, ensuring data accuracy, supporting documentation processes, and contributing to effective child protection and sponsorship reporting systems.', image: ginImg, tags: ['Data Management', 'Child Protection', 'April-October 2025'], icon: Briefcase, link: 'https://www.goodneighbors.org/' },
-      { title: 'Mental Health & Counseling Support', description: 'Interned at Manoshastra Research and Counseling Center, gaining hands-on experience in mental health support. Assisted with client history taking, relaxation therapy sessions, and psychosocial support, while developing skills in empathetic communication, case documentation, and client-centered care.', image: manoImg, tags: ['Mental Health', 'Counseling', 'May-July 2022'], icon: Heart },
-      { title: 'Community Safety & Policing Internship', description: 'Completed an internship at Metro Police Circle Thimi, gaining practical exposure to community policing and public safety operations. Supported administrative documentation, observed case handling procedures, and engaged in coordination processes related to community security.', image: '/assets/community/Internship/Metro Police Circle Thimi.jpg', tags: ['Community Policing', 'Public Safety', 'Administrative Support'], icon: Users },
-      { title: 'Smart City Project & Governance', description: 'Worked under the Smart City Project at Kathmandu Metropolitan City, where I was primarily responsible for volunteer recruitment and mobilization. Coordinated and facilitated meetings with Ward Chairpersons and key stakeholders to support project implementation and community engagement.', image: kmcImg, tags: ['Smart City Project', 'Volunteer Mobilization', 'Government'], icon: Users, link: 'https://kathmandu.gov.np/' },
+      {
+        title: 'Good Neighbors International Nepal',
+        description: 'Good Neighbors International is a global humanitarian and development organization committed to improving the lives of neglected, vulnerable, and marginalized communities, with a particular emphasis on child rights and well-being. During my six-month internship with Good Neighbors International Nepal in the Sponsorship and Child Protection Department, I screened, verified, and updated records for approximately 1,400 children in the organization\'s Child Management System (CMS). I handled Gift Money Letters (GML), Annual Child Letters (ACL) Type A and Type B, and Home Visit Data; reviewed records for completeness and consistency; translated content from Nepali to English with high accuracy and cultural sensitivity; and participated in team meetings and benchmarking workshops to learn child protection frameworks and best practices.',
+        image: ginImg,
+        tags: ['Child Protection', 'Data Management', 'Sponsorship'],
+        icon: Briefcase,
+        link: 'https://www.goodneighbors.org/'
+      },
+      {
+        title: 'Mental Health & Counseling Support (Manoshastra Research and Counseling Center)',
+        description: 'ManoShastra Counseling and Research Center was founded in 2019 with a mission to make quality mental health care accessible across Nepal. During my two-month internship under the supervision of Psychologist Sazzan Shrestha, I assisted with client history taking, relaxation therapy sessions, and provided psychosocial support. I developed skills in empathetic communication, active listening, case documentation, and client-centered care, gaining practical insight into holistic mental health practices and psychosocial interventions.',
+        image: manoImg,
+        tags: ['Mental Health', 'Counseling', 'Psychosocial Support'],
+        icon: Heart
+      },
+      {
+        title: 'Metropolitan Police circle Thimi',
+        description: 'The Metropolitan Police Circle Thimi is the primary law enforcement agency for the Madhyapur Thimi area in Bhaktapur. I completed a 300-hour internship under the supervision of a Sub-Inspector (SI) as part of my first-year fieldwork requirement. I gained practical exposure to community policing and public safety operations: supported administrative documentation, observed case handling from complaint registration to resolution, participated in stakeholder coordination, assisted organizing an awareness session during the 16 Days of Activism against Gender-Based Violence, and contributed to a social survey on safety issues within Madhyapur Thimi Municipality. These experiences strengthened my understanding of collaborative policing, community engagement, and proactive public-safety measures.',
+        image: '/assets/community/Internship/Metro Police Circle Thimi.jpg',
+        tags: ['Community Policing', 'Case Handling', 'Public Safety', 'Stakeholder Coordination'],
+        icon: Users
+      },
+      {
+        title: 'Kathmandu Metropolitan City - Smart City Project',
+        description: 'Under the OASC (Open & Agile Smart Cities and Communities) framework, I worked on a smart city project in collaboration with Kathmandu Metropolitan City across its 32 wards. The initiative focused on community-driven urban solutions by actively involving Tole Sudhar Samiti. For one year, I served as a key team member with Antarikchya Pratisthan Nepal under the supervision of Smart City Expert Bigyan Ghimire. My responsibilities included recruiting volunteers, facilitating orientation sessions, allocating data collection sites, monitoring field activities, and conducting regular coordination meetings with ward chairpersons and stakeholders to ensure effective project implementation.',
+        image: kmcImg,
+        tags: ['Smart City', 'Volunteer Coordination', 'Data Collection'],
+        icon: Users,
+        link: 'https://kathmandu.gov.np/'
+      }
     ],
     'Educational Advocacy (CSE & SRHR)': [
       { title: 'Youth Capacity Building - Life Project', description: 'Facilitated an eight-day training session on Comprehensive Sexuality Education (CSE) and its key components for four youth participants of the Life Project. The session aimed to strengthen their knowledge and capacity on CSE, enabling them to better understand and promote its components.', image: '/assets/community/Capacity Building and Awareness/Training on CSE and Its Components.jpg', tags: ['CSE Training', 'Life Project', 'Youth Capacity'], icon: BookOpen },
