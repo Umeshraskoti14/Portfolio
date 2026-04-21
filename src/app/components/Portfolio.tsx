@@ -1,4 +1,5 @@
 import { motion, useInView } from 'motion/react';
+import React from 'react';
 import { useRef, useState } from 'react';
 import { ExternalLink, Camera } from 'lucide-react';
 const kmcImg = '/assets/leadership/Pre Induction.jpg';
@@ -114,23 +115,21 @@ interface RowCardProps {
 }
 
 const RowCard = ({ project, index, isInView }: RowCardProps) => {
-  const isEvenIndex = index % 2 === 0;
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 50 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-      transition={{ duration: 0.55, ease: 'easeOut', delay: 0.15 + (index % 8) * 0.06 }}
-      className="w-full rounded-2xl border border-gray-200 bg-gray-50/60 p-4 sm:p-5 md:p-6 hover:bg-gray-50 transition-colors"
+      transition={{ duration: 0.5, ease: 'easeOut', delay: 0.12 + (index % 8) * 0.05 }}
+      className="w-full rounded-2xl border border-gray-200 bg-gray-50 p-4 sm:p-5 md:p-6"
     >
-      <div className={`flex w-full flex-col ${isEvenIndex ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-5 md:gap-6 items-stretch`}>
+      <div className="flex w-full flex-col gap-5 md:gap-6 items-stretch lg:flex-row">
         {/* Image Container */}
-        <div className="w-full lg:w-[42%] flex-shrink-0 rounded-xl overflow-hidden border border-gray-200 bg-gray-100">
+        <div className="w-full lg:w-[40%] flex-shrink-0 rounded-xl overflow-hidden border border-gray-200 bg-gray-100">
           <motion.img
             src={project.image}
             alt={project.title}
-            className="w-full aspect-[4/3] md:aspect-[16/10] lg:aspect-[5/4] object-cover"
-            whileHover={{ scale: 1.03 }}
+            className="w-full aspect-[4/3] md:aspect-[16/10] lg:aspect-[4/3] object-cover"
+            whileHover={{ scale: 1.02 }}
             transition={{ duration: 0.4 }}
             onError={(e) => {
               const img = e.target as HTMLImageElement;
@@ -140,7 +139,7 @@ const RowCard = ({ project, index, isInView }: RowCardProps) => {
         </div>
 
         {/* Content Container */}
-        <div className="w-full lg:w-[58%] min-w-0 flex flex-col justify-center">
+        <div className="w-full lg:w-[60%] min-w-0 flex flex-col justify-center">
           <motion.h3 
             className="text-xl md:text-2xl font-bold text-gray-900 mb-3 break-words"
             initial={{ opacity: 0 }}
@@ -246,11 +245,11 @@ export function Portfolio() {
     ? projects 
     : projects.filter(project => project.category === activeCategory);
 
-  // Check if we should use row-based layout
-  const isRowBasedCategory = activeCategory === 'Community Impact' || activeCategory === 'Strategic Leadership';
-  const isAllWithRowBased = activeCategory === 'All' && filteredProjects.some(
-    p => p.category === 'Community Impact' || p.category === 'Strategic Leadership'
-  );
+  const isListStyleCategory = (category: string) =>
+    category === 'Community Impact' || category === 'Strategic Leadership';
+
+  const isRowBasedCategory = isListStyleCategory(activeCategory);
+  const isAllWithMixedLayouts = activeCategory === 'All';
 
   return (
     <section id="portfolio" className="py-20 md:py-32 bg-white" ref={ref}>
@@ -294,7 +293,7 @@ export function Portfolio() {
         </motion.div>
 
         {/* Row-Based Layout for Community Impact and Strategic Leadership */}
-        {isRowBasedCategory || isAllWithRowBased ? (
+        {isRowBasedCategory || isAllWithMixedLayouts ? (
           <div className="space-y-5">
             {isRowBasedCategory 
               ? filteredProjects.map((project, index) => (
