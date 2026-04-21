@@ -120,16 +120,16 @@ const RowCard = ({ project, index, isInView }: RowCardProps) => {
       initial={{ opacity: 0, y: 50 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
       transition={{ duration: 0.5, ease: 'easeOut', delay: 0.12 + (index % 8) * 0.05 }}
-      className="w-full rounded-2xl border border-gray-200 bg-gray-50 p-4 sm:p-5 md:p-6"
+      className="w-full border-b border-gray-200 py-6 md:py-8"
     >
-      <div className="flex w-full flex-col gap-5 md:gap-6 items-stretch lg:flex-row">
+      <div className="flex w-full flex-col gap-5 md:gap-6 lg:flex-row lg:items-start">
         {/* Image Container */}
-        <div className="w-full lg:w-[40%] flex-shrink-0 rounded-xl overflow-hidden border border-gray-200 bg-gray-100">
+        <div className="w-full lg:w-[32%] flex-shrink-0 overflow-hidden rounded-lg bg-gray-100">
           <motion.img
             src={project.image}
             alt={project.title}
-            className="w-full aspect-[4/3] md:aspect-[16/10] lg:aspect-[4/3] object-cover"
-            whileHover={{ scale: 1.02 }}
+            className="w-full aspect-[16/10] object-cover"
+            whileHover={{ scale: 1.01 }}
             transition={{ duration: 0.4 }}
             onError={(e) => {
               const img = e.target as HTMLImageElement;
@@ -139,9 +139,17 @@ const RowCard = ({ project, index, isInView }: RowCardProps) => {
         </div>
 
         {/* Content Container */}
-        <div className="w-full lg:w-[60%] min-w-0 flex flex-col justify-center">
-          <motion.h3 
-            className="text-xl md:text-2xl font-bold text-gray-900 mb-3 break-words"
+        <div className="w-full lg:w-[68%] min-w-0">
+          <motion.p
+            className="text-xs md:text-sm uppercase tracking-widest text-gray-500 mb-2"
+            initial={{ opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+            transition={{ duration: 0.4, delay: 0.18 + (index % 8) * 0.05 }}
+          >
+            Program {index + 1}
+          </motion.p>
+          <motion.h3
+            className="text-xl md:text-2xl font-semibold text-gray-900 mb-3 break-words"
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : { opacity: 0 }}
             transition={{ duration: 0.45, delay: 0.22 + (index % 8) * 0.06 }}
@@ -149,7 +157,7 @@ const RowCard = ({ project, index, isInView }: RowCardProps) => {
             {project.title}
           </motion.h3>
           
-          <motion.p 
+          <motion.p
             className="text-gray-600 text-sm md:text-base mb-4 leading-relaxed break-words"
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : { opacity: 0 }}
@@ -167,7 +175,7 @@ const RowCard = ({ project, index, isInView }: RowCardProps) => {
             {project.tags.map((tag) => (
               <span
                 key={tag}
-                className="px-3 py-1 bg-gray-200 text-gray-700 rounded-full text-xs font-medium break-words max-w-full"
+                className="px-2.5 py-1 bg-gray-100 text-gray-700 rounded text-xs font-medium break-words max-w-full border border-gray-200"
               >
                 {tag}
               </span>
