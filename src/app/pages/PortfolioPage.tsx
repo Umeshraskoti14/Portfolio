@@ -1,10 +1,11 @@
 ﻿import { AnimatePresence, motion, useInView } from 'motion/react';
+import React from 'react';
 import { useRef, useState, useEffect } from 'react';
 import { Camera, MapPin, Users, Award, BookOpen, Heart, Briefcase, GraduationCap, Trophy, Star, Target, Lightbulb } from 'lucide-react';
-import ginImg from 'figma:asset/2c4f084427bf94aa4895b8089f02f525068246fe.png';
-import manoImg from 'figma:asset/a10c0aa055913800b480435f11f1cb49df00ce42.png';
-import kmcImg from 'figma:asset/63b35ce0ab7380ad171c37c929c5ca1a23a179cf.png';
-import communityCampaignImg from 'figma:asset/9ec45cbbbc95fb0d1d25d569ed17865ca696fc58.png';
+const ginImg = '/assets/community/Capacity Building and Awareness/Kaligandaki Rural Municipality.JPG';
+const manoImg = '/assets/community/Capacity Building and Awareness/SRHR Youth Champion.jpg';
+const kmcImg = '/assets/leadership/Pre Induction.jpg';
+const communityCampaignImg = '/assets/storytelling/heritage/heritage-1.jpg';
 
 const portfolioData = {
   'Community Impact': {
@@ -88,11 +89,9 @@ const portfolioData = {
       { title: 'International Relations - IVP Official Visit', description: 'Coordinated and hosted the official visit of the JCI International Vice President to Nepal. This historic milestone provided valuable strategic insights, feedback, and motivation to enhance chapter performance and leadership effectiveness at the international level.', image: '/assets/leadership/Welcome International Assign Vice President.jpg', tags: ['International Level', 'JCI Vice President', 'Chapter Visit'], icon: Trophy },
       { title: 'Festival Documentation - Gaijatra & Cultural Events', description: 'Capturing the vibrant essence of Nepali cultural festivals and traditional ceremonies. Documenting community celebrations, traditional rituals, and the living cultural heritage of Nepal through authentic festival photography.', images: [{ src: '/assets/leadership/Water Distribution.jpg', name: 'Gaijatra Festival 1' }, { src: '/assets/leadership/Installation and Award distribution Ceremony.jpg', name: 'Cultural Event 1' }, { src: '/assets/leadership/Developing Emotional Intelligence.jpg', name: 'Cultural Event 2' }], tags: ['Festival', 'Culture', 'Community Events'], icon: Camera },
     ],
-    'Governance & Urban Projects': [
+    'Conventions': [
       { title: 'Smart City Project Coordination', description: 'Worked under the Smart City Project at Kathmandu Metropolitan City, where I was primarily responsible for volunteer recruitment and mobilization. Coordinated and facilitated meetings with Ward Chairpersons and key stakeholders to support project implementation and community engagement.', image: kmcImg, tags: ['Smart City Project', 'Volunteer Mobilization', 'Government'], icon: Users, link: 'https://kathmandu.gov.np/' },
       { title: 'Urban Development & Public Health', description: 'The program was organized by JCI Bhaktapur Junior with the support of JCI Bhaktapur and JCI Bhaktapur Lady during the cultural festival of Gaijatra in Bhaktapur. The primary objective was to provide safe drinking water to visitors, particularly those who were new to Bhaktapur and participating in the festival.', image: '/assets/leadership/Water Distribution.jpg', tags: ['Community Service', 'Gaijatra Festival', 'Bhaktapur'], icon: Heart },
-    ],
-    'Strategic Training & Conventions': [
       { title: 'Area C Conference Leadership', description: 'The 2023 JCI Nepal Area "C" Conference was held on April 28–29, 2023 at Hotel View Bhrikuti in Godawari, Lalitpur District. The conference brought together members and leaders from multiple chapters within Area C. The primary objective was to strengthen leadership capabilities, foster collaboration, and enhance strategic vision.', image: '/assets/leadership/Area C conference.jpg', tags: ['Conference', 'April 28-29, 2023', 'Area C'], icon: Users },
       { title: 'National Conventions & Leadership Forums', description: 'Participated in the 50th JCI Nepal National Convention (December 15–18, 2023) and 12th National Junior Jaycees Leaders\' Academy (November 8–10, 2023). These landmark events featured comprehensive leadership forums, strategic sessions, capacity-building workshops, and networking opportunities.', image: '/assets/leadership/50th Convention.jpg', tags: ['50th Convention', 'December 15-18, 2023', 'National Event'], icon: Star },
       { title: 'Multi-Chapter Leadership Training', description: 'Hosted Area C Multi-Chapter Training centered on "Leadership Within You," emphasizing self-awareness, personal accountability, and values-based leadership. The training was facilitated by the National Past President of JCI Nepal with participation from multiple chapters.', image: '/assets/leadership/Multichapter.jpg', tags: ['Multi-Chapter', 'Area C', 'Leadership Within You'], icon: Users },
@@ -218,7 +217,7 @@ function GalleryModal({ item, startIndex = 0, onClose }: { item: any; startIndex
   const [idx, setIdx] = useState(startIndex);
   useEffect(() => { setIdx(startIndex); }, [item, startIndex]);
   if (!item) return null;
-  const imgs: Array<{ src: string; name?: string }> = uniqueImages((item.images || [item.image]).map((img: any) => (typeof img === 'string' ? { src: img } : img)));
+  const imgs = uniqueImages((item.images || [item.image]).map((img: any) => (typeof img === 'string' ? { src: img } : img))) as Array<{ src: string; name?: string }>;
   const prev = () => setIdx((i) => (i - 1 + imgs.length) % imgs.length);
   const next = () => setIdx((i) => (i + 1) % imgs.length);
   const current = imgs[idx];
@@ -234,6 +233,25 @@ function GalleryModal({ item, startIndex = 0, onClose }: { item: any; startIndex
       </motion.div>
     </motion.div>
   );
+}
+
+function useSlideshow(images: Array<string | { src: string }>, intervalMs = 2500) {
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    if (!images || images.length <= 1) {
+      setIndex(0);
+      return;
+    }
+
+    const timer = window.setInterval(() => {
+      setIndex((prev) => (prev + 1) % images.length);
+    }, intervalMs);
+
+    return () => window.clearInterval(timer);
+  }, [images, intervalMs]);
+
+  return index;
 }
 
 function PortfolioCard({ item, index, isInView, onClick }: { item: any; index: number; isInView: boolean; onClick: (startIndex: number) => void }) {
@@ -294,6 +312,7 @@ export function PortfolioPage() {
   const [activeCategory, setActiveCategory] = useState<keyof PortfolioData>(categories[0]);
   const [activeSubcategory, setActiveSubcategory] = useState<string | null>(null);
   const [selectedItem, setSelectedItem] = useState<{ item: any; startIndex: number } | null>(null);
+  const [expandedItemTitle, setExpandedItemTitle] = useState<string | null>(null);
 
   useEffect(() => {
     const data = portfolioData[activeCategory];
@@ -316,6 +335,7 @@ export function PortfolioPage() {
   };
 
   const currentItems = getCurrentItems();
+  const rowItems = activeCategory === 'Visual Storytelling' ? currentItems : currentItems.slice(0, 3);
   const visualGalleryItems = activeCategory === 'Visual Storytelling'
     ? currentItems.flatMap((item: any) =>
         uniqueImages(item.images || []).map((img: any, index: number) => ({
@@ -326,6 +346,10 @@ export function PortfolioPage() {
         }))
       )
     : [];
+
+  useEffect(() => {
+    setExpandedItemTitle(null);
+  }, [activeCategory, activeSubcategory]);
 
   return (
     <div id="portfolio" className="cursor-none min-h-screen bg-gradient-to-b from-gray-50 to-white pt-28 pb-20">
@@ -387,47 +411,86 @@ export function PortfolioPage() {
             </div>
           </div>
         ) : (
-          <div className="space-y-8">
-            {currentItems.map((item: any, index: number) => {
+          <div className="space-y-1 rounded-3xl border border-slate-200 bg-white px-6 py-3 shadow-sm md:px-8">
+            {rowItems.map((item: any, index: number) => {
               const images = uniqueImages(item.images || (item.image ? [item.image] : []));
               const cover = images[0] || item.image;
               const coverSrc = typeof cover === 'string' ? cover : cover.src;
+              const isExpanded = expandedItemTitle === item.title;
+              const shortDescription =
+                item.description.length > 170 ? `${item.description.slice(0, 170)}...` : item.description;
+
               return (
                 <motion.div
                   key={item.title}
                   initial={{ opacity: 0, y: 50 }}
                   animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-                  transition={{ duration: 0.6, delay: 0.1 * index }}
-                  className="group overflow-hidden rounded-[2rem] bg-white shadow-2xl"
+                  transition={{ duration: 0.45, delay: 0.05 * index }}
+                  className="border-b border-slate-200 py-5 last:border-b-0"
                 >
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
-                    <div className="relative h-64 md:h-full overflow-hidden cursor-pointer order-2 md:order-1">
-                      <img
-                        src={coverSrc}
-                        alt={item.title}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                        loading="lazy"
-                        decoding="async"
-                        onError={(e) => { const t = e.currentTarget as HTMLImageElement; if (t.src !== communityCampaignImg) t.src = communityCampaignImg; }}
-                      />
-                    </div>
-                    <div className="p-8 flex flex-col justify-center order-1 md:order-2">
-                      <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">{item.title}</h3>
-                      <p className="text-gray-600 leading-relaxed mb-6 text-sm md:text-base">{item.description}</p>
-                      <div className="flex flex-wrap items-center gap-3 mb-6">
-                        {item.tags.map((tag: string) => (
-                          <span key={tag} className="rounded-full bg-gray-100 px-3 py-1 text-xs md:text-sm text-gray-700">
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                      {item.link && (
-                        <a href={item.link} target="_blank" rel="noopener noreferrer" className="inline-block text-purple-600 hover:text-pink-600 font-semibold transition-colors text-sm md:text-base">
-                          Learn More →
-                        </a>
-                      )}
-                    </div>
+                  <img
+                    src={coverSrc}
+                    alt={`${item.title} profile`}
+                    className="mb-3 h-12 w-12 rounded-full object-cover border border-slate-200"
+                    loading="lazy"
+                    decoding="async"
+                    onError={(e) => { const t = e.currentTarget as HTMLImageElement; if (t.src !== communityCampaignImg) t.src = communityCampaignImg; }}
+                  />
+                  <div className="flex items-start justify-between gap-4">
+                    <h3 className="text-lg font-semibold text-slate-900 md:text-xl">{item.title}</h3>
+                    <button
+                      type="button"
+                      className="text-sm font-medium text-slate-700 underline underline-offset-4 hover:text-slate-900"
+                      onClick={() =>
+                        setExpandedItemTitle((prev) => (prev === item.title ? null : item.title))
+                      }
+                    >
+                      {isExpanded ? 'Show less' : 'See more'}
+                    </button>
                   </div>
+
+                  <p className="mt-2 text-sm leading-relaxed text-slate-600 md:text-base">
+                    {isExpanded ? item.description : shortDescription}
+                  </p>
+
+                  {isExpanded && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 12 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3, ease: 'easeOut' }}
+                      className="mt-4 grid grid-cols-1 gap-5 md:grid-cols-12"
+                    >
+                      <div className="overflow-hidden rounded-xl bg-slate-100 md:col-span-4">
+                        <img
+                          src={coverSrc}
+                          alt={item.title}
+                          className="aspect-[16/10] w-full object-cover"
+                          loading="lazy"
+                          decoding="async"
+                          onError={(e) => { const t = e.currentTarget as HTMLImageElement; if (t.src !== communityCampaignImg) t.src = communityCampaignImg; }}
+                        />
+                      </div>
+                      <div className="md:col-span-8">
+                        <div className="flex flex-wrap gap-2">
+                          {item.tags.map((tag: string) => (
+                            <span key={tag} className="rounded border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs text-slate-700">
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                        {item.link && (
+                          <a
+                            href={item.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="mt-4 inline-block text-sm font-semibold text-purple-600 transition-colors hover:text-pink-600 md:text-base"
+                          >
+                            Learn More →
+                          </a>
+                        )}
+                      </div>
+                    </motion.div>
+                  )}
                 </motion.div>
               );
             })}
