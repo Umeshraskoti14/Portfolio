@@ -373,8 +373,8 @@ export function PortfolioPage() {
         {activeSubcategory && (
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.7 }} className="sticky top-24 z-40 flex flex-col md:flex-row justify-center gap-4 mb-12 bg-white/95 backdrop-blur-xl border border-slate-200 pb-6 pt-4 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8 shadow-xl">
             {subcategories.map((sub) => (
-              <motion.button key={sub} onClick={() => setActiveSubcategory(sub)} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className={`px-4 py-2 rounded-full transition-all text-[0.68rem] md:text-[0.75rem] lowercase italic tracking-[0.16em] font-medium shadow-sm backdrop-blur-sm ${activeSubcategory === sub ? 'bg-gradient-to-r from-emerald-600 to-cyan-500 text-white border border-transparent shadow-cyan-200/40' : 'bg-white/90 text-slate-700 border border-slate-200/80 hover:bg-slate-100'}`}>
-                {sub}
+              <motion.button key={sub} onClick={() => setActiveSubcategory(sub)} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className={`px-4 py-2 rounded-full transition-all text-[0.68rem] md:text-[0.75rem] italic tracking-[0.16em] font-medium shadow-sm backdrop-blur-sm ${activeSubcategory === sub ? 'bg-gradient-to-r from-emerald-600 to-cyan-500 text-white border border-transparent shadow-cyan-200/40' : 'bg-white/90 text-slate-700 border border-slate-200/80 hover:bg-slate-100'}`}>
+                {sub.replace(/\b\w/g, (char) => char.toUpperCase())}
               </motion.button>
             ))}
           </motion.div>
