@@ -33,7 +33,7 @@ const projects = [
     category: 'Community Impact',
   },
   {
-    title: 'Community Safety & Policing Internship (Metropolitan Police Circle Thimi)',
+    title: 'Metropolitan Police circle Thimi',
     description: "The Metropolitan Police Circle Thimi is the primary law enforcement agency for the Madhyapur Thimi area in Bhaktapur. While interning as a first-year academic fieldwork requirement, I completed a 300-hour internship under the supervision of a Sub-Inspector (SI). I gained practical exposure to community policing and public safety operations, supported administrative documentation, observed case handling from complaint registration to resolution, participated in stakeholder coordination, helped organize an awareness session for the 16 Days of Activism against Gender-Based Violence, and contributed to a social survey on safety issues within Madhyapur Thimi Municipality.",
     image: '/assets/community/Internship/Metro Police Circle Thimi.jpg',
     tags: ['Community Policing', 'Case Handling', 'Public Safety', 'Stakeholder Coordination'],
