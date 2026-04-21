@@ -69,17 +69,10 @@ const projects = [
     category: 'Strategic Leadership',
   },
   {
-    title: 'Governance & Urban Projects',
-    description: 'Worked on smart city projects at Kathmandu Metropolitan City and community safety initiatives, contributing to urban development and public service delivery.',
-    image: kmcImg,
-    tags: ['Smart City Project', 'Volunteer Mobilization', 'Government', 'Community Safety'],
-    category: 'Strategic Leadership',
-  },
-  {
-    title: 'Strategic Training & Conventions',
-    description: 'Participated in national conventions, leadership academies, and multi-chapter training programs, strengthening organizational capacity and leadership skills.',
+    title: 'Conventions',
+    description: 'Combined governance, urban project learning, and national convention participation into one strategic leadership stream, including smart city and community safety exposure, leadership academies, and multi-chapter collaboration to strengthen institutional capacity.',
     image: '/assets/leadership/50th Convention.jpg',
-    tags: ['Leadership Training', 'National Conventions', 'Capacity Building', 'Organizational Development'],
+    tags: ['National Conventions', 'Leadership Academy', 'Urban Governance', 'Capacity Building'],
     category: 'Strategic Leadership',
   },
   {
@@ -115,6 +108,10 @@ interface RowCardProps {
 }
 
 const RowCard = ({ project, index, isInView }: RowCardProps) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const shortDescription =
+    project.description.length > 140 ? `${project.description.slice(0, 140)}...` : project.description;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 50 }}
@@ -122,67 +119,76 @@ const RowCard = ({ project, index, isInView }: RowCardProps) => {
       transition={{ duration: 0.5, ease: 'easeOut', delay: 0.12 + (index % 8) * 0.05 }}
       className="w-full border-b border-gray-200 py-6 md:py-8"
     >
-      <div className="flex w-full flex-col gap-5 md:gap-6 lg:flex-row lg:items-start">
-        {/* Image Container */}
-        <div className="w-full lg:w-[32%] flex-shrink-0 overflow-hidden rounded-lg bg-gray-100">
-          <motion.img
-            src={project.image}
-            alt={project.title}
-            className="w-full aspect-[16/10] object-cover"
-            whileHover={{ scale: 1.01 }}
-            transition={{ duration: 0.4 }}
-            onError={(e) => {
-              const img = e.target as HTMLImageElement;
-              img.style.backgroundColor = '#e5e7eb';
-            }}
-          />
-        </div>
+      <motion.p
+        className="text-xs md:text-sm uppercase tracking-widest text-gray-500 mb-2"
+        initial={{ opacity: 0 }}
+        animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+        transition={{ duration: 0.4, delay: 0.18 + (index % 8) * 0.05 }}
+      >
+        Program {index + 1}
+      </motion.p>
 
-        {/* Content Container */}
-        <div className="w-full lg:w-[68%] min-w-0">
-          <motion.p
-            className="text-xs md:text-sm uppercase tracking-widest text-gray-500 mb-2"
-            initial={{ opacity: 0 }}
-            animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-            transition={{ duration: 0.4, delay: 0.18 + (index % 8) * 0.05 }}
-          >
-            Program {index + 1}
-          </motion.p>
-          <motion.h3
-            className="text-xl md:text-2xl font-semibold text-gray-900 mb-3 break-words"
-            initial={{ opacity: 0 }}
-            animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-            transition={{ duration: 0.45, delay: 0.22 + (index % 8) * 0.06 }}
-          >
-            {project.title}
-          </motion.h3>
-          
-          <motion.p
-            className="text-gray-600 text-sm md:text-base mb-4 leading-relaxed break-words"
-            initial={{ opacity: 0 }}
-            animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-            transition={{ duration: 0.45, delay: 0.28 + (index % 8) * 0.06 }}
-          >
-            {project.description}
-          </motion.p>
-
-          <motion.div 
-            className="flex flex-wrap gap-2"
-            initial={{ opacity: 0 }}
-            animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-            transition={{ duration: 0.45, delay: 0.34 + (index % 8) * 0.06 }}
-          >
-            {project.tags.map((tag) => (
-              <span
-                key={tag}
-                className="px-2.5 py-1 bg-gray-100 text-gray-700 rounded text-xs font-medium break-words max-w-full border border-gray-200"
-              >
-                {tag}
-              </span>
-            ))}
-          </motion.div>
-        </div>
+      <div className="flex items-start justify-between gap-4">
+        <motion.h3
+          className="text-xl md:text-2xl font-semibold text-gray-900 break-words"
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+          transition={{ duration: 0.45, delay: 0.22 + (index % 8) * 0.06 }}
+        >
+          {project.title}
+        </motion.h3>
+        <button
+          type="button"
+          className="text-sm font-medium text-gray-700 hover:text-gray-900 underline underline-offset-4 whitespace-nowrap"
+          onClick={() => setIsExpanded((prev) => !prev)}
+        >
+          {isExpanded ? 'Show less' : 'See more'}
+        </button>
       </div>
+
+      <motion.p
+        className="text-gray-600 text-sm md:text-base mt-2 leading-relaxed break-words"
+        initial={{ opacity: 0 }}
+        animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+        transition={{ duration: 0.45, delay: 0.26 + (index % 8) * 0.06 }}
+      >
+        {isExpanded ? project.description : shortDescription}
+      </motion.p>
+
+      {isExpanded && (
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, ease: 'easeOut' }}
+          className="mt-4 flex w-full flex-col gap-5 md:gap-6 lg:flex-row lg:items-start"
+        >
+          <div className="w-full lg:w-[32%] flex-shrink-0 overflow-hidden rounded-lg bg-gray-100">
+            <motion.img
+              src={project.image}
+              alt={project.title}
+              className="w-full aspect-[16/10] object-cover"
+              whileHover={{ scale: 1.01 }}
+              transition={{ duration: 0.4 }}
+              onError={(e) => {
+                const img = e.target as HTMLImageElement;
+                img.style.backgroundColor = '#e5e7eb';
+              }}
+            />
+          </div>
+          <div className="w-full lg:w-[68%] min-w-0">
+            <div className="flex flex-wrap gap-2">
+              {project.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="px-2.5 py-1 bg-gray-100 text-gray-700 rounded text-xs font-medium break-words max-w-full border border-gray-200"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+      )}
     </motion.div>
   );
 };
