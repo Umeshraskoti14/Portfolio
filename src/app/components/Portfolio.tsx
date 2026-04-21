@@ -1,7 +1,7 @@
 import { motion, useInView } from 'motion/react';
 import { useRef, useState } from 'react';
 import { ExternalLink, Camera } from 'lucide-react';
-import kmcImg from 'figma:asset/63b35ce0ab7380ad171c37c929c5ca1a23a179cf.png';
+const kmcImg = '/assets/leadership/Pre Induction.jpg';
 
 const projects = [
   {
