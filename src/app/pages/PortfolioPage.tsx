@@ -305,6 +305,11 @@ function PortfolioCard({ item, index, isInView, onClick }: { item: any; index: n
 
 type PortfolioData = typeof portfolioData;
 const categories = Object.keys(portfolioData) as Array<keyof PortfolioData>;
+const FACE_SAFE_TITLES = new Set([
+  'Ethnographic Research Camp - Kanyam, Ilam',
+  'Mental Health & Counseling Support (Manoshastra Research and Counseling Center)',
+  'SRHR Youth Champion Portfolio',
+]);
 
 export function PortfolioPage() {
   const ref = useRef(null);
@@ -312,7 +317,7 @@ export function PortfolioPage() {
   const [activeCategory, setActiveCategory] = useState<keyof PortfolioData>(categories[0]);
   const [activeSubcategory, setActiveSubcategory] = useState<string | null>(null);
   const [selectedItem, setSelectedItem] = useState<{ item: any; startIndex: number } | null>(null);
-  const [expandedItemTitle, setExpandedItemTitle] = useState<string | null>(null);
+  const [selectedContent, setSelectedContent] = useState<any | null>(null);
 
   useEffect(() => {
     const data = portfolioData[activeCategory];
@@ -335,7 +340,7 @@ export function PortfolioPage() {
   };
 
   const currentItems = getCurrentItems();
-  const rowItems = activeCategory === 'Visual Storytelling' ? currentItems : currentItems.slice(0, 3);
+  const rowItems = currentItems;
   const visualGalleryItems = activeCategory === 'Visual Storytelling'
     ? currentItems.flatMap((item: any) =>
         uniqueImages(item.images || []).map((img: any, index: number) => ({
@@ -346,10 +351,6 @@ export function PortfolioPage() {
         }))
       )
     : [];
-
-  useEffect(() => {
-    setExpandedItemTitle(null);
-  }, [activeCategory, activeSubcategory]);
 
   return (
     <div id="portfolio" className="cursor-none min-h-screen bg-gradient-to-b from-gray-50 to-white pt-28 pb-20">
@@ -411,12 +412,13 @@ export function PortfolioPage() {
             </div>
           </div>
         ) : (
-          <div className="space-y-1 rounded-3xl border border-slate-200 bg-white px-6 py-3 shadow-sm md:px-8">
+          <div className="rounded-3xl border border-slate-200 bg-white px-6 py-6 shadow-sm md:px-8">
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
             {rowItems.map((item: any, index: number) => {
               const images = uniqueImages(item.images || (item.image ? [item.image] : []));
               const cover = images[0] || item.image;
               const coverSrc = typeof cover === 'string' ? cover : cover.src;
-              const isExpanded = expandedItemTitle === item.title;
+              const useFaceSafeFit = FACE_SAFE_TITLES.has(item.title);
               const shortDescription =
                 item.description.length > 170 ? `${item.description.slice(0, 170)}...` : item.description;
 
@@ -426,78 +428,166 @@ export function PortfolioPage() {
                   initial={{ opacity: 0, y: 50 }}
                   animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
                   transition={{ duration: 0.45, delay: 0.05 * index }}
-                  className="border-b border-slate-200 py-5 last:border-b-0"
+                  className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-4 md:p-5"
                 >
-                  <img
-                    src={coverSrc}
-                    alt={`${item.title} profile`}
-                    className="mb-3 h-12 w-12 rounded-full object-cover border border-slate-200"
-                    loading="lazy"
-                    decoding="async"
-                    onError={(e) => { const t = e.currentTarget as HTMLImageElement; if (t.src !== communityCampaignImg) t.src = communityCampaignImg; }}
-                  />
+                  <div className="mb-4 overflow-hidden rounded-xl border border-slate-200 bg-slate-100">
+                    <img
+                      src={coverSrc}
+                      alt={`${item.title} cover`}
+                      className={useFaceSafeFit ? 'h-52 w-full object-contain bg-slate-100' : 'aspect-[16/7] w-full object-cover'}
+                      loading="lazy"
+                      decoding="async"
+                      onError={(e) => { const t = e.currentTarget as HTMLImageElement; if (t.src !== communityCampaignImg) t.src = communityCampaignImg; }}
+                    />
+                  </div>
                   <div className="flex items-start justify-between gap-4">
                     <h3 className="text-lg font-semibold text-slate-900 md:text-xl">{item.title}</h3>
                     <button
                       type="button"
                       className="text-sm font-medium text-slate-700 underline underline-offset-4 hover:text-slate-900"
-                      onClick={() =>
-                        setExpandedItemTitle((prev) => (prev === item.title ? null : item.title))
-                      }
+                      onClick={() => setSelectedContent(item)}
                     >
-                      {isExpanded ? 'Show less' : 'See more'}
+                      See more
                     </button>
                   </div>
 
                   <p className="mt-2 text-sm leading-relaxed text-slate-600 md:text-base">
-                    {isExpanded ? item.description : shortDescription}
+                    {shortDescription}
                   </p>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {item.tags?.slice(0, 4).map((tag: string) => (
+                      <span key={tag} className="rounded border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs text-slate-700">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </motion.div>
+              );
+            })}
+            </div>
+          </div>
+        )}
 
-                  {isExpanded && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 12 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.3, ease: 'easeOut' }}
-                      className="mt-4 grid grid-cols-1 gap-5 md:grid-cols-12"
-                    >
-                      <div className="overflow-hidden rounded-xl bg-slate-100 md:col-span-4">
+        <AnimatePresence>
+          {selectedContent && (
+            <motion.div
+              className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setSelectedContent(null)}
+            >
+              <motion.div
+                className="w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl bg-white shadow-2xl"
+                initial={{ opacity: 0, y: 20, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 20, scale: 0.98 }}
+                transition={{ duration: 0.25 }}
+                onClick={(e) => e.stopPropagation()}
+              >
+                {(() => {
+                  const modalImages = uniqueImages(selectedContent.images || (selectedContent.image ? [selectedContent.image] : []));
+                  const modalCover = modalImages[0] || communityCampaignImg;
+                  const modalCoverSrc = typeof modalCover === 'string' ? modalCover : modalCover.src;
+                  const modalFaceSafeFit = FACE_SAFE_TITLES.has(selectedContent.title);
+
+                  if (modalFaceSafeFit) {
+                    return (
+                      <div className="grid grid-cols-1 md:grid-cols-12">
+                        <div className="overflow-hidden rounded-t-3xl bg-slate-100 md:col-span-5 md:rounded-l-3xl md:rounded-tr-none">
+                          <img
+                            src={modalCoverSrc}
+                            alt={selectedContent.title}
+                            className="h-72 md:h-full w-full object-contain bg-slate-100"
+                            onError={(e) => {
+                              const t = e.currentTarget as HTMLImageElement;
+                              if (t.src !== communityCampaignImg) t.src = communityCampaignImg;
+                            }}
+                          />
+                        </div>
+                        <div className="p-6 md:col-span-7 md:p-8">
+                          <div className="mb-4 flex items-start justify-between gap-4">
+                            <h3 className="text-2xl font-bold text-slate-900 md:text-3xl">{selectedContent.title}</h3>
+                            <button
+                              type="button"
+                              onClick={() => setSelectedContent(null)}
+                              className="text-sm font-medium text-slate-600 underline underline-offset-4 hover:text-slate-900"
+                            >
+                              Close
+                            </button>
+                          </div>
+                          <p className="text-slate-600 leading-relaxed">{selectedContent.description}</p>
+                          <div className="mt-5 flex flex-wrap gap-2">
+                            {selectedContent.tags?.map((tag: string) => (
+                              <span key={tag} className="rounded border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs text-slate-700">
+                                {tag}
+                              </span>
+                            ))}
+                          </div>
+                          {selectedContent.link && (
+                            <a
+                              href={selectedContent.link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="mt-6 inline-block text-sm font-semibold text-purple-600 transition-colors hover:text-pink-600 md:text-base"
+                            >
+                              Learn More →
+                            </a>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  }
+
+                  return (
+                    <>
+                      <div className="overflow-hidden rounded-t-3xl bg-slate-100">
                         <img
-                          src={coverSrc}
-                          alt={item.title}
-                          className="aspect-[16/10] w-full object-cover"
-                          loading="lazy"
-                          decoding="async"
-                          onError={(e) => { const t = e.currentTarget as HTMLImageElement; if (t.src !== communityCampaignImg) t.src = communityCampaignImg; }}
+                          src={modalCoverSrc}
+                          alt={selectedContent.title}
+                          className="h-56 md:h-72 w-full object-cover"
+                          onError={(e) => {
+                            const t = e.currentTarget as HTMLImageElement;
+                            if (t.src !== communityCampaignImg) t.src = communityCampaignImg;
+                          }}
                         />
                       </div>
-                      <div className="md:col-span-8">
-                        <div className="flex flex-wrap gap-2">
-                          {item.tags.map((tag: string) => (
+                      <div className="p-6 md:p-8">
+                        <div className="mb-4 flex items-start justify-between gap-4">
+                          <h3 className="text-2xl font-bold text-slate-900 md:text-3xl">{selectedContent.title}</h3>
+                          <button
+                            type="button"
+                            onClick={() => setSelectedContent(null)}
+                            className="text-sm font-medium text-slate-600 underline underline-offset-4 hover:text-slate-900"
+                          >
+                            Close
+                          </button>
+                        </div>
+                        <p className="text-slate-600 leading-relaxed">{selectedContent.description}</p>
+                        <div className="mt-5 flex flex-wrap gap-2">
+                          {selectedContent.tags?.map((tag: string) => (
                             <span key={tag} className="rounded border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs text-slate-700">
                               {tag}
                             </span>
                           ))}
                         </div>
-                        {item.link && (
+                        {selectedContent.link && (
                           <a
-                            href={item.link}
+                            href={selectedContent.link}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="mt-4 inline-block text-sm font-semibold text-purple-600 transition-colors hover:text-pink-600 md:text-base"
+                            className="mt-6 inline-block text-sm font-semibold text-purple-600 transition-colors hover:text-pink-600 md:text-base"
                           >
                             Learn More →
                           </a>
                         )}
                       </div>
-                    </motion.div>
-                  )}
-                </motion.div>
-              );
-            })}
-          </div>
-        )}
-
-        <AnimatePresence>
+                    </>
+                  );
+                })()}
+              </motion.div>
+            </motion.div>
+          )}
           {selectedItem && (
             <GalleryModal item={selectedItem.item} startIndex={selectedItem.startIndex} onClose={() => setSelectedItem(null)} />
           )}
