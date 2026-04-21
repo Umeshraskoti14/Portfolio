@@ -8,11 +8,35 @@ import communityCampaignImg from 'figma:asset/9ec45cbbbc95fb0d1d25d569ed17865ca6
 
 const portfolioData = {
   'Community Impact': {
-    'Social Work Camps': [
-      { title: 'Neighborhood Social Work Camp', description: 'The camp was held in four municipalities of Bhaktapur District (Bhaktapur, Madhyapur Thimi, Suryabinayak, and Chagunarayan) where I served as Group Leader from January 2–6, 2022. Activities included Social Survey, Dialogue with Social Representatives, visiting Model Organizations, Community Engagement, and Closing Ceremony.', image: '/assets/community/Social work camp/Neighborhood social work camp.jpg', tags: ['Group Leader', 'January 2-6, 2022', 'Bhaktapur District'], icon: Users },
-      { title: 'Rural Social Work Camp - Ghalegaun, Lamjung', description: 'Served as Camp Coordinator leading rural community development, November 1-5, 2022. Program included Social Mapping, Social Survey on Gender Equality, Dialogue with Local Stakeholders, Community Engagement, Report Presentation, and Closing Ceremony.', image: '/assets/community/Social work camp/Lamjung.jpg', tags: ['Camp Coordinator', 'November 1-5, 2022', 'Gender Equality'], icon: MapPin },
-      { title: 'Urban Social Work Camp - Sauraha, Chitwan', description: 'Head of Idea and Event Management, January 14-18, 2023. Activities included Social Interaction & PRA, Social Survey, School Session and Agency Visit, Panel Discussion, Presentation Competition, and Closing Ceremony.', image: '/assets/community/Social work camp/Urban Social Work Camp.jpg', tags: ['Event Management', 'January 14-18, 2023', 'Urban Development'], icon: Users },
-      { title: 'Ethnographic Research Camp - Kanyam, Ilam', description: 'Head of Grievances Management, December 16-20, 2024. Conducted Ethnographic Field Research, Workshop & Mini Project, Local Area Exploration, and Closing Ceremony.', image: '/assets/community/Social work camp/Ethnographic.jpg', tags: ['Ethnographic Research', 'December 16-20, 2024', 'Field Work'], icon: BookOpen },
+      'Social Work Camps': [
+      {
+        title: 'Neighborhood Social Work Camp',
+        description: 'The Neighborhood Social Work Camp was a practical field activity organized by the Faculty of Humanities and Social Work at Khwopa College in 2021 as part of the academic requirements for the first-year Bachelor of Arts in Social Work (BASW) program. The six-day camp was conducted in Bhaktapur district, with students divided into four groups and assigned to four different municipalities: Bhaktapur Municipality, Suryabinayak Municipality, Changunarayan Municipality, and Madhyapur Thimi Municipality. Key activities included community social surveys, stakeholder engagement, dialogues with local representatives, group presentations, and a closing ceremony. A total of 45 students participated. In this program, I served as Group Leader. My responsibilities included leading overall camp implementation, facilitating effective teamwork, conducting regular meetings with team members and the field instructor, and ensuring the timely completion of all assigned tasks. This role strengthened my leadership, communication, and organizational skills while providing valuable hands-on experience in community engagement and social work practice.',
+        image: '/assets/community/Social work camp/Neighborhood social work camp.jpg',
+        tags: ['Group Leader', 'Bhaktapur District', 'Community Engagement'],
+        icon: Users
+      },
+      {
+        title: 'Rural Social Work Camp - Ghalegaun, Lamjung',
+        description: 'The Rural Social Work Camp was a practical field activity organized by the Faculty of Humanities and Social Work at Khwopa College in 2022 as part of the academic requirements for the second-year Bachelor of Arts in Social Work (BASW) program. The six-day camp was conducted in Lamjung district, specifically in Ghale Gaun and Bhujung. Students were divided into four groups, with each group assigned to develop and implement a unique thematic area. Key activities included social mapping, social surveys, community engagement, dialogues with local representatives, awareness sessions, group presentations, and a closing ceremony. A total of 45 students participated. In this program, I served as Camp Coordinator. My responsibilities included overseeing the overall implementation of the camp, coordinating among all four groups, facilitating regular meetings with team members and the field instructor, and successfully hosting the entire program. This leadership role enhanced my organizational, coordination, and problem-solving skills while providing deeper practical exposure to community-based social work.',
+        image: '/assets/community/Social work camp/Lamjung.jpg',
+        tags: ['Camp Coordinator', 'Lamjung', 'Social Mapping'],
+        icon: MapPin
+      },
+      {
+        title: 'Urban Social Work Camp - Sauraha, Chitwan',
+        description: 'The Urban Social Work Camp was a practical field activity organized by the Faculty of Humanities and Social Work at Khwopa College in 2023 as part of the academic requirements for the third-year Bachelor of Arts in Social Work (BASW) program. The six-day camp was conducted in Sauraha, Chitwan district. Students were divided into four groups, with each group assigned to develop and implement a unique thematic area. Key activities included seasonal calendar preparation, social surveys, community engagement, dialogues with local representatives, awareness sessions, group presentations, and a closing ceremony. A total of 45 students participated. In this program, I served as Idea and Event Manager. My responsibilities included managing logistics, planning and organizing events, and supporting the overall camp implementation in close coordination with the Camp Coordinator and the field instructor. This role strengthened my event management, logistical planning, and teamwork skills while providing valuable practical experience in urban community settings.',
+        image: '/assets/community/Social work camp/Urban Social Work Camp.jpg',
+        tags: ['Idea & Event Manager', 'Sauraha', 'Event Management'],
+        icon: Users
+      },
+      {
+        title: 'Ethnographic Research Camp - Kanyam, Ilam',
+        description: 'The Ethnographic Camp was a practical field activity organized by the Faculty of Humanities and Social Work at Khwopa College in 2024 as part of the academic requirements for the fourth-year Bachelor of Arts in Social Work (BASW) program. The six-day camp was conducted in Ilam district in collaboration with students from Sociology and Journalism. Students were assigned to carry out fieldwork independently. The major purpose of the camp was to conduct ethnographic research in the community of Kanyam and to launch mini-projects in different parts of Ilam. Key activities included ethnographic research, launching mini-projects, community engagement, dialogues with local representatives, awareness sessions, group presentations, and a closing ceremony. A total of 85 students participated in the camp. In this program, I served as Grievances and Idea Management Head. My responsibilities included managing logistics, handling grievances and conflicts, supporting students facing physical and mental challenges, and contributing to the overall coordination of the camp in collaboration with the Camp Coordinator and the field instructor. This role significantly enhanced my conflict resolution, crisis management, leadership, and problem-solving skills in a real community setting.',
+        image: '/assets/community/Social work camp/Ethnographic.jpg',
+        tags: ['Grievance Management', 'Ilam', 'Ethnographic Research'],
+        icon: BookOpen
+      }
     ],
     'Professional Internships': [
       {
