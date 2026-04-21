@@ -250,6 +250,11 @@ export function Portfolio() {
 
   const isRowBasedCategory = isListStyleCategory(activeCategory);
   const isAllWithMixedLayouts = activeCategory === 'All';
+  const getProgramsByCategory = (category: 'Community Impact' | 'Strategic Leadership') =>
+    projects.filter((project) => project.category === category).slice(0, 3);
+
+  const communityPrograms = getProgramsByCategory('Community Impact');
+  const leadershipPrograms = getProgramsByCategory('Strategic Leadership');
 
   return (
     <section id="portfolio" className="py-20 md:py-32 bg-white" ref={ref}>
@@ -296,13 +301,13 @@ export function Portfolio() {
         {isRowBasedCategory || isAllWithMixedLayouts ? (
           <div className="space-y-5">
             {isRowBasedCategory 
-              ? filteredProjects.map((project, index) => (
+              ? filteredProjects.slice(0, 3).map((project, index) => (
                   <RowCard key={project.title} project={project} index={index} isInView={isInView} />
                 ))
               : (
                 <>
                   {/* Community Impact Section */}
-                  {filteredProjects.some(p => p.category === 'Community Impact') && (
+                  {communityPrograms.length > 0 && (
                     <div>
                       <motion.h3
                         className="text-2xl font-bold text-gray-900 pt-2 pb-3"
@@ -312,16 +317,14 @@ export function Portfolio() {
                       >
                         Community Impact
                       </motion.h3>
-                      {filteredProjects
-                        .filter(p => p.category === 'Community Impact')
-                        .map((project, index) => (
+                      {communityPrograms.map((project, index) => (
                           <RowCard key={project.title} project={project} index={index} isInView={isInView} />
-                        ))}
+                      ))}
                     </div>
                   )}
 
                   {/* Strategic Leadership Section */}
-                  {filteredProjects.some(p => p.category === 'Strategic Leadership') && (
+                  {leadershipPrograms.length > 0 && (
                     <div>
                       <motion.h3
                         className="text-2xl font-bold text-gray-900 pt-8 pb-3"
@@ -331,11 +334,9 @@ export function Portfolio() {
                       >
                         Strategic Leadership
                       </motion.h3>
-                      {filteredProjects
-                        .filter(p => p.category === 'Strategic Leadership')
-                        .map((project, index) => (
+                      {leadershipPrograms.map((project, index) => (
                           <RowCard key={project.title} project={project} index={index} isInView={isInView} />
-                        ))}
+                      ))}
                     </div>
                   )}
 
