@@ -1,4 +1,4 @@
-﻿import { AnimatePresence, motion, useInView } from 'motion/react';
+import { AnimatePresence, motion, useInView } from 'motion/react';
 import React from 'react';
 import { useRef, useState, useEffect } from 'react';
 import { Camera, MapPin, Users, Award, BookOpen, Heart, Briefcase, GraduationCap, Trophy, Star, Target, Lightbulb } from 'lucide-react';
