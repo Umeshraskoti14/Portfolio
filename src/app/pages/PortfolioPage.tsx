@@ -474,7 +474,7 @@ export function PortfolioPage() {
                     <img
                       src={imgItem.src}
                       alt={imgItem.name ?? imgItem.item.title}
-                      className="h-auto w-full object-cover transition-transform duration-500 group-hover:scale-[1.03] group-hover:brightness-105"
+                      className="h-auto w-full object-contain transition-transform duration-500 group-hover:scale-[1.03] group-hover:brightness-105"
                       loading="lazy"
                       decoding="async"
                       onError={(e) => { const t = e.currentTarget as HTMLImageElement; if (t.src !== communityCampaignImg) t.src = communityCampaignImg; }}
@@ -546,7 +546,7 @@ export function PortfolioPage() {
                         <img
                           src={coverSrc}
                           alt={`${item.title} cover`}
-                          className={useFaceSafeFit ? 'h-64 w-full bg-slate-100 object-contain' : 'aspect-[16/9] w-full object-cover transition duration-500 group-hover:scale-[1.03]'}
+                          className={useFaceSafeFit ? 'h-64 w-full bg-slate-100 object-contain' : 'aspect-[16/9] w-full object-contain transition duration-500 group-hover:scale-[1.03]'}
                           loading="lazy"
                           decoding="async"
                           onError={(e) => { const t = e.currentTarget as HTMLImageElement; if (t.src !== communityCampaignImg) t.src = communityCampaignImg; }}
@@ -673,7 +673,7 @@ export function PortfolioPage() {
                         <img
                           src={modalCoverSrc}
                           alt={selectedContent.title}
-                          className="h-56 md:h-72 w-full object-cover"
+                          className="h-56 md:h-72 w-full object-contain"
                           onError={(e) => {
                             const t = e.currentTarget as HTMLImageElement;
                             if (t.src !== communityCampaignImg) t.src = communityCampaignImg;
