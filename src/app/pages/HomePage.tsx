@@ -100,7 +100,6 @@ export function HomePage() {
                 animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 26 }}
                 transition={{ duration: 0.7, delay: 0.15 }}
               >
-                <Sparkles size={16} className="text-emerald-600" />
                 Social impact professional and documentary storyteller
               </motion.div>
 
