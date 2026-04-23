@@ -1,6 +1,6 @@
-import { animate, motion, useInView, useMotionValue, useTransform } from 'motion/react';
+import { animate, motion, useInView } from 'motion/react';
 import { ArrowRight, Download, Facebook, Instagram, Linkedin, Mail, Sparkles } from 'lucide-react';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { About } from '../components/About';
 import { PortfolioPage } from './PortfolioPage';
 import { Skills } from '../components/Skills';
@@ -8,20 +8,23 @@ import { Contact } from '../components/Contact';
 import profilePic from '../../assets/Umesh.png';
 
 function AnimatedCounter({ value, suffix = '', isInView }: { value: number; suffix?: string; isInView: boolean }) {
-  const count = useMotionValue(0);
-  const rounded = useTransform(count, Math.round);
+  const [displayValue, setDisplayValue] = useState(0);
 
   useEffect(() => {
-    if (!isInView) return;
-    const controls = animate(count, value, { duration: 1.8, ease: 'easeOut' });
+    if (!isInView) return undefined;
+    const controls = animate(0, value, {
+      duration: 1.8,
+      ease: 'easeOut',
+      onUpdate: (latest) => setDisplayValue(Math.round(latest)),
+    });
     return () => controls.stop();
-  }, [count, isInView, value]);
+  }, [isInView, value]);
 
   return (
-    <motion.span>
-      {rounded}
+    <span>
+      {displayValue}
       {suffix}
-    </motion.span>
+    </span>
   );
 }
 
