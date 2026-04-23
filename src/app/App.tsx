@@ -1,6 +1,10 @@
-import { RouterProvider } from 'react-router';
-import { router } from './routes';
+import { Layout } from './components/Layout';
+import { HomePage } from './pages/HomePage';
 
 export default function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <Layout>
+      <HomePage />
+    </Layout>
+  );
 }
