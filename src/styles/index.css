@@ -6,6 +6,19 @@ html {
   scroll-behavior: smooth;
 }
 
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, rgba(16, 185, 129, 0.08), transparent 24%),
+    linear-gradient(180deg, #f8fafc 0%, #ffffff 40%, #f8fafc 100%);
+  color: #0f172a;
+}
+
+::selection {
+  background: rgba(15, 23, 42, 0.14);
+  color: #020617;
+}
+
 /* Dark Mode Support */
 html.dark {
   color-scheme: dark;
