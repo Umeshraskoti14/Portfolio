@@ -1,7 +1,6 @@
 import { AnimatePresence, motion, useInView } from 'motion/react';
-import React from 'react';
 import { useRef, useState, useEffect } from 'react';
-import { Camera, MapPin, Users, Award, BookOpen, Heart, Briefcase, GraduationCap, Trophy, Star, Target, Lightbulb } from 'lucide-react';
+import { ArrowRight, BookOpen, Briefcase, Camera, Heart, Lightbulb, MapPin, Star, Target, Trophy, Users, Award } from 'lucide-react';
 const ginImg = '/assets/community/Capacity Building and Awareness/Kaligandaki Rural Municipality.JPG';
 const manoImg = '/assets/community/Capacity Building and Awareness/SRHR Youth Champion.jpg';
 const kmcImg = '/assets/leadership/Pre Induction.jpg';
@@ -235,74 +234,6 @@ function GalleryModal({ item, startIndex = 0, onClose }: { item: any; startIndex
   );
 }
 
-function useSlideshow(images: Array<string | { src: string }>, intervalMs = 2500) {
-  const [index, setIndex] = useState(0);
-
-  useEffect(() => {
-    if (!images || images.length <= 1) {
-      setIndex(0);
-      return;
-    }
-
-    const timer = window.setInterval(() => {
-      setIndex((prev) => (prev + 1) % images.length);
-    }, intervalMs);
-
-    return () => window.clearInterval(timer);
-  }, [images, intervalMs]);
-
-  return index;
-}
-
-function PortfolioCard({ item, index, isInView, onClick }: { item: any; index: number; isInView: boolean; onClick: (startIndex: number) => void }) {
-  const images = uniqueImages(item.images || (item.image ? [item.image] : []));
-  const coverIdx = useSlideshow(images);
-  const cover = images[coverIdx];
-  const coverSrc = typeof cover === 'string' ? cover : cover.src;
-  const coverName = typeof cover === 'string' ? undefined : cover.name;
-  const previewImages = images.slice(0, 4);
-  const extraPhotos = images.length > 4 ? images.length - 4 : 0;
-
-  return (
-    <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55, delay: 0.08 * index, ease: 'easeOut' }} whileHover={{ y: -8 }} onClick={() => onClick(coverIdx)} className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all cursor-pointer">
-      <div className="relative h-72 overflow-hidden">
-        <img src={coverSrc} alt={item.title} loading="lazy" decoding="async" fetchPriority="high" onError={(e) => { const t = e.currentTarget as HTMLImageElement; if (t.src !== communityCampaignImg) t.src = communityCampaignImg; }} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-        {item.images && <div className="absolute top-4 right-4 bg-purple-600 text-white px-3 py-1 rounded-full text-sm font-semibold">{item.images.length} Photos</div>}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-      </div>
-
-      {previewImages.length > 0 && (
-        <div className="p-4 bg-gray-50">
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-            {previewImages.map((img: any, idx: number) => {
-              const src = typeof img === 'string' ? img : img.src;
-              const name = typeof img === 'string' ? undefined : img.name;
-              const isLast = idx === previewImages.length - 1 && extraPhotos > 0;
-              return (
-                <div key={src} className="relative overflow-hidden rounded-2xl h-24 bg-gray-200">
-                  <img src={src} alt={name ?? `${item.title} preview ${idx + 1}`} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                  {isLast && (
-                    <div className="absolute inset-0 bg-black/60 flex items-center justify-center text-white text-sm font-semibold">+{extraPhotos}</div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      )}
-
-      <div className="p-6">
-        <div className="flex items-start gap-3 mb-3">
-          <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center flex-shrink-0"><item.icon size={20} className="text-white" /></div>
-          <h3 className="text-xl font-bold text-gray-900 group-hover:text-purple-600 transition-colors">{item.title}</h3>
-        </div>
-        <p className="text-gray-600 leading-relaxed">{item.description}</p>
-        {item.link && <a href={item.link} target="_blank" rel="noopener noreferrer" className="inline-block mt-4 text-purple-600 hover:text-pink-600 font-semibold transition-colors">Learn More →</a>}
-      </div>
-    </motion.div>
-  );
-}
-
 type PortfolioData = typeof portfolioData;
 const categories = Object.keys(portfolioData) as Array<keyof PortfolioData>;
 const FACE_SAFE_TITLES = new Set([
@@ -310,6 +241,39 @@ const FACE_SAFE_TITLES = new Set([
   'Mental Health & Counseling Support (Manoshastra Research and Counseling Center)',
   'SRHR Youth Champion Portfolio',
 ]);
+const categoryMeta: Record<keyof PortfolioData, { eyebrow: string; title: string; description: string }> = {
+  'Community Impact': {
+    eyebrow: 'Social Development',
+    title: 'Fieldwork rooted in service, advocacy, and measurable community engagement.',
+    description: 'A portfolio of grassroots programs, internships, and educational initiatives focused on social protection, public awareness, and local empowerment.',
+  },
+  'Strategic Leadership': {
+    eyebrow: 'Leadership Portfolio',
+    title: 'Leadership roles shaped by coordination, governance, and public-facing execution.',
+    description: 'This section highlights chapter leadership, event stewardship, and strategic partnerships across JCI and civic initiatives.',
+  },
+  'Visual Storytelling': {
+    eyebrow: 'Photography Practice',
+    title: 'A documentary eye for culture, landscape, and the people behind the story.',
+    description: 'Selected image collections covering heritage, nature, rural life, and professional event coverage from across Nepal.',
+  },
+};
+
+function getCategoryEntries(category: keyof PortfolioData) {
+  const data = portfolioData[category];
+  if (Array.isArray(data)) return data;
+  return Object.values(data).flat();
+}
+
+function getItemImageCount(item: any) {
+  return uniqueImages(item.images || (item.image ? [item.image] : [])).length;
+}
+
+const portfolioSummary = categories.map((category) => ({
+  category,
+  entries: getCategoryEntries(category).length,
+  images: getCategoryEntries(category).reduce((total, item) => total + Math.max(getItemImageCount(item), 1), 0),
+}));
 
 export function PortfolioPage() {
   const ref = useRef(null);
@@ -351,28 +315,149 @@ export function PortfolioPage() {
         }))
       )
     : [];
+  const activeMeta = categoryMeta[activeCategory];
+  const activeSummary = portfolioSummary.find((summary) => summary.category === activeCategory);
+  const totalEntries = portfolioSummary.reduce((sum, item) => sum + item.entries, 0);
+  const totalImages = portfolioSummary.reduce((sum, item) => sum + item.images, 0);
 
   return (
-    <div id="portfolio" className="cursor-none min-h-screen bg-gradient-to-b from-gray-50 to-white pt-28 pb-20">
+    <div id="portfolio" className="cursor-none min-h-screen bg-[radial-gradient(circle_at_top,_rgba(14,116,144,0.12),_transparent_32%),linear-gradient(180deg,#f8fafc_0%,#ffffff_46%,#f8fafc_100%)] pt-24 pb-20 text-slate-900">
       <CustomCursor />
-      <motion.div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" ref={ref} initial={{ opacity: 0 }} animate={{ opacity: isInView ? 1 : 0.3 }} transition={{ duration: 0.6 }}>
-        <motion.div initial={{ opacity: 0, y: 50 }} animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }} transition={{ duration: 0.8 }} className="text-center mb-16">
-          <motion.h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6" initial={{ opacity: 0, scale: 0.9 }} animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }} transition={{ duration: 0.8 }}>Portfolio</motion.h1>
-          <motion.div className="w-24 h-1 bg-gradient-to-r from-purple-600 to-pink-600 mx-auto mb-8" initial={{ width: 0 }} animate={isInView ? { width: 96 } : { width: 0 }} transition={{ duration: 0.8, delay: 0.2 }} />
-          <motion.p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed" initial={{ opacity: 0 }} animate={isInView ? { opacity: 1 } : { opacity: 0 }} transition={{ duration: 0.8, delay: 0.3 }}>Explore my journey in social activism, leadership, and visual storytelling</motion.p>
-        </motion.div>
+      <motion.div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" ref={ref} initial={{ opacity: 0 }} animate={{ opacity: isInView ? 1 : 0.3 }} transition={{ duration: 0.6 }}>
+        <motion.section
+          initial={{ opacity: 0, y: 40 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+          transition={{ duration: 0.8 }}
+          className="mb-12 overflow-hidden rounded-[2rem] border border-slate-200/80 bg-white/90 shadow-[0_24px_80px_-40px_rgba(15,23,42,0.45)] backdrop-blur"
+        >
+          <div className="grid gap-10 px-6 py-8 md:px-10 md:py-12 lg:grid-cols-[1.45fr_0.85fr]">
+            <div>
+              <div className="mb-5 inline-flex items-center rounded-full border border-cyan-200 bg-cyan-50 px-4 py-1.5 text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-cyan-900">
+                Portfolio Overview
+              </div>
+              <h1 className="max-w-4xl text-4xl font-semibold tracking-tight text-slate-950 md:text-6xl">
+                Social impact, civic leadership, and visual storytelling presented with clearer professional depth.
+              </h1>
+              <p className="mt-5 max-w-3xl text-base leading-8 text-slate-600 md:text-lg">
+                This portfolio brings together community fieldwork, organizational leadership, and photography projects across Nepal. Each section is organized to highlight responsibility, scope, and the outcomes behind the work.
+              </p>
+              <div className="mt-8 grid gap-4 sm:grid-cols-3">
+                <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                  <div className="text-3xl font-semibold text-slate-950">{categories.length}</div>
+                  <div className="mt-1 text-sm uppercase tracking-[0.18em] text-slate-500">Practice Areas</div>
+                </div>
+                <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                  <div className="text-3xl font-semibold text-slate-950">{totalEntries}+</div>
+                  <div className="mt-1 text-sm uppercase tracking-[0.18em] text-slate-500">Featured Projects</div>
+                </div>
+                <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                  <div className="text-3xl font-semibold text-slate-950">{totalImages}+</div>
+                  <div className="mt-1 text-sm uppercase tracking-[0.18em] text-slate-500">Portfolio Images</div>
+                </div>
+              </div>
+            </div>
 
-        <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.4 }} className="flex flex-wrap justify-center gap-3 mb-12">
+            <div className="rounded-[1.75rem] border border-slate-200 bg-[linear-gradient(160deg,#0f172a_0%,#1e293b_52%,#164e63_100%)] p-6 text-white">
+              <div className="text-sm uppercase tracking-[0.24em] text-cyan-200">Current Focus</div>
+              <h2 className="mt-3 text-2xl font-semibold leading-tight">{activeMeta.title}</h2>
+              <p className="mt-4 text-sm leading-7 text-slate-200">{activeMeta.description}</p>
+              <div className="mt-8 space-y-3">
+                {portfolioSummary.map((summary) => (
+                  <button
+                    key={summary.category}
+                    type="button"
+                    onClick={() => setActiveCategory(summary.category)}
+                    className={`flex w-full items-center justify-between rounded-2xl border px-4 py-3 text-left transition ${
+                      activeCategory === summary.category
+                        ? 'border-white/30 bg-white/12'
+                        : 'border-white/10 bg-white/5 hover:bg-white/10'
+                    }`}
+                  >
+                    <div>
+                      <div className="text-sm font-medium text-white">{summary.category}</div>
+                      <div className="text-xs uppercase tracking-[0.18em] text-slate-300">{summary.entries} projects</div>
+                    </div>
+                    <ArrowRight size={18} className="text-cyan-200" />
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        </motion.section>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.55, delay: 0.2 }}
+          className="mb-10 flex flex-wrap gap-3"
+        >
           {categories.map((category, index) => (
-            <motion.button key={category} onClick={() => setActiveCategory(category)} initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.45, delay: 0.5 + index * 0.08, ease: 'easeOut' }} whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.95 }} className={`px-6 py-2.5 rounded-full font-semibold uppercase text-[0.72rem] tracking-[0.2em] transition-all border ${activeCategory === category ? 'bg-slate-900 text-white border-slate-900 shadow-md' : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'}`}>
+            <motion.button
+              key={category}
+              onClick={() => setActiveCategory(category)}
+              initial={{ opacity: 0, scale: 0.92 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.4, delay: 0.28 + index * 0.06 }}
+              whileHover={{ y: -2 }}
+              whileTap={{ scale: 0.98 }}
+              className={`rounded-full border px-5 py-3 text-sm font-semibold tracking-wide transition ${
+                activeCategory === category
+                  ? 'border-slate-900 bg-slate-900 text-white shadow-lg shadow-slate-900/10'
+                  : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50'
+              }`}
+            >
               {category}
             </motion.button>
           ))}
         </motion.div>
 
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.55, delay: 0.24 }}
+          className="mb-10 rounded-[1.75rem] border border-slate-200 bg-white/90 p-6 shadow-sm md:p-8"
+        >
+          <div className="grid gap-6 lg:grid-cols-[1.25fr_0.75fr] lg:items-end">
+            <div>
+              <div className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-slate-500">{activeMeta.eyebrow}</div>
+              <h2 className="mt-3 max-w-3xl text-3xl font-semibold tracking-tight text-slate-950 md:text-4xl">{activeMeta.title}</h2>
+              <p className="mt-4 max-w-3xl text-base leading-8 text-slate-600">{activeMeta.description}</p>
+            </div>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                <div className="text-sm uppercase tracking-[0.18em] text-slate-500">Selected Works</div>
+                <div className="mt-2 text-3xl font-semibold text-slate-950">{activeSummary?.entries ?? rowItems.length}</div>
+              </div>
+              <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                <div className="text-sm uppercase tracking-[0.18em] text-slate-500">{activeSubcategory ? 'Current Lens' : 'Visual Archive'}</div>
+                <div className="mt-2 text-base font-semibold text-slate-950">{activeSubcategory ?? 'All Collections'}</div>
+              </div>
+            </div>
+          </div>
+        </motion.section>
+
         {activeCategory === 'Visual Storytelling' ? (
           <div className="space-y-10">
-            <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4">
+            {subcategories.length > 0 && (
+              <div className="flex flex-wrap gap-3">
+                {subcategories.map((sub) => (
+                  <button
+                    key={sub}
+                    type="button"
+                    onClick={() => setActiveSubcategory(sub)}
+                    className={`rounded-full border px-4 py-2 text-sm font-medium transition ${
+                      activeSubcategory === sub
+                        ? 'border-cyan-900 bg-cyan-900 text-white'
+                        : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'
+                    }`}
+                  >
+                    {sub}
+                  </button>
+                ))}
+              </div>
+            )}
+
+            <div className="columns-1 gap-5 space-y-5 sm:columns-2 lg:columns-3 xl:columns-4">
               {visualGalleryItems.map((imgItem, imgIndex) => (
                 <motion.div
                   key={`${imgItem.src}-${imgIndex}`}
@@ -382,19 +467,20 @@ export function PortfolioPage() {
                 >
                   <button
                     onClick={() => setSelectedItem({ item: imgItem.item, startIndex: imgItem.index })}
-                    className="group relative overflow-hidden rounded-[2rem] break-inside-avoid transition-shadow duration-300 hover:shadow-2xl w-full"
+                    className="group relative w-full overflow-hidden rounded-[1.75rem] border border-slate-200/80 bg-white break-inside-avoid transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_60px_-35px_rgba(15,23,42,0.55)]"
                   >
                     <img
                       src={imgItem.src}
                       alt={imgItem.name ?? imgItem.item.title}
-                      className="w-full h-auto object-cover rounded-[2rem] transition-transform duration-500 group-hover:scale-105 group-hover:brightness-110"
+                      className="h-auto w-full object-cover transition-transform duration-500 group-hover:scale-[1.03] group-hover:brightness-105"
                       loading="lazy"
                       decoding="async"
                       onError={(e) => { const t = e.currentTarget as HTMLImageElement; if (t.src !== communityCampaignImg) t.src = communityCampaignImg; }}
                     />
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
-                    <div className="pointer-events-none absolute bottom-4 left-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-sm font-semibold">
-                      {imgItem.name ?? imgItem.item.title}
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-slate-950/0 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                    <div className="pointer-events-none absolute inset-x-0 bottom-0 p-4 text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                      <div className="text-xs uppercase tracking-[0.18em] text-cyan-100">{imgItem.item.title}</div>
+                      <div className="mt-1 text-sm font-semibold">{imgItem.name ?? 'Open gallery'}</div>
                     </div>
                   </button>
                 </motion.div>
@@ -403,90 +489,104 @@ export function PortfolioPage() {
           </div>
         ) : (
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
-            <div className={`${activeSubcategory ? 'lg:col-span-9 lg:order-1' : 'lg:col-span-12'} rounded-3xl border border-slate-200 bg-white px-6 py-6 shadow-sm md:px-8`}>
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {rowItems.map((item: any, index: number) => {
-              const images = uniqueImages(item.images || (item.image ? [item.image] : []));
-              const cover = images[0] || item.image;
-              const coverSrc = typeof cover === 'string' ? cover : cover.src;
-              const useFaceSafeFit = FACE_SAFE_TITLES.has(item.title);
-              const shortDescription =
-                item.description.length > 170 ? `${item.description.slice(0, 170)}...` : item.description;
-
-              return (
-                <motion.div
-                  key={item.title}
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-                  transition={{ duration: 0.45, delay: 0.05 * index }}
-                  className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-4 md:p-5"
+            <div className="lg:col-span-3">
+              {activeSubcategory && (
+                <motion.aside
+                  initial={{ opacity: 0, x: -12 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.35, ease: 'easeOut' }}
+                  className="lg:sticky lg:top-24"
                 >
-                  <div className="mb-4 overflow-hidden rounded-xl border border-slate-200 bg-slate-100">
-                    <img
-                      src={coverSrc}
-                      alt={`${item.title} cover`}
-                      className={useFaceSafeFit ? 'h-52 w-full object-contain bg-slate-100' : 'aspect-[16/7] w-full object-cover'}
-                      loading="lazy"
-                      decoding="async"
-                      onError={(e) => { const t = e.currentTarget as HTMLImageElement; if (t.src !== communityCampaignImg) t.src = communityCampaignImg; }}
-                    />
+                  <div className="rounded-[1.5rem] border border-slate-200 bg-white p-4 shadow-sm">
+                    <div className="mb-4 text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">Categories</div>
+                    <div className="flex gap-2 overflow-x-auto lg:flex-col lg:overflow-visible">
+                      {subcategories.map((sub) => (
+                        <motion.button
+                          key={sub}
+                          onClick={() => setActiveSubcategory(sub)}
+                          whileHover={{ x: 2 }}
+                          whileTap={{ scale: 0.98 }}
+                          className={`shrink-0 rounded-2xl border px-4 py-3 text-left text-sm font-medium transition ${
+                            activeSubcategory === sub
+                              ? 'border-slate-900 bg-slate-900 text-white'
+                              : 'border-slate-200 bg-slate-50 text-slate-700 hover:bg-white'
+                          }`}
+                        >
+                          {sub}
+                        </motion.button>
+                      ))}
+                    </div>
                   </div>
+                </motion.aside>
+              )}
+            </div>
 
-                  <div className="flex items-start justify-between gap-4">
-                    <h3 className="text-lg font-semibold text-slate-900 md:text-xl">{item.title}</h3>
-                    <button
-                      type="button"
-                      className="text-sm font-medium text-slate-700 underline underline-offset-4 hover:text-slate-900"
-                      onClick={() => setSelectedContent(item)}
+            <div className="lg:col-span-9">
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                {rowItems.map((item: any, index: number) => {
+                  const images = uniqueImages(item.images || (item.image ? [item.image] : []));
+                  const cover = images[0] || item.image;
+                  const coverSrc = typeof cover === 'string' ? cover : cover.src;
+                  const useFaceSafeFit = FACE_SAFE_TITLES.has(item.title);
+                  const shortDescription =
+                    item.description.length > 190 ? `${item.description.slice(0, 190)}...` : item.description;
+                  const Icon = item.icon || Star;
+
+                  return (
+                    <motion.article
+                      key={item.title}
+                      initial={{ opacity: 0, y: 36 }}
+                      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 36 }}
+                      transition={{ duration: 0.45, delay: 0.04 * index }}
+                      className="group flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white shadow-[0_20px_60px_-45px_rgba(15,23,42,0.55)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_30px_70px_-40px_rgba(15,23,42,0.55)]"
                     >
-                      See more
-                    </button>
-                  </div>
+                      <div className="overflow-hidden border-b border-slate-200 bg-slate-100">
+                        <img
+                          src={coverSrc}
+                          alt={`${item.title} cover`}
+                          className={useFaceSafeFit ? 'h-64 w-full bg-slate-100 object-contain' : 'aspect-[16/9] w-full object-cover transition duration-500 group-hover:scale-[1.03]'}
+                          loading="lazy"
+                          decoding="async"
+                          onError={(e) => { const t = e.currentTarget as HTMLImageElement; if (t.src !== communityCampaignImg) t.src = communityCampaignImg; }}
+                        />
+                      </div>
 
-                  <p className="mt-2 text-sm leading-relaxed text-slate-600 md:text-base">
-                    {shortDescription}
-                  </p>
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {item.tags?.slice(0, 4).map((tag: string) => (
-                      <span key={tag} className="rounded border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs text-slate-700">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </motion.div>
-              );
-            })}
-            </div>
-            </div>
+                      <div className="flex flex-1 flex-col p-6">
+                        <div className="flex items-start justify-between gap-4">
+                          <div className="flex items-start gap-3">
+                            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-cyan-50 text-cyan-900 ring-1 ring-cyan-100">
+                              <Icon size={20} />
+                            </div>
+                            <div>
+                              <h3 className="text-xl font-semibold leading-tight text-slate-950">{item.title}</h3>
+                              <div className="mt-2 text-xs uppercase tracking-[0.18em] text-slate-500">
+                                {getItemImageCount(item)} asset{getItemImageCount(item) > 1 ? 's' : ''}
+                              </div>
+                            </div>
+                          </div>
+                          <button
+                            type="button"
+                            className="rounded-full border border-slate-200 px-3 py-1.5 text-sm font-medium text-slate-700 transition hover:border-slate-300 hover:bg-slate-50 hover:text-slate-950"
+                            onClick={() => setSelectedContent(item)}
+                          >
+                            View details
+                          </button>
+                        </div>
 
-            {activeSubcategory && (
-              <motion.aside
-                initial={{ opacity: 0, x: 16 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.35, ease: 'easeOut' }}
-                className="lg:col-span-3 lg:order-2"
-              >
-                <div className="lg:sticky lg:top-24 lg:mr-[-2rem] rounded-l-2xl rounded-r-none border border-r-0 border-slate-200 bg-white/95 p-3 shadow-sm backdrop-blur-md">
-                  <div className="flex gap-2 overflow-x-auto lg:flex-col lg:overflow-visible">
-                    {subcategories.map((sub) => (
-                      <motion.button
-                        key={sub}
-                        onClick={() => setActiveSubcategory(sub)}
-                        whileHover={{ x: -2 }}
-                        whileTap={{ scale: 0.98 }}
-                        className={`shrink-0 whitespace-nowrap rounded-xl px-3 py-2 text-left text-xs md:text-sm font-medium transition-all ${
-                          activeSubcategory === sub
-                            ? 'bg-purple-600 text-white shadow-sm'
-                            : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-50'
-                        }`}
-                      >
-                        {sub.replace(/\b\w/g, (char) => char.toUpperCase())}
-                      </motion.button>
-                    ))}
-                  </div>
-                </div>
-              </motion.aside>
-            )}
+                        <p className="mt-5 flex-1 text-sm leading-7 text-slate-600 md:text-base">{shortDescription}</p>
+                        <div className="mt-6 flex flex-wrap gap-2">
+                          {item.tags?.slice(0, 4).map((tag: string) => (
+                            <span key={tag} className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-medium text-slate-600">
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </motion.article>
+                  );
+                })}
+              </div>
+            </div>
           </div>
         )}
 
@@ -500,7 +600,7 @@ export function PortfolioPage() {
               onClick={() => setSelectedContent(null)}
             >
               <motion.div
-                className="w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl bg-white shadow-2xl"
+                className="max-h-[90vh] w-full max-w-5xl overflow-y-auto rounded-[2rem] border border-white/20 bg-white shadow-2xl"
                 initial={{ opacity: 0, y: 20, scale: 0.98 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: 20, scale: 0.98 }}
@@ -516,7 +616,7 @@ export function PortfolioPage() {
                   if (modalFaceSafeFit) {
                     return (
                       <div className="grid grid-cols-1 md:grid-cols-12">
-                        <div className="overflow-hidden rounded-t-3xl bg-slate-100 md:col-span-5 md:rounded-l-3xl md:rounded-tr-none">
+                        <div className="overflow-hidden rounded-t-[2rem] bg-slate-100 md:col-span-5 md:rounded-l-[2rem] md:rounded-tr-none">
                           <img
                             src={modalCoverSrc}
                             alt={selectedContent.title}
@@ -529,19 +629,22 @@ export function PortfolioPage() {
                         </div>
                         <div className="p-6 md:col-span-7 md:p-8">
                           <div className="mb-4 flex items-start justify-between gap-4">
-                            <h3 className="text-2xl font-bold text-slate-900 md:text-3xl">{selectedContent.title}</h3>
+                            <div>
+                              <div className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Project Details</div>
+                              <h3 className="mt-2 text-2xl font-semibold text-slate-900 md:text-3xl">{selectedContent.title}</h3>
+                            </div>
                             <button
                               type="button"
                               onClick={() => setSelectedContent(null)}
-                              className="text-sm font-medium text-slate-600 underline underline-offset-4 hover:text-slate-900"
+                              className="rounded-full border border-slate-200 px-3 py-1.5 text-sm font-medium text-slate-600 transition hover:bg-slate-50 hover:text-slate-900"
                             >
                               Close
                             </button>
                           </div>
-                          <p className="text-slate-600 leading-relaxed">{selectedContent.description}</p>
+                          <p className="text-slate-600 leading-8">{selectedContent.description}</p>
                           <div className="mt-5 flex flex-wrap gap-2">
                             {selectedContent.tags?.map((tag: string) => (
-                              <span key={tag} className="rounded border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs text-slate-700">
+                              <span key={tag} className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-medium text-slate-700">
                                 {tag}
                               </span>
                             ))}
@@ -551,9 +654,10 @@ export function PortfolioPage() {
                               href={selectedContent.link}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="mt-6 inline-block text-sm font-semibold text-purple-600 transition-colors hover:text-pink-600 md:text-base"
+                              className="mt-6 inline-flex items-center gap-2 rounded-full bg-slate-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-800 md:text-base"
                             >
-                              Learn More →
+                              Visit reference
+                              <ArrowRight size={16} />
                             </a>
                           )}
                         </div>
@@ -563,7 +667,7 @@ export function PortfolioPage() {
 
                   return (
                     <>
-                      <div className="overflow-hidden rounded-t-3xl bg-slate-100">
+                      <div className="overflow-hidden rounded-t-[2rem] bg-slate-100">
                         <img
                           src={modalCoverSrc}
                           alt={selectedContent.title}
@@ -576,19 +680,22 @@ export function PortfolioPage() {
                       </div>
                       <div className="p-6 md:p-8">
                         <div className="mb-4 flex items-start justify-between gap-4">
-                          <h3 className="text-2xl font-bold text-slate-900 md:text-3xl">{selectedContent.title}</h3>
+                          <div>
+                            <div className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Project Details</div>
+                            <h3 className="mt-2 text-2xl font-semibold text-slate-900 md:text-3xl">{selectedContent.title}</h3>
+                          </div>
                           <button
                             type="button"
                             onClick={() => setSelectedContent(null)}
-                            className="text-sm font-medium text-slate-600 underline underline-offset-4 hover:text-slate-900"
+                            className="rounded-full border border-slate-200 px-3 py-1.5 text-sm font-medium text-slate-600 transition hover:bg-slate-50 hover:text-slate-900"
                           >
                             Close
                           </button>
                         </div>
-                        <p className="text-slate-600 leading-relaxed">{selectedContent.description}</p>
+                        <p className="text-slate-600 leading-8">{selectedContent.description}</p>
                         <div className="mt-5 flex flex-wrap gap-2">
                           {selectedContent.tags?.map((tag: string) => (
-                            <span key={tag} className="rounded border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs text-slate-700">
+                            <span key={tag} className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-medium text-slate-700">
                               {tag}
                             </span>
                           ))}
@@ -598,9 +705,10 @@ export function PortfolioPage() {
                             href={selectedContent.link}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="mt-6 inline-block text-sm font-semibold text-purple-600 transition-colors hover:text-pink-600 md:text-base"
+                            className="mt-6 inline-flex items-center gap-2 rounded-full bg-slate-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-800 md:text-base"
                           >
-                            Learn More →
+                            Visit reference
+                            <ArrowRight size={16} />
                           </a>
                         )}
                       </div>
