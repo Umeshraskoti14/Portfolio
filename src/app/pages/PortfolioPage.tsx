@@ -1,9 +1,10 @@
 import { AnimatePresence, motion, useInView } from 'motion/react';
 import { useRef, useState, useEffect } from 'react';
 import { ArrowRight, BookOpen, Briefcase, Camera, Heart, Lightbulb, MapPin, Star, Target, Trophy, Users, Award } from 'lucide-react';
-const ginImg = '/assets/community/Capacity Building and Awareness/Kaligandaki Rural Municipality.JPG';
-const manoImg = '/assets/community/Capacity Building and Awareness/SRHR Youth Champion.jpg';
-const kmcImg = '/assets/leadership/Pre Induction.jpg';
+import ginImg from '@/assets/Good Neighbors International Nepal.png';
+import kmcImg from '@/assets/Kathmandu Metropolitan City - Smart City Project.png';
+import manoImg from '@/assets/Mental Health & Counseling Support (Manoshastra Research and Counseling Center).png';
+import thimiImg from '@/assets/Metropolitan Police circle Thimi.png';
 const communityCampaignImg = '/assets/storytelling/heritage/heritage-1.jpg';
 
 const portfolioData = {
@@ -57,7 +58,7 @@ const portfolioData = {
       {
         title: 'Metropolitan Police circle Thimi',
         description: 'The Metropolitan Police Circle Thimi is the primary law enforcement agency for the Madhyapur Thimi area in Bhaktapur. I completed a 300-hour internship under the supervision of a Sub-Inspector (SI) as part of my first-year fieldwork requirement. I gained practical exposure to community policing and public safety operations: supported administrative documentation, observed case handling from complaint registration to resolution, participated in stakeholder coordination, assisted organizing an awareness session during the 16 Days of Activism against Gender-Based Violence, and contributed to a social survey on safety issues within Madhyapur Thimi Municipality. These experiences strengthened my understanding of collaborative policing, community engagement, and proactive public-safety measures.',
-        image: '/assets/community/Internship/Metro Police Circle Thimi.jpg',
+        image: thimiImg,
         tags: ['Community Policing', 'Case Handling', 'Public Safety', 'Stakeholder Coordination'],
         icon: Users
       },
