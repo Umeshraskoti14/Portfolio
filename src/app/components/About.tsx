@@ -102,7 +102,7 @@ export function About() {
             <div className="grid grid-cols-2 gap-4 mb-6">
               <div className="bg-gradient-to-br from-purple-50 to-purple-100 p-4 rounded-xl">
                 <div className="text-3xl font-bold text-purple-600">
-                  <AnimatedCounter value={5} isInView={isInView} />+
+                  <AnimatedCounter value={3} isInView={isInView} />+
                 </div>
                 <div className="text-gray-700 font-medium">Years Experience</div>
               </div>
@@ -119,9 +119,9 @@ export function About() {
               </motion.div>
               <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-4 rounded-xl col-span-2">
                 <div className="text-3xl font-bold text-blue-600">
-                  <AnimatedCounter value={7} isInView={isInView} />
+                  <AnimatedCounter value={4} isInView={isInView} />
                 </div>
-                <div className="text-gray-700 font-medium">Strategic Projects</div>
+                <div className="text-gray-700 font-medium">Project</div>
               </div>
             </div>
 
@@ -130,7 +130,7 @@ export function About() {
               download
               className="inline-flex items-center justify-center px-6 py-3 mb-6 bg-purple-600 text-white rounded-full font-semibold hover:bg-purple-700 transition"
             >
-              Download Resume
+              Download CV
             </a>
             <div className="flex flex-wrap gap-3">
               {['Social Work', 'SRHR Advocacy', 'Program Management', 'Data Analysis', 'Community Development'].map((tech, index) => (

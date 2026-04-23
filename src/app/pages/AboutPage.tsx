@@ -101,7 +101,7 @@ export function AboutPage() {
               transition={{ duration: 0.6, delay: 0.6 }}
             >
               <div className="text-4xl font-bold text-purple-600">
-                <AnimatedCounter value={5} isInView={isInView} />+
+                <AnimatedCounter value={3} isInView={isInView} />+
               </div>
               <div className="text-gray-600">Years Experience</div>
             </motion.div>
@@ -137,9 +137,9 @@ export function AboutPage() {
               </div>
               <div className="bg-gradient-to-br from-pink-50 to-pink-100 p-4 rounded-xl">
                 <div className="text-3xl font-bold text-pink-600">
-                  <AnimatedCounter value={7} isInView={isInView} />
+                  <AnimatedCounter value={4} isInView={isInView} />
                 </div>
-                <div className="text-gray-700">Projects</div>
+                <div className="text-gray-700">Project</div>
               </div>
             </div>
           </motion.div>
@@ -203,7 +203,7 @@ export function AboutPage() {
               whileHover={{ scale: 1.05, y: -3 }}
               whileTap={{ scale: 0.95 }}
             >
-              Download Resume
+              Download CV
             </motion.a>
           </div>
         </motion.div>
