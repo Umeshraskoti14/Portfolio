@@ -1,22 +1,7 @@
-import { motion, useInView, useMotionValue, useTransform, animate } from 'motion/react';
-import { useRef, useEffect } from 'react';
+import { motion, useInView } from 'motion/react';
+import { useRef } from 'react';
 import { ArrowRight, Code2, Palette, Rocket, Users } from 'lucide-react';
 import profilePic from '../../assets/Umesh.png';
-
-function AnimatedCounter({ value, isInView }: { value: number; isInView: boolean }) {
-  const count = useMotionValue(0);
-  const rounded = useTransform(count, Math.round);
-
-  useEffect(() => {
-    if (isInView) {
-      const animation = animate(count, value, { duration: 2, ease: 'easeOut' });
-      return animation.stop;
-    }
-    return undefined;
-  }, [isInView, value, count]);
-
-  return <motion.span>{rounded}</motion.span>;
-}
 
 const features = [
   {
@@ -101,32 +86,6 @@ export function About() {
             <p className="mb-8 text-slate-600 leading-8">
               I see myself as a social worker at heart, but I carry a camera to stay grounded. Photography allows me to notice and preserve the quiet stories of resilience that often go unseen. For me, social work is not only a career path but a long-term commitment to helping transform society for the better. I am always looking for ways to blend leadership, advocacy, and creativity to leave a lasting and positive impact on communities.
             </p>
-
-            <div className="mb-8 grid grid-cols-2 gap-4">
-              <div className="rounded-2xl border border-emerald-100 bg-gradient-to-br from-emerald-50 to-white p-5">
-                <div className="text-3xl font-semibold text-slate-950">
-                  <AnimatedCounter value={3} isInView={isInView} />+
-                </div>
-                <div className="mt-1 text-sm uppercase tracking-[0.16em] text-slate-500">Years Experience</div>
-              </div>
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.6, delay: 0.5 }}
-                className="rounded-2xl border border-sky-100 bg-gradient-to-br from-sky-50 to-white p-5"
-              >
-                <div className="text-3xl font-semibold text-slate-950">
-                  <AnimatedCounter value={1000} isInView={isInView} />+
-                </div>
-                <div className="mt-1 text-sm uppercase tracking-[0.16em] text-slate-500">People Reached</div>
-              </motion.div>
-              <div className="col-span-2 rounded-2xl border border-amber-100 bg-gradient-to-br from-amber-50 to-white p-5">
-                <div className="text-3xl font-semibold text-slate-950">
-                  <AnimatedCounter value={4} isInView={isInView} />
-                </div>
-                <div className="mt-1 text-sm uppercase tracking-[0.16em] text-slate-500">Project</div>
-              </div>
-            </div>
 
             <div className="mb-6 flex flex-wrap gap-4">
               <a

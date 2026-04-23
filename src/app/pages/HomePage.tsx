@@ -1,11 +1,29 @@
-import { motion, useInView } from 'motion/react';
+import { animate, motion, useInView, useMotionValue, useTransform } from 'motion/react';
 import { ArrowRight, Download, Facebook, Instagram, Linkedin, Mail, Sparkles } from 'lucide-react';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { About } from '../components/About';
 import { PortfolioPage } from './PortfolioPage';
 import { Skills } from '../components/Skills';
 import { Contact } from '../components/Contact';
 import profilePic from '../../assets/Umesh.png';
+
+function AnimatedCounter({ value, suffix = '', isInView }: { value: number; suffix?: string; isInView: boolean }) {
+  const count = useMotionValue(0);
+  const rounded = useTransform(count, Math.round);
+
+  useEffect(() => {
+    if (!isInView) return;
+    const controls = animate(count, value, { duration: 1.8, ease: 'easeOut' });
+    return () => controls.stop();
+  }, [count, isInView, value]);
+
+  return (
+    <span>
+      {rounded}
+      {suffix}
+    </span>
+  );
+}
 
 export function HomePage() {
   const ref = useRef(null);
@@ -108,15 +126,21 @@ export function HomePage() {
                 transition={{ duration: 0.75, delay: 0.45 }}
               >
                 <div className="rounded-2xl border border-slate-200 bg-white/90 p-4 shadow-sm backdrop-blur">
-                  <div className="text-3xl font-semibold text-slate-950">3+</div>
+                  <div className="text-3xl font-semibold text-slate-950">
+                    <AnimatedCounter value={3} suffix="+" isInView={isInView} />
+                  </div>
                   <div className="mt-1 text-sm uppercase tracking-[0.18em] text-slate-500">Years Experience</div>
                 </div>
                 <div className="rounded-2xl border border-slate-200 bg-white/90 p-4 shadow-sm backdrop-blur">
-                  <div className="text-3xl font-semibold text-slate-950">4</div>
+                  <div className="text-3xl font-semibold text-slate-950">
+                    <AnimatedCounter value={4} isInView={isInView} />
+                  </div>
                   <div className="mt-1 text-sm uppercase tracking-[0.18em] text-slate-500">Key Projects</div>
                 </div>
                 <div className="rounded-2xl border border-slate-200 bg-white/90 p-4 shadow-sm backdrop-blur">
-                  <div className="text-3xl font-semibold text-slate-950">1000+</div>
+                  <div className="text-3xl font-semibold text-slate-950">
+                    <AnimatedCounter value={1000} suffix="+" isInView={isInView} />
+                  </div>
                   <div className="mt-1 text-sm uppercase tracking-[0.18em] text-slate-500">People Reached</div>
                 </div>
               </motion.div>
