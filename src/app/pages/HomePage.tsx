@@ -18,10 +18,10 @@ function AnimatedCounter({ value, suffix = '', isInView }: { value: number; suff
   }, [count, isInView, value]);
 
   return (
-    <span>
+    <motion.span>
       {rounded}
       {suffix}
-    </span>
+    </motion.span>
   );
 }
 
