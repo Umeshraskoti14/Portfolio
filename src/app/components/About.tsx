@@ -95,17 +95,11 @@ export function About() {
               Social Impact Through Multiple Lenses
             </h3>
             <p className="mb-4 text-slate-600 leading-8">
-              As a dedicated Social Work professional, SRHR Youth Champion, and passionate photographer, 
-              I bring a unique perspective to community development. Recognized with the Best Leadership 
-              Award (2023) by JCI Nepal and Best Social Survey Award, I combine field expertise with 
-              creative storytelling through photography.
+              I have always believed that real change does not happen from the sidelines. It happens through action, empathy, and being present in the community. My journey in social work and psychology has been guided by a simple goal: to understand people better so I can serve them more effectively. Whether I am contributing to urban development projects at Kathmandu Metropolitan City or leading initiatives as President of JCI Bhaktapur Junior, I find the greatest meaning in work that helps others discover and strengthen their own voice.
             </p>
 
             <p className="mb-8 text-slate-600 leading-8">
-              From coordinating rural social work camps in Ghalegaun and Kanyam to facilitating SRHR 
-              awareness sessions, and capturing compelling visual stories through my lens (fluent with 
-              Canon, Nikon, Sony, and Pentax systems), I strive to create meaningful impact in communities 
-              while documenting their stories.
+              I see myself as a social worker at heart, but I carry a camera to stay grounded. Photography allows me to notice and preserve the quiet stories of resilience that often go unseen. For me, social work is not only a career path but a long-term commitment to helping transform society for the better. I am always looking for ways to blend leadership, advocacy, and creativity to leave a lasting and positive impact on communities.
             </p>
 
             <div className="mb-8 grid grid-cols-2 gap-4">
