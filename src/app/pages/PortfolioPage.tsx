@@ -893,42 +893,42 @@ export function PortfolioPage() {
                   <div className="absolute left-12 top-10 h-36 w-36 rounded-full bg-cyan-200/40 blur-3xl" />
                   <div className="absolute bottom-8 right-8 h-40 w-40 rounded-full bg-amber-200/40 blur-3xl" />
 
-                  <div className="relative px-6 py-8 md:px-10 md:py-12">
-                    <div className="grid gap-4 md:grid-cols-3">
+                  <div className="relative px-5 py-6 md:px-8 md:py-8">
+                    <div className="grid gap-3 md:grid-cols-3">
                       {summaryMetrics.map((metric) => (
                         <div
                           key={metric.label}
-                          className="flex min-h-[8.75rem] flex-col justify-between rounded-[1.7rem] border border-white/80 bg-white/78 p-5 shadow-sm backdrop-blur"
+                          className="flex min-h-[6.75rem] flex-col justify-between rounded-[1.5rem] border border-white/80 bg-white/78 p-4 shadow-sm backdrop-blur"
                         >
-                          <div className="text-sm uppercase tracking-[0.18em] text-slate-500">{metric.label}</div>
-                          <div className="mt-5 text-4xl font-semibold tracking-tight text-slate-950">{metric.value}</div>
+                          <div className="text-[0.72rem] uppercase tracking-[0.18em] text-slate-500">{metric.label}</div>
+                          <div className="mt-3 text-3xl font-semibold tracking-tight text-slate-950 md:text-[2rem]">{metric.value}</div>
                         </div>
                       ))}
                     </div>
 
-                    <div className="mt-6 rounded-[2rem] border border-white/60 bg-[linear-gradient(160deg,rgba(15,23,42,0.96)_0%,rgba(15,118,110,0.92)_100%)] p-6 text-white shadow-[0_24px_80px_-40px_rgba(15,23,42,0.55)] md:p-7">
-                      <div className="text-sm uppercase tracking-[0.24em] text-cyan-200">Current Focus</div>
-                      <h2 className="mt-3 text-2xl font-semibold leading-tight">{activeCategory}</h2>
-                      <div className="mt-6 grid gap-3 lg:grid-cols-2 xl:grid-cols-3">
+                    <div className="mt-5 rounded-[1.8rem] border border-white/60 bg-[linear-gradient(160deg,rgba(15,23,42,0.96)_0%,rgba(15,118,110,0.92)_100%)] p-5 text-white shadow-[0_24px_80px_-40px_rgba(15,23,42,0.55)] md:p-6">
+                      <div className="text-[0.72rem] uppercase tracking-[0.22em] text-cyan-200">Current Focus</div>
+                      <h2 className="mt-2 text-xl font-semibold leading-tight md:text-2xl">{activeCategory}</h2>
+                      <div className="mt-5 grid gap-3 lg:grid-cols-2 xl:grid-cols-3">
                         {portfolioSummary.map((summary) => (
                           <button
                             key={summary.category}
                             type="button"
                             onClick={() => setActiveCategory(summary.category)}
-                            className={`group flex min-h-[8.5rem] w-full flex-col justify-between rounded-[1.5rem] border px-5 py-4 text-left transition ${
+                            className={`group flex min-h-[6.75rem] w-full flex-col justify-between rounded-[1.3rem] border px-4 py-3.5 text-left transition ${
                               activeCategory === summary.category
                                 ? 'border-white/35 bg-white/14 shadow-[0_18px_48px_-36px_rgba(255,255,255,0.55)]'
                                 : 'border-white/10 bg-white/6 hover:bg-white/10'
                             }`}
                           >
                             <div className="min-w-0">
-                              <div className="inline-flex rounded-full border border-white/15 bg-white/10 px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-cyan-100">
+                              <div className="inline-flex rounded-full border border-white/15 bg-white/10 px-2.5 py-1 text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-cyan-100">
                                 {summary.entries} items
                               </div>
-                              <div className="mt-4 text-lg font-semibold leading-snug text-white">{summary.category}</div>
+                              <div className="mt-3 text-base font-semibold leading-snug text-white md:text-[1.05rem]">{summary.category}</div>
                             </div>
-                            <div className="mt-5 flex justify-end">
-                              <ArrowRight size={18} className="text-cyan-200 transition group-hover:translate-x-1" />
+                            <div className="mt-3 flex justify-end">
+                              <ArrowRight size={16} className="text-cyan-200 transition group-hover:translate-x-1" />
                             </div>
                           </button>
                         ))}
