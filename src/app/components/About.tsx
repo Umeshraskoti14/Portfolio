@@ -1,7 +1,7 @@
 import { motion, useInView } from 'motion/react';
 import { useRef } from 'react';
 import { ArrowRight, Code2, Palette, Rocket, Users } from 'lucide-react';
-import profilePic from '../../assets/Umesh.png';
+const profilePic = '/assets/About me/Umesh.png';
 
 const features = [
   {
