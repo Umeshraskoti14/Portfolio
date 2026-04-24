@@ -5,7 +5,7 @@ import { About } from '../components/About';
 import { PortfolioPage } from './PortfolioPage';
 import { Skills } from '../components/Skills';
 import { Contact } from '../components/Contact';
-const profilePic = '/assets/About me/Umesh.png';
+const profilePic = '/assets/About me/Home Profile.jpeg';
 
 function AnimatedCounter({ value, suffix = '', isInView }: { value: number; suffix?: string; isInView: boolean }) {
   const [displayValue, setDisplayValue] = useState(0);
