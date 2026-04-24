@@ -10,20 +10,12 @@ type UiPreferencesContextValue = {
   toggleLanguage: () => void;
 };
 
-const THEME_STORAGE_KEY = 'portfolio-theme-mode';
 const LANGUAGE_STORAGE_KEY = 'portfolio-language-mode';
 
 const UiPreferencesContext = createContext<UiPreferencesContextValue | null>(null);
 
 function getInitialTheme(): ThemeMode {
-  if (typeof window === 'undefined') return 'light';
-
-  const storedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
-  if (storedTheme === 'light' || storedTheme === 'dark') {
-    return storedTheme;
-  }
-
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  return 'light';
 }
 
 function getInitialLanguage(): LanguageMode {
@@ -46,7 +38,6 @@ export function UiPreferencesProvider({ children }: { children: ReactNode }) {
     root.classList.toggle('dark', theme === 'dark');
     root.dataset.theme = theme;
     root.style.colorScheme = theme;
-    window.localStorage.setItem(THEME_STORAGE_KEY, theme);
   }, [theme]);
 
   useEffect(() => {
