@@ -106,7 +106,7 @@ const portfolioData = {
     ],
     'Documentary Photography': [
       { title: 'Rural Nepal Village Life', description: 'Documentary photography showcasing the authentic life in Nepal\'s countryside. Capturing the essence of rural communities and their daily lives.', images: [{ src: '/assets/Visual Storytelling/rural/rural1.jpg', name: 'Rural 1' }, { src: '/assets/Visual Storytelling/rural/rural2.jpg', name: 'Rural 2' }, { src: '/assets/Visual Storytelling/rural/rural3.jpg', name: 'Rural 3' }, { src: '/assets/Visual Storytelling/rural/rural4.jpg', name: 'Rural 4' }, { src: '/assets/Visual Storytelling/rural/rural5.jpg', name: 'Rural 5' }, { src: '/assets/Visual Storytelling/rural/rural6.JPG', name: 'Rural 6' }, { src: '/assets/Visual Storytelling/rural/rural7.JPG', name: 'Rural 7' }, { src: '/assets/Visual Storytelling/rural/rural8.JPG', name: 'Rural 8' }, { src: '/assets/Visual Storytelling/rural/rural9.jpg', name: 'Rural 9' }, { src: '/assets/Visual Storytelling/rural/rural10.jpg', name: 'Rural 10' }, { src: '/assets/Visual Storytelling/rural/rural11.JPG', name: 'Rural 11' }, { src: '/assets/Visual Storytelling/rural/rural12.jpg', name: 'Rural 12' }, { src: '/assets/Visual Storytelling/rural/rural13.jpg', name: 'Rural 13' }, { src: '/assets/Visual Storytelling/rural/rural14.JPG', name: 'Rural 14' }, { src: '/assets/Visual Storytelling/rural/rural15.jpg', name: 'Rural 15' }, { src: '/assets/Visual Storytelling/rural/rural16.jpeg', name: 'Rural 16' }, { src: '/assets/Visual Storytelling/rural/rural17.jpg', name: 'Rural 17' }, { src: '/assets/Visual Storytelling/rural/rural18.jpg', name: 'Rural 18' }, { src: '/assets/Visual Storytelling/rural/rural19.jpg', name: 'Rural 19' }, { src: '/assets/Visual Storytelling/rural/rural20.jpg', name: 'Rural 20' }, { src: '/assets/Visual Storytelling/rural/rural21.jpg', name: 'Rural 21' }, { src: '/assets/Visual Storytelling/rural/rural22.jpg', name: 'Rural 22' }, { src: '/assets/Visual Storytelling/rural/rural23.jpg', name: 'Rural 23' }, { src: '/assets/Visual Storytelling/rural/rural24.JPG', name: 'Rural 24' }, { src: '/assets/Visual Storytelling/rural/rural25.JPG', name: 'Rural 25' }, { src: '/assets/Visual Storytelling/rural/rural26.jpg', name: 'Rural 26' }], tags: ['Documentary', 'Village Life', 'Rural Nepal'], icon: Camera },
-      { title: 'Professional Portraiture & Events', description: 'Professional event and portrait photography using Canon, Nikon, Sony, and Pentax systems. Capturing moments that matter in leadership, community events, and character-driven storytelling.', images: [{ src: '/assets/Visual Storytelling/professional/professional1.jpg', name: 'Professional 1' }, { src: '/assets/Visual Storytelling/professional/professional2.jpg', name: 'Professional 2' }, { src: '/assets/Visual Storytelling/professional/professional3.jpg', name: 'Professional 3' }, { src: '/assets/Visual Storytelling/professional/professional4.JPG', name: 'Professional 4' }, { src: '/assets/Visual Storytelling/professional/professional5.JPG', name: 'Professional 5' }, { src: '/assets/Visual Storytelling/professional/professional6.JPG', name: 'Professional 6' }, { src: '/assets/Visual Storytelling/professional/professional7.JPG', name: 'Professional 7' }, { src: '/assets/Visual Storytelling/professional/professional8.JPG', name: 'Professional 8' }, { src: '/assets/Visual Storytelling/professional/professional9.JPG', name: 'Professional 9' }], tags: ['Professional', 'Events', 'Portraits'], icon: Camera },
+      { title: 'Professional Portraiture & Events', description: 'Professional event and portrait photography using Canon, Nikon, Sony, and Pentax systems. Capturing moments that matter in leadership, community events, and character-driven storytelling.', images: [{ src: '/assets/Visual Storytelling/professional/professional1.jpg', name: 'Professional 1' }, { src: '/assets/Visual Storytelling/professional/professional2.jpg', name: 'Professional 2' }, { src: '/assets/Visual Storytelling/professional/professional3.jpg', name: 'Professional 3' }, { src: '/assets/Visual Storytelling/professional/professional4.JPG', name: 'Professional 4' }, { src: '/assets/Visual Storytelling/professional/professional5.JPG', name: 'Professional 5' }, { src: '/assets/Visual Storytelling/professional/professional6.JPG', name: 'Professional 6' }, { src: '/assets/Visual Storytelling/professional/professional7.JPG', name: 'Professional 7' }, { src: '/assets/Visual Storytelling/professional/professional8.JPG', name: 'Professional 8' }, { src: '/assets/Visual Storytelling/professional/professional9.JPG', name: 'Professional 9' }], tags: ['Professional', 'Training Sessions', 'Portraits'], icon: Camera },
     ],
   },
 };
@@ -231,7 +231,7 @@ type GalleryAsset = {
   src: string;
   name?: string;
 };
-type VisualGalleryFilter = 'All' | 'Field Work' | 'Community Engagement' | 'Training Sessions' | 'Events' | 'Documentation';
+type VisualGalleryFilter = 'All' | 'Field Work' | 'Community Engagement' | 'Training Sessions' | 'Documentation';
 type VisualGalleryImage = {
   id: string;
   src: string;
@@ -241,14 +241,14 @@ type VisualGalleryImage = {
 };
 
 const categories = Object.keys(portfolioData) as PortfolioCategory[];
-const visualGalleryFilters: VisualGalleryFilter[] = ['All', 'Field Work', 'Community Engagement', 'Training Sessions', 'Events', 'Documentation'];
+const visualGalleryFilters: VisualGalleryFilter[] = ['All', 'Field Work', 'Community Engagement', 'Training Sessions', 'Documentation'];
 const visualGalleryAssignments: Record<string, Exclude<VisualGalleryFilter, 'All'>[]> = {
   'Architectural Photography - Temples & Landmarks': ['Documentation'],
   'Himalayan Landscapes': ['Field Work'],
   'Golden Hour - Sunrise Mountain Peaks': ['Field Work'],
   'Forest & Nature Biodiversity': ['Field Work', 'Documentation'],
   'Rural Nepal Village Life': ['Field Work', 'Community Engagement', 'Documentation'],
-  'Professional Portraiture & Events': ['Events', 'Training Sessions', 'Community Engagement'],
+  'Professional Portraiture & Events': ['Training Sessions', 'Community Engagement'],
 };
 
 function normalizeImages(item: PortfolioItem): GalleryAsset[] {
