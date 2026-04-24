@@ -52,7 +52,14 @@ export function FloatingActionFab() {
   ];
 
   return (
-    <div ref={rootRef} className="pointer-events-none fixed bottom-4 right-4 z-[70] flex flex-col items-end gap-3 md:bottom-6 md:right-6">
+    <div
+      ref={rootRef}
+      className="fab-shell fixed flex flex-col items-end gap-3"
+      style={{
+        right: 'max(1rem, env(safe-area-inset-right))',
+        bottom: 'max(1rem, env(safe-area-inset-bottom))',
+      }}
+    >
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -60,18 +67,19 @@ export function FloatingActionFab() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 12, scale: 0.96 }}
             transition={{ duration: 0.2, ease: 'easeOut' }}
-            className="pointer-events-auto flex flex-col items-end gap-2"
+            className="flex flex-col items-end gap-2"
           >
             {actions.map((action, index) => (
               <motion.button
                 key={action.key}
                 type="button"
                 onClick={action.onClick}
+                data-cursor-interactive
                 initial={{ opacity: 0, x: 10 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 8 }}
                 transition={{ duration: 0.18, delay: index * 0.04 }}
-                className="fab-button group inline-flex items-center gap-3 rounded-full px-4 py-3 text-sm font-medium"
+                className="fab-button fab-sub-button group inline-flex items-center gap-3 rounded-full px-4 py-3 text-sm font-medium"
               >
                 <span className="fab-icon">
                   <action.icon size={18} />
@@ -87,9 +95,10 @@ export function FloatingActionFab() {
         type="button"
         aria-label={isOpen ? text.fab.close : text.fab.open}
         onClick={() => setIsOpen((current) => !current)}
+        data-cursor-interactive
         whileHover={{ y: -2, scale: 1.01 }}
         whileTap={{ scale: 0.98 }}
-        className="fab-button pointer-events-auto inline-flex items-center gap-3 rounded-full px-4 py-3 text-sm font-semibold shadow-lg"
+        className="fab-button fab-main-button inline-flex items-center gap-3 rounded-full px-4 py-3 text-sm font-semibold shadow-lg"
       >
         <span className="fab-icon">
           {isOpen ? <X size={18} /> : <Settings2 size={18} />}

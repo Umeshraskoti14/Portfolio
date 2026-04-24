@@ -54,6 +54,10 @@
   --fab-border: rgba(15, 23, 42, 0.14);
   --fab-icon-bg: rgba(255, 255, 255, 0.14);
   --fab-shadow: 0 24px 80px -30px rgba(15, 23, 42, 0.38);
+  --fab-main-bg: linear-gradient(135deg, #0f172a 0%, #0f766e 100%);
+  --fab-main-bg-hover: linear-gradient(135deg, #111827 0%, #115e59 100%);
+  --fab-main-fg: #f8fafc;
+  --fab-main-border: rgba(15, 23, 42, 0.18);
 }
 
 .dark {
@@ -106,6 +110,10 @@
   --fab-border: rgba(148, 163, 184, 0.24);
   --fab-icon-bg: rgba(15, 23, 42, 0.08);
   --fab-shadow: 0 28px 80px -30px rgba(2, 6, 23, 0.55);
+  --fab-main-bg: linear-gradient(135deg, #f8fafc 0%, #ccfbf1 100%);
+  --fab-main-bg-hover: linear-gradient(135deg, #ffffff 0%, #99f6e4 100%);
+  --fab-main-fg: #0f172a;
+  --fab-main-border: rgba(148, 163, 184, 0.32);
 }
 
 @theme inline {

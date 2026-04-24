@@ -78,6 +78,28 @@ html.dark :where([class*='text-slate-500'], [class*='text-slate-400'], [class*='
   background: var(--fab-bg-hover);
 }
 
+.fab-shell {
+  z-index: 120;
+}
+
+.fab-main-button {
+  border-color: var(--fab-main-border);
+  background: var(--fab-main-bg);
+  color: var(--fab-main-fg);
+  box-shadow:
+    0 20px 60px -24px rgba(13, 148, 136, 0.5),
+    var(--fab-shadow);
+}
+
+.fab-main-button:hover {
+  background: var(--fab-main-bg-hover);
+}
+
+.fab-sub-button {
+  min-width: 11.5rem;
+  justify-content: flex-start;
+}
+
 .fab-icon {
   display: inline-flex;
   align-items: center;
