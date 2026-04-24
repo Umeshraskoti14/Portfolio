@@ -259,7 +259,7 @@ const categoryMeta: Record<PortfolioCategory, { eyebrow: string; title: string; 
   'Community Impact': {
     eyebrow: 'Social Development',
     title: 'Community-centered work presented as a polished portfolio of programs, advocacy, and action.',
-    description: 'Each project is framed like a modern showcase page, making impact stories easier to browse, understand, and revisit across devices.',
+    description: 'Programs, advocacy, and field-based initiatives across communities in Nepal.',
   },
   'Strategic Leadership': {
     eyebrow: 'Leadership Practice',
@@ -642,9 +642,6 @@ function PortfolioDetailView({
                 <h1 className="text-3xl font-semibold tracking-tight text-slate-950 md:text-5xl [font-family:'Iowan_Old_Style','Palatino_Linotype','Book_Antiqua',serif]">
                   {entry.item.title}
                 </h1>
-                <p className="mt-4 max-w-3xl text-base leading-8 text-slate-600 md:text-lg">
-                  A premium detail page for this portfolio item, designed to foreground the story, evidence, and visual context in one polished experience.
-                </p>
               </div>
 
               <div className="flex flex-wrap gap-3">
@@ -664,7 +661,7 @@ function PortfolioDetailView({
                   onClick={() => scrollToSelector('#contact')}
                   className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/90 px-5 py-3 text-sm font-semibold text-slate-900 transition hover:border-slate-300 hover:bg-slate-50"
                 >
-                  Contact / CTA
+                  Contact
                   <ArrowRight size={16} />
                 </button>
               </div>
@@ -677,7 +674,7 @@ function PortfolioDetailView({
         <div className="rounded-[2rem] border border-white/70 bg-white/72 p-6 shadow-[0_22px_70px_-45px_rgba(15,23,42,0.45)] backdrop-blur-xl md:p-8">
           <div className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-slate-500">Detailed Content Overview</div>
           <h2 className="mt-3 text-2xl font-semibold tracking-tight text-slate-950 md:text-3xl [font-family:'Iowan_Old_Style','Palatino_Linotype','Book_Antiqua',serif]">
-            Framed with more structure, context, and narrative depth.
+            Overview
           </h2>
           <div className="mt-6 space-y-5 text-base leading-8 text-slate-600">
             {overviewParagraphs.map((paragraph) => (
@@ -696,9 +693,6 @@ function PortfolioDetailView({
                 </span>
               ))}
             </div>
-            <div className="mt-6 rounded-[1.5rem] border border-cyan-100 bg-cyan-50/70 p-4 text-sm leading-7 text-cyan-950">
-              This page layout is optimized for modern portfolio, NGO, education, and program showcase sites where visual trust and narrative clarity matter equally.
-            </div>
           </div>
 
           <div className="rounded-[2rem] border border-white/70 bg-[linear-gradient(180deg,#0f172a_0%,#16263f_100%)] p-6 text-white shadow-[0_22px_70px_-45px_rgba(15,23,42,0.55)]">
@@ -715,7 +709,7 @@ function PortfolioDetailView({
           <div>
             <div className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-slate-500">Charts / Analytics / Infographics</div>
             <h2 className="mt-3 text-2xl font-semibold tracking-tight text-slate-950 md:text-3xl [font-family:'Iowan_Old_Style','Palatino_Linotype','Book_Antiqua',serif]">
-              A premium snapshot of scope, reach, and documentation quality.
+              Scope, reach, and documentation
             </h2>
           </div>
           <p className="max-w-2xl text-sm leading-7 text-slate-500">
@@ -752,7 +746,7 @@ function PortfolioDetailView({
       <section className="rounded-[2rem] border border-white/70 bg-white/72 p-6 shadow-[0_22px_70px_-45px_rgba(15,23,42,0.45)] backdrop-blur-xl md:p-8">
         <div className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-slate-500">Features / Key Highlights</div>
         <h2 className="mt-3 text-2xl font-semibold tracking-tight text-slate-950 md:text-3xl [font-family:'Iowan_Old_Style','Palatino_Linotype','Book_Antiqua',serif]">
-          Highlighted like a modern editorial landing page.
+          Key highlights
         </h2>
         <div className="mt-8 grid gap-4 md:grid-cols-3">
           {features.map((feature) => (
@@ -814,7 +808,7 @@ function PortfolioDetailView({
         <section className="rounded-[2rem] border border-white/70 bg-white/72 p-6 shadow-[0_22px_70px_-45px_rgba(15,23,42,0.45)] backdrop-blur-xl md:p-8">
           <div className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-slate-500">Similar Content Recommendations</div>
           <h2 className="mt-3 text-2xl font-semibold tracking-tight text-slate-950 md:text-3xl [font-family:'Iowan_Old_Style','Palatino_Linotype','Book_Antiqua',serif]">
-            Keep browsing related portfolio stories in the same design language.
+            Related portfolio stories
           </h2>
           <div className="mt-8 grid gap-4 lg:grid-cols-3">
             {relatedEntries.map((related) => {
@@ -860,7 +854,7 @@ function PortfolioDetailView({
 
       <section className="relative overflow-hidden rounded-[2.2rem] border border-cyan-200/70 bg-[radial-gradient(circle_at_top,_rgba(125,211,252,0.35),_transparent_35%),linear-gradient(135deg,#ffffff_0%,#ecfeff_50%,#f8fafc_100%)] p-8 shadow-[0_22px_70px_-45px_rgba(15,23,42,0.45)] md:p-10">
         <div className="max-w-3xl">
-          <div className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-cyan-800">Contact / CTA Section</div>
+          <div className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-cyan-800">Contact</div>
           <h2 className="mt-3 text-3xl font-semibold tracking-tight text-slate-950 md:text-4xl [font-family:'Iowan_Old_Style','Palatino_Linotype','Book_Antiqua',serif]">
             Build from this story, connect for collaboration, or continue exploring the portfolio.
           </h2>
@@ -888,17 +882,6 @@ function PortfolioDetailView({
         </div>
       </section>
 
-      <footer className="rounded-[2rem] border border-white/70 bg-white/72 px-6 py-6 shadow-sm backdrop-blur-xl">
-        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-          <div>
-            <div className="text-sm font-semibold text-slate-950">Portfolio Detail Landing Page</div>
-            <p className="mt-1 text-sm text-slate-500">
-              Premium layout for {entry.item.title}, built with a consistent visual system across overview, analytics, gallery, recommendations, and calls to action.
-            </p>
-          </div>
-          <div className="text-sm text-slate-500">© {new Date().getFullYear()} Umesh Raskoti</div>
-        </div>
-      </footer>
     </div>
   );
 }
@@ -974,16 +957,6 @@ export function PortfolioPage() {
 
                 <div className="relative grid gap-10 px-6 py-8 md:px-10 md:py-12 lg:grid-cols-[1.2fr_0.8fr]">
                   <div>
-                    <div className="mb-5 inline-flex items-center rounded-full border border-cyan-200 bg-cyan-50/90 px-4 py-1.5 text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-cyan-900">
-                      Premium Portfolio Landing
-                    </div>
-                    <h1 className="max-w-5xl text-4xl font-semibold tracking-tight text-slate-950 md:text-6xl [font-family:'Iowan_Old_Style','Palatino_Linotype','Book_Antiqua',serif]">
-                      Equal-sized showcase cards with modern detail pages, glassmorphism, and polished storytelling flow.
-                    </h1>
-                    <p className="mt-5 max-w-3xl text-base leading-8 text-slate-600 md:text-lg">
-                      Browse the portfolio through refined content cards, then open each story as a premium inner landing page with a full hero banner, analytics blocks, gallery, recommendations, and calls to action.
-                    </p>
-
                     <div className="mt-8 grid gap-4 sm:grid-cols-3">
                       <div className="rounded-[1.5rem] border border-white/80 bg-white/75 p-4 shadow-sm backdrop-blur">
                         <div className="text-3xl font-semibold text-slate-950">{categories.length}</div>
