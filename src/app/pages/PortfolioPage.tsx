@@ -694,52 +694,6 @@ function PortfolioDetailView({
               ))}
             </div>
           </div>
-
-          <div className="rounded-[2rem] border border-white/70 bg-[linear-gradient(180deg,#0f172a_0%,#16263f_100%)] p-6 text-white shadow-[0_22px_70px_-45px_rgba(15,23,42,0.55)]">
-            <div className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-cyan-200">Why This Story Stands Out</div>
-            <p className="mt-4 text-sm leading-7 text-slate-200">
-              The detail view turns a single portfolio card into a dedicated landing page with hierarchy, analytics cues, related imagery, and stronger calls to action.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section className="rounded-[2rem] border border-white/70 bg-white/72 p-6 shadow-[0_22px_70px_-45px_rgba(15,23,42,0.45)] backdrop-blur-xl md:p-8">
-        <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-          <div>
-            <div className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-slate-500">Charts / Analytics / Infographics</div>
-            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-slate-950 md:text-3xl [font-family:'Iowan_Old_Style','Palatino_Linotype','Book_Antiqua',serif]">
-              Scope, reach, and documentation
-            </h2>
-          </div>
-          <p className="max-w-2xl text-sm leading-7 text-slate-500">
-            These figures are presented as a polished infographic layer to make each portfolio story feel more business-ready and easier to scan.
-          </p>
-        </div>
-
-        <div className="mt-8 grid gap-4 md:grid-cols-3">
-          {stats.map((stat) => (
-            <div key={stat.label} className="rounded-[1.6rem] border border-slate-200 bg-white/80 p-5 shadow-sm">
-              <div className="text-sm uppercase tracking-[0.18em] text-slate-500">{stat.label}</div>
-              <div className="mt-3 text-4xl font-semibold tracking-tight text-slate-950">{stat.value}</div>
-              <p className="mt-3 text-sm leading-7 text-slate-600">{stat.caption}</p>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-6 grid gap-4 lg:grid-cols-3">
-          {analytics.map((metric) => (
-            <div key={metric.label} className="rounded-[1.6rem] border border-slate-200 bg-slate-50/90 p-5">
-              <div className="flex items-center justify-between gap-3">
-                <div className="text-base font-semibold text-slate-950">{metric.label}</div>
-                <div className="text-sm font-semibold text-slate-500">{metric.value}%</div>
-              </div>
-              <div className="mt-4 h-2 rounded-full bg-slate-200">
-                <div className={`h-full rounded-full bg-gradient-to-r ${metric.tone}`} style={{ width: `${metric.value}%` }} />
-              </div>
-              <p className="mt-4 text-sm leading-7 text-slate-600">{metric.note}</p>
-            </div>
-          ))}
         </div>
       </section>
 
@@ -755,51 +709,6 @@ function PortfolioDetailView({
               <h3 className="mt-3 text-xl font-semibold text-slate-950">{feature.title}</h3>
               <p className="mt-3 text-sm leading-7 text-slate-600">{feature.description}</p>
             </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="rounded-[2rem] border border-white/70 bg-white/72 p-6 shadow-[0_22px_70px_-45px_rgba(15,23,42,0.45)] backdrop-blur-xl md:p-8">
-        <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-          <div>
-            <div className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-slate-500">Related Images / Gallery</div>
-            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-slate-950 md:text-3xl [font-family:'Iowan_Old_Style','Palatino_Linotype','Book_Antiqua',serif]">
-              A visual gallery with fully visible images and premium spacing.
-            </h2>
-          </div>
-          <button
-            type="button"
-            onClick={() => onOpenGallery({ title: entry.item.title, images: galleryAssets }, 0)}
-            className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/90 px-4 py-3 text-sm font-semibold text-slate-900 transition hover:border-slate-300 hover:bg-slate-50"
-          >
-            Open Full Gallery
-            <ArrowRight size={16} />
-          </button>
-        </div>
-
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-          {galleryAssets.map((image, index) => (
-            <button
-              key={`${image.src}-${index}`}
-              type="button"
-              onClick={() => onOpenGallery({ title: entry.item.title, images: galleryAssets }, index)}
-              className="group rounded-[1.6rem] border border-slate-200 bg-white/85 p-4 text-left shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
-            >
-              <div className="flex aspect-[4/3] items-center justify-center rounded-[1.2rem] bg-[linear-gradient(180deg,#ffffff_0%,#f8fafc_100%)] p-4">
-                <img
-                  src={image.src}
-                  alt={image.name ?? entry.item.title}
-                  className="h-full w-full object-contain transition duration-300 group-hover:brightness-105"
-                  loading="lazy"
-                  decoding="async"
-                  onError={(e) => {
-                    const target = e.currentTarget as HTMLImageElement;
-                    if (target.src !== communityCampaignImg) target.src = communityCampaignImg;
-                  }}
-                />
-              </div>
-              <div className="mt-4 text-sm font-semibold text-slate-900">{image.name ?? `Gallery Asset ${index + 1}`}</div>
-            </button>
           ))}
         </div>
       </section>
