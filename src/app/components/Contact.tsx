@@ -89,15 +89,16 @@ export function Contact() {
               <h4 className="mb-4 font-semibold text-slate-900">Follow Me</h4>
               <div className="flex gap-4">
                 {[
-                  { name: 'Facebook', icon: Facebook, href: 'https://facebook.com', color: 'hover:bg-blue-600' },
-                  { name: 'Instagram', icon: Instagram, href: 'https://instagram.com', color: 'hover:bg-pink-600' },
+                  { name: 'Facebook', icon: Facebook, href: 'https://www.facebook.com/twin.raskoti.3', color: 'hover:bg-blue-600' },
+                  { name: 'Instagram', icon: Instagram, href: 'https://www.instagram.com/umesh_raskoti?igsh=MW9qOWJ3aDYzdG83MQ==', color: 'hover:bg-pink-600' },
                   { name: 'LinkedIn', icon: Linkedin, href: 'https://linkedin.com', color: 'hover:bg-blue-700' },
+                  { name: 'Email', icon: Mail, href: 'mailto:umeshraskoti14@gmail.com', color: 'hover:bg-emerald-600' },
                 ].map((platform, index) => (
                   <motion.a
                     key={platform.name}
                     href={platform.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    target={platform.href.startsWith('http') ? '_blank' : undefined}
+                    rel={platform.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                     className={`flex h-11 w-11 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600 hover:text-white ${platform.color} hover:border-transparent transition-all`}
                     whileHover={{ scale: 1.1, y: -3 }}
                     whileTap={{ scale: 0.95 }}

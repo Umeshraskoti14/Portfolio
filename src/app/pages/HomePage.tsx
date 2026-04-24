@@ -179,8 +179,8 @@ export function HomePage() {
                 transition={{ duration: 0.8, delay: 0.7 }}
               >
                 {[
-                  { icon: Facebook, href: 'https://facebook.com', label: 'Facebook' },
-                  { icon: Instagram, href: 'https://instagram.com', label: 'Instagram' },
+                  { icon: Facebook, href: 'https://www.facebook.com/twin.raskoti.3', label: 'Facebook' },
+                  { icon: Instagram, href: 'https://www.instagram.com/umesh_raskoti?igsh=MW9qOWJ3aDYzdG83MQ==', label: 'Instagram' },
                   { icon: Linkedin, href: 'https://linkedin.com', label: 'LinkedIn' },
                   { icon: Mail, href: 'mailto:umeshraskoti14@gmail.com', label: 'Email' },
                 ].map((social, index) => (
