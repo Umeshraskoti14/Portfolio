@@ -12,7 +12,7 @@ type UiPreferencesContextValue = {
 
 const LANGUAGE_STORAGE_KEY = 'portfolio-language-mode';
 
-const UiPreferencesContext = createContext<UiPreferencesContextValue | null>(null);
+export const UiPreferencesContext = createContext<UiPreferencesContextValue | null>(null);
 
 function getInitialTheme(): ThemeMode {
   return 'light';

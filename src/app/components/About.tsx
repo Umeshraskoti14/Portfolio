@@ -40,7 +40,7 @@ export function About() {
             <div className="relative flex aspect-[4/4.6] items-center justify-center overflow-hidden rounded-[1.6rem] border border-slate-200 bg-[linear-gradient(180deg,#f8fafc_0%,#e2e8f0_100%)]">
               <img
                 src={profilePic}
-                alt="Umesh Raskoti"
+                alt={text.about.imageAlt}
                 className="h-full w-full object-contain p-4"
                 onError={(e) => {
                   const img = e.target as HTMLImageElement;

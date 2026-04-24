@@ -43,6 +43,19 @@ export function HomePage() {
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
   }, []);
 
+  useEffect(() => {
+    document.title = text.meta.title;
+
+    const descriptionMeta = document.querySelector('meta[name="description"]');
+    if (descriptionMeta) descriptionMeta.setAttribute('content', text.meta.description);
+
+    const ogTitleMeta = document.querySelector('meta[property="og:title"]');
+    if (ogTitleMeta) ogTitleMeta.setAttribute('content', text.meta.title);
+
+    const ogDescriptionMeta = document.querySelector('meta[property="og:description"]');
+    if (ogDescriptionMeta) ogDescriptionMeta.setAttribute('content', text.meta.description);
+  }, [text.meta.description, text.meta.title]);
+
   return (
     <div>
       <motion.section
@@ -218,7 +231,7 @@ export function HomePage() {
                 <div className="relative rounded-[1.8rem] border border-slate-200 bg-[linear-gradient(180deg,#f8fafc_0%,#e2e8f0_100%)] p-5">
                   <img
                     src={profilePic}
-                    alt="Umesh Raskoti portrait"
+                    alt={text.home.profileAlt}
                     className="mx-auto h-[18rem] w-full rounded-[1.5rem] object-contain sm:h-[22rem] lg:h-[25rem]"
                   />
                 </div>

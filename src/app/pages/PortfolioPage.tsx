@@ -1,6 +1,7 @@
 import { AnimatePresence, motion, useInView } from 'motion/react';
 import { useRef, useState, useEffect } from 'react';
 import { ArrowRight, BookOpen, Briefcase, Camera, Heart, Lightbulb, MapPin, Star, Target, Trophy, Users, Award, X } from 'lucide-react';
+import { getLocalizedPortfolioItem } from '../content/portfolioTranslations';
 import { siteText, translatePortfolioCategory, translatePortfolioFilter, translatePortfolioSubcategory } from '../content/siteText';
 import { useUiPreferences } from '../context/UiPreferencesContext';
 const communityCampaignImg = '/assets/Visual Storytelling/heritage/heritage-1.jpg';
@@ -300,7 +301,7 @@ function getItemImageCount(item: PortfolioItem) {
 
 function getDescriptionSentences(description: string) {
   return description
-    .split(/(?<=[.!?])\s+/)
+    .split(/(?<=[.!?।])\s+/)
     .map((sentence) => sentence.trim())
     .filter(Boolean);
 }
@@ -329,16 +330,17 @@ function scrollToSelector(selector: string) {
   document.querySelector(selector)?.scrollIntoView({ behavior: 'smooth' });
 }
 
-function getVisualStorytellingGalleryImages() {
+function getVisualStorytellingGalleryImages(language: 'en' | 'ne') {
   return getCategoryEntriesWithContext('Visual Storytelling').flatMap((entry) => {
     const filters = visualGalleryAssignments[entry.item.title] ?? ['Documentation'];
+    const localizedItem = getLocalizedPortfolioItem(language, entry.item);
 
     return normalizeImages(entry.item).map((image, index) => ({
       id: `${entry.item.title}-${index}-${image.src}`,
       src: image.src,
-      alt: image.name ?? `${entry.item.title} image ${index + 1}`,
+      alt: `${localizedItem.title} ${index + 1}`,
       filters,
-      sourceTitle: entry.item.title,
+      sourceTitle: localizedItem.title,
     }));
   });
 }
@@ -351,7 +353,6 @@ const portfolioSummary = categories.map((category) => {
     images: entries.reduce((total, entry) => total + Math.max(getItemImageCount(entry.item), 1), 0),
   };
 });
-const visualStorytellingGalleryImages = getVisualStorytellingGalleryImages();
 
 function LandingCard({
   entry,
@@ -363,11 +364,12 @@ function LandingCard({
   onOpen: (entry: PortfolioEntry) => void;
 }) {
   const coverImage = normalizeImages(entry.item)[0]?.src ?? communityCampaignImg;
-  const shortDescription =
-    entry.item.description.length > 150 ? `${entry.item.description.slice(0, 150)}...` : entry.item.description;
   const Icon = entry.item.icon || Star;
   const { language } = useUiPreferences();
   const text = siteText[language];
+  const localizedItem = getLocalizedPortfolioItem(language, entry.item);
+  const shortDescription =
+    localizedItem.description.length > 150 ? `${localizedItem.description.slice(0, 150)}...` : localizedItem.description;
 
   return (
     <motion.article
@@ -380,7 +382,7 @@ function LandingCard({
         <div className="flex h-48 items-center justify-center rounded-[1.5rem] border border-slate-200/80 bg-[radial-gradient(circle_at_top,_rgba(125,211,252,0.22),_transparent_35%),linear-gradient(180deg,#ffffff_0%,#f8fafc_100%)] p-4 shadow-inner shadow-slate-200/50 sm:h-56">
           <img
             src={coverImage}
-            alt={`${entry.item.title} cover`}
+            alt={localizedItem.title}
             className="h-full w-full object-contain transition duration-300 group-hover:brightness-105"
             loading="lazy"
             decoding="async"
@@ -397,7 +399,7 @@ function LandingCard({
           </div>
           <div className="min-w-0">
             <h3 className="text-[1.25rem] font-semibold leading-tight tracking-tight text-slate-950 [font-family:'Iowan_Old_Style','Palatino_Linotype','Book_Antiqua',serif] sm:text-[1.45rem]">
-              {entry.item.title}
+              {localizedItem.title}
             </h3>
           </div>
         </div>
@@ -405,7 +407,7 @@ function LandingCard({
         <p className="mt-4 flex-1 text-sm leading-7 text-slate-600">{shortDescription}</p>
 
         <div className="mt-5 flex flex-wrap gap-2">
-          {entry.item.tags?.slice(0, 3).map((tag) => (
+          {localizedItem.tags?.slice(0, 3).map((tag) => (
             <span key={tag} className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-600 shadow-sm">
               {tag}
             </span>
@@ -549,6 +551,7 @@ function VisualStorytellingDashboard() {
   const text = siteText[language];
   const [activeFilter, setActiveFilter] = useState<VisualGalleryFilter>('All');
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const visualStorytellingGalleryImages = getVisualStorytellingGalleryImages(language);
   const filteredImages =
     activeFilter === 'All'
       ? visualStorytellingGalleryImages
@@ -656,11 +659,12 @@ function PortfolioDetailView({
   onSelectRelated: (entry: PortfolioEntry) => void;
 }) {
   const coverImage = normalizeImages(entry.item)[0]?.src ?? communityCampaignImg;
-  const overviewParagraphs = getOverviewParagraphs(entry.item.description);
   const relatedEntries = getRelatedEntries(entry, 3);
   const Icon = entry.item.icon || Star;
   const { language } = useUiPreferences();
   const text = siteText[language];
+  const localizedItem = getLocalizedPortfolioItem(language, entry.item);
+  const overviewParagraphs = getOverviewParagraphs(localizedItem.description);
   const categoryLabel = translatePortfolioCategory(language, entry.category);
   const subcategoryLabel = translatePortfolioSubcategory(language, entry.subcategory);
 
@@ -690,7 +694,7 @@ function PortfolioDetailView({
         <div className="aspect-[4/3] bg-[radial-gradient(circle_at_top,_rgba(34,211,238,0.18),_transparent_36%),radial-gradient(circle_at_bottom_right,_rgba(251,191,36,0.18),_transparent_28%),linear-gradient(180deg,#ffffff_0%,#eff6ff_100%)] p-4 sm:aspect-[21/10] sm:p-6 md:aspect-[21/8] md:p-10">
           <img
             src={coverImage}
-            alt={entry.item.title}
+            alt={localizedItem.title}
             className="h-full w-full object-contain"
             loading="eager"
             decoding="async"
@@ -724,7 +728,7 @@ function PortfolioDetailView({
                 </div>
 
                 <h1 className="text-2xl font-semibold tracking-tight text-slate-950 sm:text-3xl md:text-5xl [font-family:'Iowan_Old_Style','Palatino_Linotype','Book_Antiqua',serif]">
-                  {entry.item.title}
+                  {localizedItem.title}
                 </h1>
               </div>
 
@@ -774,7 +778,7 @@ function PortfolioDetailView({
                 {text.portfolio.quickPositioning}
               </div>
               <div className="flex flex-wrap gap-2">
-              {entry.item.tags?.map((tag) => (
+              {localizedItem.tags?.map((tag) => (
                 <span key={tag} className="rounded-full border border-slate-200 bg-white px-3 py-1 text-sm font-medium text-slate-700 shadow-sm">
                   {tag}
                 </span>
@@ -794,6 +798,7 @@ function PortfolioDetailView({
           <div className="mt-8 grid gap-4 lg:grid-cols-3">
             {relatedEntries.map((related) => {
               const relatedCover = normalizeImages(related.item)[0]?.src ?? communityCampaignImg;
+              const localizedRelatedItem = getLocalizedPortfolioItem(language, related.item);
 
               return (
                 <button
@@ -805,7 +810,7 @@ function PortfolioDetailView({
                   <div className="flex aspect-[16/10] items-center justify-center rounded-[1.25rem] bg-[linear-gradient(180deg,#ffffff_0%,#f8fafc_100%)] p-4">
                     <img
                       src={relatedCover}
-                      alt={related.item.title}
+                      alt={localizedRelatedItem.title}
                       className="h-full w-full object-contain transition duration-300 group-hover:brightness-105"
                       loading="lazy"
                       decoding="async"
@@ -818,9 +823,11 @@ function PortfolioDetailView({
                   <div className="mt-4 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
                     {translatePortfolioSubcategory(language, related.subcategory) ?? translatePortfolioCategory(language, related.category)}
                   </div>
-                  <h3 className="mt-2 text-lg font-semibold text-slate-950">{related.item.title}</h3>
+                  <h3 className="mt-2 text-lg font-semibold text-slate-950">{localizedRelatedItem.title}</h3>
                   <p className="mt-2 text-sm leading-7 text-slate-600">
-                    {related.item.description.length > 100 ? `${related.item.description.slice(0, 100)}...` : related.item.description}
+                    {localizedRelatedItem.description.length > 100
+                      ? `${localizedRelatedItem.description.slice(0, 100)}...`
+                      : localizedRelatedItem.description}
                   </p>
                   <div className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-slate-900">
                     {text.portfolio.exploreStory}

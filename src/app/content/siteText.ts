@@ -22,10 +22,15 @@ export const siteText: Record<
       contact: string;
       connect: string;
     };
+    meta: {
+      title: string;
+      description: string;
+    };
     home: {
       tagline: string;
       explore: string;
       downloadCv: string;
+      profileAlt: string;
       stats: {
         experience: string;
         projects: string;
@@ -45,6 +50,7 @@ export const siteText: Record<
     };
     about: {
       eyebrow: string;
+      imageAlt: string;
       approachLabel: string;
       approachValue: string;
       paragraphs: string[];
@@ -77,6 +83,8 @@ export const siteText: Record<
         phone: string;
         location: string;
       };
+      locationValue: string;
+      subjectPrefix: string;
       follow: string;
       quickMessage: string;
       introTitle: string;
@@ -113,6 +121,11 @@ export const siteText: Record<
       contact: string;
       backToTop: string;
       rights: string;
+    };
+    errorBoundary: {
+      eyebrow: string;
+      title: string;
+      description: string;
     };
     portfolio: {
       summaryMetrics: {
@@ -160,10 +173,15 @@ export const siteText: Record<
       contact: 'Contact',
       connect: 'Connect',
     },
+    meta: {
+      title: 'Umesh Raskoti - Portfolio',
+      description: 'Portfolio of Umesh Raskoti, showcasing skills, projects, and experiences in social work, leadership, and storytelling.',
+    },
     home: {
       tagline: 'Leading with Purpose. Documenting with Heart.',
       explore: 'Explore Portfolio',
       downloadCv: 'Download CV',
+      profileAlt: 'Umesh Raskoti portrait',
       stats: {
         experience: 'Years Experience',
         projects: 'Key Projects',
@@ -183,6 +201,7 @@ export const siteText: Record<
     },
     about: {
       eyebrow: 'About Me',
+      imageAlt: 'Umesh Raskoti portrait',
       approachLabel: 'Approach',
       approachValue: 'People-first, evidence-based, visually aware',
       paragraphs: [
@@ -270,6 +289,8 @@ export const siteText: Record<
         phone: 'Phone',
         location: 'Location',
       },
+      locationValue: 'Suryabinayak, Bhaktapur 44800',
+      subjectPrefix: 'Portfolio inquiry from',
       follow: 'Follow Me',
       quickMessage: 'Quick Message',
       introTitle: 'Send an introduction',
@@ -306,6 +327,12 @@ export const siteText: Record<
       contact: 'Contact',
       backToTop: 'Back to Top',
       rights: 'All rights reserved.',
+    },
+    errorBoundary: {
+      eyebrow: 'Render Error',
+      title: 'The portfolio hit a runtime error.',
+      description:
+        'The app loaded, but one section failed while rendering. Refresh once. If it still happens, the message below will help identify the broken component.',
     },
     portfolio: {
       summaryMetrics: {
@@ -370,10 +397,15 @@ export const siteText: Record<
       contact: 'सम्पर्क',
       connect: 'कनेक्ट',
     },
+    meta: {
+      title: 'उमेश रास्कोटी - पोर्टफोलियो',
+      description: 'उमेश रास्कोटीको पोर्टफोलियो, जसमा सामाजिक कार्य, नेतृत्व र कथनसम्बन्धी सीप, परियोजना र अनुभवहरू समेटिएका छन्।',
+    },
     home: {
       tagline: 'उद्देश्यका साथ नेतृत्व। मनको भावनासहित दस्तावेजीकरण।',
       explore: 'पोर्टफोलियो हेर्नुहोस्',
       downloadCv: 'सीभी डाउनलोड गर्नुहोस्',
+      profileAlt: 'उमेश रास्कोटीको पोर्ट्रेट',
       stats: {
         experience: 'वर्षको अनुभव',
         projects: 'मुख्य परियोजना',
@@ -393,6 +425,7 @@ export const siteText: Record<
     },
     about: {
       eyebrow: 'मेरो बारेमा',
+      imageAlt: 'उमेश रास्कोटीको पोर्ट्रेट',
       approachLabel: 'दृष्टिकोण',
       approachValue: 'मानिस-प्रथम, प्रमाणमा आधारित, दृश्य-जागरूक',
       paragraphs: [
@@ -480,6 +513,8 @@ export const siteText: Record<
         phone: 'फोन',
         location: 'स्थान',
       },
+      locationValue: 'सूर्यविनायक, भक्तपुर ४४८००',
+      subjectPrefix: 'बाट पोर्टफोलियो सम्बन्धी सोधपुछ',
       follow: 'मलाई फलो गर्नुहोस्',
       quickMessage: 'छिटो सन्देश',
       introTitle: 'परिचय पठाउनुहोस्',
@@ -516,6 +551,12 @@ export const siteText: Record<
       contact: 'सम्पर्क',
       backToTop: 'माथि फर्कनुहोस्',
       rights: 'सर्वाधिकार सुरक्षित।',
+    },
+    errorBoundary: {
+      eyebrow: 'रेन्डर त्रुटि',
+      title: 'पोर्टफोलियोमा रनटाइम त्रुटि देखियो।',
+      description:
+        'एप खुलेको छ, तर रेन्डर गर्ने क्रममा एउटा भागमा समस्या आएको छ। एकपटक रिफ्रेस गर्नुहोस्। समस्या दोहोरिएमा तलको सन्देशले कुन कम्पोनेन्टमा समस्या छ भनेर देखाउन मद्दत गर्छ।',
     },
     portfolio: {
       summaryMetrics: {

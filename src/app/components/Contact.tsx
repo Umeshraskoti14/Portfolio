@@ -17,8 +17,12 @@ export function Contact() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const subject = encodeURIComponent(`Portfolio inquiry from ${formData.name}`);
-    const body = encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\n\n${formData.message}`);
+    const subject = encodeURIComponent(
+      language === 'ne' ? `${formData.name} ${text.contact.subjectPrefix}` : `${text.contact.subjectPrefix} ${formData.name}`
+    );
+    const body = encodeURIComponent(
+      `${text.contact.fields.name}: ${formData.name}\n${text.contact.fields.email}: ${formData.email}\n\n${formData.message}`
+    );
     window.location.href = `mailto:umeshraskoti14@gmail.com?subject=${subject}&body=${body}`;
     setFormData({ name: '', email: '', message: '' });
   };
@@ -64,7 +68,7 @@ export function Contact() {
               {[
                 { icon: Mail, label: text.contact.labels.email, value: 'umeshraskoti14@gmail.com', color: 'bg-gradient-to-br from-emerald-500 to-emerald-600' },
                 { icon: Phone, label: text.contact.labels.phone, value: '+977 9867233437', color: 'bg-gradient-to-br from-sky-500 to-sky-600' },
-                { icon: MapPin, label: text.contact.labels.location, value: 'Suryabinayak, Bhaktapur 44800', color: 'bg-gradient-to-br from-slate-800 to-slate-900' },
+                { icon: MapPin, label: text.contact.labels.location, value: text.contact.locationValue, color: 'bg-gradient-to-br from-slate-800 to-slate-900' },
               ].map((item, index) => (
                 <motion.div
                   key={item.label}
