@@ -43,7 +43,7 @@ export function HomePage() {
     <div>
       <motion.section
         id="home"
-        className="relative flex min-h-screen items-center overflow-hidden bg-[radial-gradient(circle_at_top_left,_rgba(34,197,94,0.16),_transparent_22%),radial-gradient(circle_at_top_right,_rgba(14,165,233,0.12),_transparent_24%),linear-gradient(180deg,#f8fafc_0%,#ffffff_48%,#f1f5f9_100%)] pt-24"
+        className="relative flex min-h-screen items-start overflow-hidden bg-[radial-gradient(circle_at_top_left,_rgba(34,197,94,0.16),_transparent_22%),radial-gradient(circle_at_top_right,_rgba(14,165,233,0.12),_transparent_24%),linear-gradient(180deg,#f8fafc_0%,#ffffff_48%,#f1f5f9_100%)] pt-24 pb-12 md:items-center md:pb-0"
         ref={ref}
         initial={{ opacity: 0 }}
         animate={{ opacity: isInView ? 1 : 0.3 }}
@@ -98,11 +98,11 @@ export function HomePage() {
             initial={{ opacity: 0, y: 28 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 28 }}
             transition={{ duration: 0.9, ease: 'easeOut' }}
-            className="grid items-center gap-10 py-12 lg:grid-cols-[1.15fr_0.85fr]"
+            className="grid items-center gap-8 py-8 sm:py-12 lg:grid-cols-[1.15fr_0.85fr] lg:gap-10"
           >
             <div className="max-w-3xl">
               <motion.div
-                className="mb-6 inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-white/80 px-5 py-2 text-sm font-medium text-slate-700 shadow-sm backdrop-blur"
+                className="mb-6 inline-flex max-w-full items-center gap-2 rounded-full border border-emerald-200 bg-white/80 px-4 py-2 text-sm font-medium text-slate-700 shadow-sm backdrop-blur sm:px-5"
                 initial={{ opacity: 0, y: 26 }}
                 animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 26 }}
                 transition={{ duration: 0.7, delay: 0.15 }}
@@ -111,7 +111,7 @@ export function HomePage() {
               </motion.div>
 
               <motion.h1
-                className="text-5xl font-semibold leading-[0.96] tracking-tight text-slate-950 sm:text-6xl md:text-7xl lg:text-[5.4rem]"
+                className="text-4xl font-semibold leading-[0.96] tracking-tight text-slate-950 sm:text-6xl md:text-7xl lg:text-[5.4rem]"
                 initial={{ opacity: 0, y: 34 }}
                 animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 34 }}
                 transition={{ duration: 0.8, delay: 0.22 }}
@@ -153,7 +153,7 @@ export function HomePage() {
               >
                 <motion.button
                   onClick={() => document.querySelector('#portfolio')?.scrollIntoView({ behavior: 'smooth' })}
-                  className="inline-flex items-center gap-2 rounded-full bg-slate-950 px-7 py-4 text-white shadow-lg shadow-slate-950/15 transition"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-slate-950 px-7 py-4 text-white shadow-lg shadow-slate-950/15 transition sm:w-auto"
                   whileHover={{ scale: 1.03, y: -2 }}
                   whileTap={{ scale: 0.98 }}
                 >
@@ -163,7 +163,7 @@ export function HomePage() {
                 <motion.a
                   href="/Umesh_Raskoti_Resume.pdf"
                   download
-                  className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white/90 px-7 py-4 text-slate-900 shadow-sm backdrop-blur transition hover:border-slate-400 hover:bg-white"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-slate-300 bg-white/90 px-7 py-4 text-slate-900 shadow-sm backdrop-blur transition hover:border-slate-400 hover:bg-white sm:w-auto"
                   whileHover={{ scale: 1.03, y: -2 }}
                   whileTap={{ scale: 0.98 }}
                 >
@@ -207,7 +207,7 @@ export function HomePage() {
               initial={{ opacity: 0, x: 40 }}
               animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 40 }}
               transition={{ duration: 0.9, delay: 0.36 }}
-              className="relative mx-auto w-full max-w-xl"
+              className="relative mx-auto mt-2 w-full max-w-xl lg:mt-0"
             >
               <div className="relative overflow-hidden rounded-[2.25rem] border border-slate-200 bg-white/90 p-4 shadow-[0_28px_80px_-42px_rgba(15,23,42,0.55)] backdrop-blur">
                 <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-r from-emerald-100 via-sky-100 to-amber-100" />
@@ -215,34 +215,34 @@ export function HomePage() {
                   <img
                     src={profilePic}
                     alt="Umesh Raskoti portrait"
-                    className="mx-auto h-[25rem] w-full rounded-[1.5rem] object-contain"
+                    className="mx-auto h-[18rem] w-full rounded-[1.5rem] object-contain sm:h-[22rem] lg:h-[25rem]"
                   />
                 </div>
               </div>
 
               <motion.div
-                className="absolute -left-4 top-8 rounded-2xl border border-slate-200 bg-white/90 p-4 shadow-lg backdrop-blur"
+                className="absolute left-3 top-4 max-w-[11rem] rounded-2xl border border-slate-200 bg-white/90 px-3 py-2.5 shadow-lg backdrop-blur sm:-left-4 sm:top-8 sm:max-w-none sm:p-4"
                 animate={{ y: [0, -10, 0] }}
                 transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
               >
                 <div className="text-xs uppercase tracking-[0.18em] text-slate-500">Current Focus</div>
-                <div className="mt-2 text-sm font-semibold text-slate-900">Youth advocacy and community-centered coordination</div>
+                <div className="mt-2 text-xs font-semibold text-slate-900 sm:text-sm">Youth advocacy and community-centered coordination</div>
               </motion.div>
 
               <motion.div
-                className="absolute -bottom-4 right-0 rounded-2xl bg-slate-950 px-5 py-4 text-white shadow-xl"
+                className="absolute bottom-3 right-3 rounded-2xl bg-slate-950 px-4 py-3 text-white shadow-xl sm:-bottom-4 sm:right-0 sm:px-5 sm:py-4"
                 animate={{ y: [0, 10, 0] }}
                 transition={{ duration: 5.6, repeat: Infinity, ease: 'easeInOut' }}
               >
                 <div className="text-xs uppercase tracking-[0.18em] text-slate-300">Based In</div>
-                <div className="mt-2 text-lg font-semibold">Bhaktapur, Nepal</div>
+                <div className="mt-2 text-base font-semibold sm:text-lg">Bhaktapur, Nepal</div>
               </motion.div>
             </motion.div>
           </motion.div>
         </div>
 
         <motion.div
-          className="absolute bottom-8 left-1/2 -translate-x-1/2"
+          className="absolute bottom-8 left-1/2 hidden -translate-x-1/2 sm:block"
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1, y: [0, 10, 0] } : { opacity: 0 }}
           transition={{ y: { duration: 2, repeat: Infinity }, opacity: { delay: 1.5 } }}

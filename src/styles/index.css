@@ -4,14 +4,20 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 5.5rem;
 }
 
 body {
   min-height: 100vh;
+  overflow-x: hidden;
   background:
     radial-gradient(circle at top left, rgba(16, 185, 129, 0.08), transparent 24%),
     linear-gradient(180deg, #f8fafc 0%, #ffffff 40%, #f8fafc 100%);
   color: #0f172a;
+}
+
+:where(section[id], div[id]) {
+  scroll-margin-top: 5.5rem;
 }
 
 ::selection {
@@ -101,4 +107,11 @@ html.dark button:hover {
   border-color: rgba(56, 189, 248, 0.75);
   background: rgba(56, 189, 248, 0.14);
   box-shadow: 0 24px 90px rgba(56, 189, 248, 0.18);
+}
+
+@media (pointer: coarse) {
+  .custom-cursor-dot,
+  .custom-cursor-outline {
+    display: none;
+  }
 }

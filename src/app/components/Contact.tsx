@@ -37,7 +37,7 @@ export function Contact() {
           className="text-center mb-16"
         >
           <div className="mb-4 text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-slate-500">Contact</div>
-          <h2 className="text-4xl md:text-5xl font-semibold tracking-tight text-slate-950 mb-4">Let’s connect around meaningful projects and creative collaborations.</h2>
+          <h2 className="text-3xl md:text-5xl font-semibold tracking-tight text-slate-950 mb-4">Let’s connect around meaningful projects and creative collaborations.</h2>
           <div className="mx-auto mb-8 h-1 w-20 bg-slate-900" />
           <p className="mx-auto max-w-3xl text-lg leading-8 text-slate-600">
             If you are working on community outreach, advocacy, documentation, training, or a story-led campaign, I’d be glad to hear from you.
@@ -49,7 +49,7 @@ export function Contact() {
             initial={{ opacity: 0, x: -50 }}
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="rounded-[2rem] border border-slate-200 bg-white/90 p-8 shadow-sm backdrop-blur md:p-10"
+            className="rounded-[2rem] border border-slate-200 bg-white/90 p-6 shadow-sm backdrop-blur md:p-10"
           >
             <h3 className="mb-6 text-2xl font-semibold text-slate-950">Contact Information</h3>
             <p className="mb-8 leading-8 text-slate-600">
@@ -72,9 +72,9 @@ export function Contact() {
                   <div className={`flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl ${item.color} text-white shadow-lg`}>
                     <item.icon size={20} />
                   </div>
-                  <div>
+                  <div className="min-w-0 flex-1">
                     <h4 className="mb-1 font-semibold text-slate-900">{item.label}</h4>
-                    <p className="text-slate-600">{item.value}</p>
+                    <p className="break-words text-slate-600">{item.value}</p>
                   </div>
                 </motion.div>
               ))}
@@ -117,8 +117,8 @@ export function Contact() {
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            <form onSubmit={handleSubmit} className="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-[0_24px_80px_-42px_rgba(15,23,42,0.45)] md:p-10">
-              <div className="mb-8 flex items-start justify-between gap-4">
+            <form onSubmit={handleSubmit} className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-[0_24px_80px_-42px_rgba(15,23,42,0.45)] md:p-10">
+              <div className="mb-8 flex flex-col items-start justify-between gap-4 sm:flex-row">
                 <div>
                   <div className="text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-slate-500">Quick Message</div>
                   <h3 className="mt-2 text-2xl font-semibold text-slate-950">Send an introduction</h3>

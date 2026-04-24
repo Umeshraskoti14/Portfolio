@@ -370,10 +370,10 @@ function LandingCard({
       initial={{ opacity: 0, y: 28 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.45, delay: index * 0.04 }}
-      className="group flex h-full min-h-[31rem] flex-col rounded-[2rem] border border-white/70 bg-white/65 p-3 shadow-[0_28px_90px_-52px_rgba(15,23,42,0.55)] backdrop-blur-xl transition duration-300 hover:-translate-y-1.5 hover:shadow-[0_30px_90px_-40px_rgba(15,23,42,0.45)]"
+      className="group flex h-full min-h-[28rem] flex-col rounded-[2rem] border border-white/70 bg-white/65 p-3 shadow-[0_28px_90px_-52px_rgba(15,23,42,0.55)] backdrop-blur-xl transition duration-300 hover:-translate-y-1.5 hover:shadow-[0_30px_90px_-40px_rgba(15,23,42,0.45)] sm:min-h-[31rem]"
     >
-      <div className="flex h-full flex-col rounded-[1.6rem] border border-slate-200/70 bg-white/88 p-5">
-        <div className="flex h-56 items-center justify-center rounded-[1.5rem] border border-slate-200/80 bg-[radial-gradient(circle_at_top,_rgba(125,211,252,0.22),_transparent_35%),linear-gradient(180deg,#ffffff_0%,#f8fafc_100%)] p-4 shadow-inner shadow-slate-200/50">
+      <div className="flex h-full flex-col rounded-[1.6rem] border border-slate-200/70 bg-white/88 p-4 sm:p-5">
+        <div className="flex h-48 items-center justify-center rounded-[1.5rem] border border-slate-200/80 bg-[radial-gradient(circle_at_top,_rgba(125,211,252,0.22),_transparent_35%),linear-gradient(180deg,#ffffff_0%,#f8fafc_100%)] p-4 shadow-inner shadow-slate-200/50 sm:h-56">
           <img
             src={coverImage}
             alt={`${entry.item.title} cover`}
@@ -392,7 +392,7 @@ function LandingCard({
             <Icon size={20} />
           </div>
           <div className="min-w-0">
-            <h3 className="text-[1.45rem] font-semibold leading-tight tracking-tight text-slate-950 [font-family:'Iowan_Old_Style','Palatino_Linotype','Book_Antiqua',serif]">
+            <h3 className="text-[1.25rem] font-semibold leading-tight tracking-tight text-slate-950 [font-family:'Iowan_Old_Style','Palatino_Linotype','Book_Antiqua',serif] sm:text-[1.45rem]">
               {entry.item.title}
             </h3>
           </div>
@@ -549,7 +549,7 @@ function VisualStorytellingDashboard() {
       : visualStorytellingGalleryImages.filter((image) => image.filters.includes(activeFilter));
 
   return (
-    <div className="space-y-8">
+      <div className="space-y-8">
       <motion.section
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
@@ -557,7 +557,7 @@ function VisualStorytellingDashboard() {
         className="rounded-[2rem] border border-white/80 bg-white/74 px-5 py-6 shadow-[0_24px_70px_-48px_rgba(15,23,42,0.45)] backdrop-blur-xl sm:px-7"
       >
         <div className="h-px w-16 bg-gradient-to-r from-teal-600 via-cyan-500 to-transparent" />
-        <h2 className="mt-4 text-3xl font-semibold tracking-tight text-slate-950 [font-family:'Iowan_Old_Style','Palatino_Linotype','Book_Antiqua',serif]">
+        <h2 className="mt-4 text-2xl font-semibold tracking-tight text-slate-950 [font-family:'Iowan_Old_Style','Palatino_Linotype','Book_Antiqua',serif] sm:text-3xl">
           Visual Storytelling
         </h2>
         <p className="mt-2 text-sm text-slate-500">Collection of field visuals / project documentation</p>
@@ -597,7 +597,7 @@ function VisualStorytellingDashboard() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
           transition={{ duration: 0.28 }}
-          className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:gap-5 xl:grid-cols-4"
+          className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:gap-5 xl:grid-cols-4"
         >
           {filteredImages.map((image, index) => (
             <motion.button
@@ -677,7 +677,7 @@ function PortfolioDetailView({
       </div>
 
       <section className="overflow-hidden rounded-[2.5rem] border border-white/70 bg-white/60 shadow-[0_30px_100px_-50px_rgba(15,23,42,0.5)] backdrop-blur-xl">
-        <div className="aspect-[21/10] bg-[radial-gradient(circle_at_top,_rgba(34,211,238,0.18),_transparent_36%),radial-gradient(circle_at_bottom_right,_rgba(251,191,36,0.18),_transparent_28%),linear-gradient(180deg,#ffffff_0%,#eff6ff_100%)] p-6 md:aspect-[21/8] md:p-10">
+        <div className="aspect-[4/3] bg-[radial-gradient(circle_at_top,_rgba(34,211,238,0.18),_transparent_36%),radial-gradient(circle_at_bottom_right,_rgba(251,191,36,0.18),_transparent_28%),linear-gradient(180deg,#ffffff_0%,#eff6ff_100%)] p-4 sm:aspect-[21/10] sm:p-6 md:aspect-[21/8] md:p-10">
           <img
             src={coverImage}
             alt={entry.item.title}
@@ -691,7 +691,7 @@ function PortfolioDetailView({
           />
         </div>
 
-        <div className="relative -mt-12 px-4 pb-6 md:-mt-16 md:px-10 md:pb-10">
+        <div className="relative -mt-8 px-4 pb-6 sm:-mt-12 md:-mt-16 md:px-10 md:pb-10">
           <div className="rounded-[2rem] border border-white/80 bg-white/78 p-6 shadow-[0_24px_80px_-40px_rgba(15,23,42,0.45)] backdrop-blur-xl md:p-8">
             <div className="mb-4 flex flex-wrap gap-2">
               <span className="rounded-full border border-cyan-200 bg-cyan-50 px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-cyan-900">
@@ -713,7 +713,7 @@ function PortfolioDetailView({
                   </span>
                 </div>
 
-                <h1 className="text-3xl font-semibold tracking-tight text-slate-950 md:text-5xl [font-family:'Iowan_Old_Style','Palatino_Linotype','Book_Antiqua',serif]">
+                <h1 className="text-2xl font-semibold tracking-tight text-slate-950 sm:text-3xl md:text-5xl [font-family:'Iowan_Old_Style','Palatino_Linotype','Book_Antiqua',serif]">
                   {entry.item.title}
                 </h1>
               </div>
@@ -724,7 +724,7 @@ function PortfolioDetailView({
                     href={entry.item.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
+                    className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 sm:w-auto"
                   >
                     Visit Reference
                     <ArrowRight size={16} />
@@ -733,7 +733,7 @@ function PortfolioDetailView({
                 <button
                   type="button"
                   onClick={() => scrollToSelector('#contact')}
-                  className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/90 px-5 py-3 text-sm font-semibold text-slate-900 transition hover:border-slate-300 hover:bg-slate-50"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-slate-200 bg-white/90 px-5 py-3 text-sm font-semibold text-slate-900 transition hover:border-slate-300 hover:bg-slate-50 sm:w-auto"
                 >
                   Contact
                   <ArrowRight size={16} />
@@ -864,7 +864,7 @@ export function PortfolioPage() {
   };
 
   return (
-    <div id="portfolio" className="cursor-none min-h-screen bg-[radial-gradient(circle_at_top,_rgba(14,165,233,0.12),_transparent_28%),radial-gradient(circle_at_bottom_right,_rgba(245,158,11,0.12),_transparent_24%),linear-gradient(180deg,#f8fafc_0%,#ffffff_46%,#f8fafc_100%)] pt-24 pb-20 text-slate-900">
+    <div id="portfolio" className="cursor-none min-h-screen bg-[radial-gradient(circle_at_top,_rgba(14,165,233,0.12),_transparent_28%),radial-gradient(circle_at_bottom_right,_rgba(245,158,11,0.12),_transparent_24%),linear-gradient(180deg,#f8fafc_0%,#ffffff_46%,#f8fafc_100%)] pt-20 pb-16 text-slate-900 md:pt-24 md:pb-20">
       <CustomCursor />
       <motion.div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" ref={ref} initial={{ opacity: 0 }} animate={{ opacity: isInView ? 1 : 0.3 }} transition={{ duration: 0.6 }}>
         <AnimatePresence mode="wait" initial={false}>

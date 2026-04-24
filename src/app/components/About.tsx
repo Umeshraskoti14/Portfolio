@@ -48,7 +48,7 @@ export function About() {
             initial={{ opacity: 0, x: -50 }}
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative h-full overflow-hidden rounded-[2rem] border border-slate-200 bg-white p-4 shadow-[0_24px_80px_-42px_rgba(15,23,42,0.45)]"
+            className="relative h-full overflow-hidden rounded-[2rem] border border-slate-200 bg-white p-3 shadow-[0_24px_80px_-42px_rgba(15,23,42,0.45)] sm:p-4"
           >
             <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-r from-emerald-100 via-sky-100 to-amber-100" />
             <div className="relative flex aspect-[4/4.6] items-center justify-center overflow-hidden rounded-[1.6rem] border border-slate-200 bg-[linear-gradient(180deg,#f8fafc_0%,#e2e8f0_100%)]">
@@ -62,7 +62,7 @@ export function About() {
                 }}
               />
             </div>
-            <div className="absolute bottom-8 left-8 rounded-2xl bg-white/92 px-4 py-3 shadow-lg backdrop-blur">
+            <div className="absolute bottom-4 left-4 right-4 rounded-2xl bg-white/92 px-4 py-3 shadow-lg backdrop-blur sm:bottom-8 sm:left-8 sm:right-auto">
               <div className="text-xs uppercase tracking-[0.18em] text-slate-500">Approach</div>
               <div className="mt-1 text-sm font-semibold text-slate-900">People-first, evidence-based, visually aware</div>
             </div>
@@ -72,7 +72,7 @@ export function About() {
             initial={{ opacity: 0, x: 50 }}
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="flex h-full flex-col justify-center gap-6 rounded-[2rem] border border-slate-200 bg-white/90 p-8 shadow-sm backdrop-blur md:p-10"
+            className="flex h-full flex-col justify-center gap-6 rounded-[2rem] border border-slate-200 bg-white/90 p-6 shadow-sm backdrop-blur md:p-10"
           >
             <p className="text-slate-600 leading-8">
               I have always believed that real change does not happen from the sidelines. It happens through action, empathy, and being present in the community. My journey in social work and psychology has been guided by a simple goal: to understand people better so I can serve them more effectively. Whether I am contributing to urban development projects at Kathmandu Metropolitan City or leading initiatives as President of JCI Bhaktapur Junior, I find the greatest meaning in work that helps others discover and strengthen their own voice.

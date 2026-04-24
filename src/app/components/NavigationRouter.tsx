@@ -18,7 +18,9 @@ export function NavigationRouter() {
   const scrollToSection = (href: string) => {
     const element = document.querySelector(href);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      const navOffset = window.innerWidth < 768 ? 80 : 96;
+      const top = element.getBoundingClientRect().top + window.scrollY - navOffset;
+      window.scrollTo({ top: Math.max(top, 0), behavior: 'smooth' });
     }
     setIsMobileMenuOpen(false);
   };
@@ -50,6 +52,13 @@ export function NavigationRouter() {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    document.body.style.overflow = isMobileMenuOpen ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMobileMenuOpen]);
+
   return (
     <>
       <motion.nav
@@ -66,7 +75,7 @@ export function NavigationRouter() {
           <div className="flex h-16 items-center justify-between md:h-20">
             <motion.button
               onClick={() => scrollToSection('#home')}
-              className="text-xl font-semibold tracking-tight text-slate-950 md:text-2xl"
+              className="text-lg font-semibold tracking-tight text-slate-950 sm:text-xl md:text-2xl"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -127,7 +136,7 @@ export function NavigationRouter() {
             transition={{ type: 'tween' }}
             className="fixed inset-0 z-40 bg-[linear-gradient(180deg,#ffffff_0%,#f8fafc_100%)] md:hidden"
           >
-            <div className="flex h-full flex-col items-center justify-center space-y-6">
+            <div className="flex h-full flex-col items-center justify-center space-y-6 px-6 pt-24">
               {navItems.map((item, index) => (
                 <button
                   key={item.name}

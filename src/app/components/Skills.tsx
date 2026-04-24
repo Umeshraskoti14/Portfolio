@@ -45,7 +45,7 @@ export function Skills() {
           transition={{ duration: 0.8 }}
           className="relative text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-semibold tracking-tight text-slate-950 mb-4">Skills & Expertise</h2>
+          <h2 className="text-3xl md:text-5xl font-semibold tracking-tight text-slate-950 mb-4">Skills & Expertise</h2>
           <div className="w-20 h-1 bg-slate-900 mx-auto mb-8" />
           <p className="mx-auto max-w-3xl text-lg leading-8 text-slate-600">
             A practical toolkit built from program implementation, community engagement, facilitation, documentation, and visual storytelling.
@@ -59,14 +59,14 @@ export function Skills() {
               initial={{ opacity: 0, y: 50 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
               transition={{ duration: 0.6, delay: categoryIndex * 0.2 }}
-              className="flex h-full flex-col rounded-[1.8rem] border border-slate-200 bg-white p-6 shadow-sm"
+              className="flex h-full flex-col rounded-[1.8rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6"
             >
               <h3 className="mb-6 text-xl font-semibold text-slate-950">{category.title}</h3>
               <div className="space-y-4">
                 {category.skills.map((skill, skillIndex) => (
                   <div key={skill.name}>
-                    <div className="flex justify-between mb-2">
-                      <span className="font-medium text-slate-700">{skill.name}</span>
+                    <div className="mb-2 flex items-start justify-between gap-3">
+                      <span className="min-w-0 font-medium text-slate-700">{skill.name}</span>
                       <span className="text-slate-500">{skill.level}%</span>
                     </div>
                     <div className="h-2 overflow-hidden rounded-full bg-slate-200">
@@ -88,10 +88,10 @@ export function Skills() {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.8, delay: 0.8 }}
-          className="relative mt-16 rounded-[2rem] border border-slate-200 bg-white/90 p-8 text-center shadow-sm backdrop-blur"
+          className="relative mt-16 rounded-[2rem] border border-slate-200 bg-white/90 p-6 text-center shadow-sm backdrop-blur sm:p-8"
         >
-          <h3 className="mb-6 text-2xl font-semibold text-slate-950">Tools, Platforms, and Working Languages</h3>
-          <div className="flex flex-wrap justify-center gap-4">
+          <h3 className="mb-6 text-xl font-semibold text-slate-950 sm:text-2xl">Tools, Platforms, and Working Languages</h3>
+          <div className="flex flex-wrap justify-center gap-3 sm:gap-4">
             {[
               'MS Word', 'MS Excel', 'PowerPoint', 'Kobo Collect', 'Google Forms',
               'Microsoft Teams', 'Zoom', 'Adobe Lightroom', 'Photoshop', 'CapCut',
@@ -99,7 +99,7 @@ export function Skills() {
             ].map((tech, index) => (
               <motion.span
                 key={tech}
-                className="rounded-full border border-slate-200 bg-slate-50 px-5 py-2 text-slate-700 transition-all hover:-translate-y-1 hover:border-slate-300 hover:bg-white hover:shadow-md"
+                className="rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-sm text-slate-700 transition-all hover:-translate-y-1 hover:border-slate-300 hover:bg-white hover:shadow-md sm:px-5"
                 initial={{ opacity: 0, scale: 0 }}
                 animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
                 transition={{ duration: 0.4, delay: 1 + index * 0.05 }}
