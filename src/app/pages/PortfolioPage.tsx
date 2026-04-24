@@ -744,7 +744,7 @@ function PortfolioDetailView({
         </div>
       </section>
 
-      <section className="grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
+      <section className="space-y-6">
         <div className="rounded-[2rem] border border-white/70 bg-white/72 p-6 shadow-[0_22px_70px_-45px_rgba(15,23,42,0.45)] backdrop-blur-xl md:p-8">
           <div className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-slate-500">Detailed Content Overview</div>
           <h2 className="mt-3 text-2xl font-semibold tracking-tight text-slate-950 md:text-3xl [font-family:'Iowan_Old_Style','Palatino_Linotype','Book_Antiqua',serif]">
@@ -757,10 +757,10 @@ function PortfolioDetailView({
           </div>
         </div>
 
-        <div className="space-y-6">
+        <div className="w-full sm:w-fit sm:max-w-sm">
           <div className="rounded-[2rem] border border-white/70 bg-white/72 p-6 shadow-[0_22px_70px_-45px_rgba(15,23,42,0.45)] backdrop-blur-xl">
             <div className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-slate-500">Quick Positioning</div>
-            <div className="mt-4 flex flex-wrap gap-2">
+            <div className="mt-4 flex flex-col items-start gap-2">
               {entry.item.tags?.map((tag) => (
                 <span key={tag} className="rounded-full border border-slate-200 bg-white px-3 py-1 text-sm font-medium text-slate-700 shadow-sm">
                   {tag}
