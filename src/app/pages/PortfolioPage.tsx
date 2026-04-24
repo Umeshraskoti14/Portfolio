@@ -1,6 +1,6 @@
 import { AnimatePresence, motion, useInView } from 'motion/react';
 import { useRef, useState, useEffect } from 'react';
-import { ArrowRight, BookOpen, Briefcase, Camera, Heart, Lightbulb, MapPin, Star, Target, Trophy, Users, Award } from 'lucide-react';
+import { ArrowRight, BookOpen, Briefcase, Camera, Heart, Lightbulb, MapPin, Star, Target, Trophy, Users, Award, X } from 'lucide-react';
 const communityCampaignImg = '/assets/Visual Storytelling/heritage/heritage-1.jpg';
 
 const portfolioData = {
@@ -231,8 +231,25 @@ type GalleryAsset = {
   src: string;
   name?: string;
 };
+type VisualGalleryFilter = 'All' | 'Field Work' | 'Community Engagement' | 'Training Sessions' | 'Events' | 'Documentation';
+type VisualGalleryImage = {
+  id: string;
+  src: string;
+  alt: string;
+  filters: VisualGalleryFilter[];
+  sourceTitle: string;
+};
 
 const categories = Object.keys(portfolioData) as PortfolioCategory[];
+const visualGalleryFilters: VisualGalleryFilter[] = ['All', 'Field Work', 'Community Engagement', 'Training Sessions', 'Events', 'Documentation'];
+const visualGalleryAssignments: Record<string, Exclude<VisualGalleryFilter, 'All'>[]> = {
+  'Architectural Photography - Temples & Landmarks': ['Documentation'],
+  'Himalayan Landscapes': ['Field Work'],
+  'Golden Hour - Sunrise Mountain Peaks': ['Field Work'],
+  'Forest & Nature Biodiversity': ['Field Work', 'Documentation'],
+  'Rural Nepal Village Life': ['Field Work', 'Community Engagement', 'Documentation'],
+  'Professional Portraiture & Events': ['Events', 'Training Sessions', 'Community Engagement'],
+};
 
 function normalizeImages(item: PortfolioItem): GalleryAsset[] {
   return uniqueImages(item.images || (item.image ? [item.image] : [])).map((img) =>
@@ -310,6 +327,20 @@ function scrollToSelector(selector: string) {
   document.querySelector(selector)?.scrollIntoView({ behavior: 'smooth' });
 }
 
+function getVisualStorytellingGalleryImages() {
+  return getCategoryEntriesWithContext('Visual Storytelling').flatMap((entry) => {
+    const filters = visualGalleryAssignments[entry.item.title] ?? ['Documentation'];
+
+    return normalizeImages(entry.item).map((image, index) => ({
+      id: `${entry.item.title}-${index}-${image.src}`,
+      src: image.src,
+      alt: image.name ?? `${entry.item.title} image ${index + 1}`,
+      filters,
+      sourceTitle: entry.item.title,
+    }));
+  });
+}
+
 const portfolioSummary = categories.map((category) => {
   const entries = getCategoryEntriesWithContext(category);
   return {
@@ -318,6 +349,7 @@ const portfolioSummary = categories.map((category) => {
     images: entries.reduce((total, entry) => total + Math.max(getItemImageCount(entry.item), 1), 0),
   };
 });
+const visualStorytellingGalleryImages = getVisualStorytellingGalleryImages();
 
 function LandingCard({
   entry,
@@ -387,6 +419,225 @@ function LandingCard({
         </button>
       </div>
     </motion.article>
+  );
+}
+
+function VisualStorytellingLightbox({
+  images,
+  initialIndex,
+  onClose,
+}: {
+  images: VisualGalleryImage[];
+  initialIndex: number;
+  onClose: () => void;
+}) {
+  const [activeIndex, setActiveIndex] = useState(initialIndex);
+  const touchStartX = useRef<number | null>(null);
+
+  useEffect(() => {
+    setActiveIndex(initialIndex);
+  }, [initialIndex]);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') onClose();
+      if (event.key === 'ArrowLeft') {
+        setActiveIndex((current) => (current - 1 + images.length) % images.length);
+      }
+      if (event.key === 'ArrowRight') {
+        setActiveIndex((current) => (current + 1) % images.length);
+      }
+    };
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [images.length, onClose]);
+
+  const activeImage = images[activeIndex];
+  if (!activeImage) return null;
+
+  const goToPrevious = () => setActiveIndex((current) => (current - 1 + images.length) % images.length);
+  const goToNext = () => setActiveIndex((current) => (current + 1) % images.length);
+
+  return (
+    <motion.div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/88 p-4 backdrop-blur-md md:p-8"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.22 }}
+      onClick={onClose}
+    >
+      <motion.div
+        className="relative flex h-full w-full max-w-7xl items-center justify-center overflow-hidden rounded-[2rem] border border-white/10 bg-[radial-gradient(circle_at_top,_rgba(45,212,191,0.12),_transparent_28%),linear-gradient(180deg,rgba(15,23,42,0.82)_0%,rgba(2,6,23,0.94)_100%)] p-4 shadow-[0_40px_140px_-60px_rgba(15,23,42,0.85)] md:p-8"
+        initial={{ opacity: 0, scale: 0.98, y: 16 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.985, y: 16 }}
+        transition={{ duration: 0.28, ease: 'easeOut' }}
+        onClick={(event) => event.stopPropagation()}
+        onTouchStart={(event) => {
+          touchStartX.current = event.touches[0]?.clientX ?? null;
+        }}
+        onTouchEnd={(event) => {
+          if (touchStartX.current === null) return;
+          const touchEndX = event.changedTouches[0]?.clientX ?? touchStartX.current;
+          const deltaX = touchEndX - touchStartX.current;
+
+          if (deltaX > 48) goToPrevious();
+          if (deltaX < -48) goToNext();
+          touchStartX.current = null;
+        }}
+      >
+        <button
+          type="button"
+          onClick={onClose}
+          className="absolute right-4 top-4 z-10 inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/10 text-white transition hover:bg-white/16"
+        >
+          <X size={18} />
+        </button>
+
+        {images.length > 1 && (
+          <>
+            <button
+              type="button"
+              onClick={goToPrevious}
+              className="absolute left-3 top-1/2 z-10 inline-flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-white/10 text-white transition hover:bg-white/16 md:left-5"
+            >
+              <ArrowRight size={18} className="rotate-180" />
+            </button>
+            <button
+              type="button"
+              onClick={goToNext}
+              className="absolute right-3 top-1/2 z-10 inline-flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-white/10 text-white transition hover:bg-white/16 md:right-5"
+            >
+              <ArrowRight size={18} />
+            </button>
+          </>
+        )}
+
+        <motion.img
+          key={activeImage.id}
+          src={activeImage.src}
+          alt={activeImage.alt}
+          className="max-h-full max-w-full object-contain"
+          loading="eager"
+          decoding="async"
+          initial={{ opacity: 0.2, scale: 0.985 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.22 }}
+          onError={(event) => {
+            const target = event.currentTarget as HTMLImageElement;
+            if (target.src !== communityCampaignImg) target.src = communityCampaignImg;
+          }}
+        />
+      </motion.div>
+    </motion.div>
+  );
+}
+
+function VisualStorytellingDashboard() {
+  const [activeFilter, setActiveFilter] = useState<VisualGalleryFilter>('All');
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const filteredImages =
+    activeFilter === 'All'
+      ? visualStorytellingGalleryImages
+      : visualStorytellingGalleryImages.filter((image) => image.filters.includes(activeFilter));
+
+  return (
+    <div className="space-y-8">
+      <motion.section
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+        className="rounded-[2rem] border border-white/80 bg-white/74 px-5 py-6 shadow-[0_24px_70px_-48px_rgba(15,23,42,0.45)] backdrop-blur-xl sm:px-7"
+      >
+        <div className="h-px w-16 bg-gradient-to-r from-teal-600 via-cyan-500 to-transparent" />
+        <h2 className="mt-4 text-3xl font-semibold tracking-tight text-slate-950 [font-family:'Iowan_Old_Style','Palatino_Linotype','Book_Antiqua',serif]">
+          Visual Storytelling
+        </h2>
+        <p className="mt-2 text-sm text-slate-500">Collection of field visuals / project documentation</p>
+      </motion.section>
+
+      <motion.div
+        initial={{ opacity: 0, y: 18 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.45, delay: 0.05 }}
+        className="overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      >
+        <div className="flex min-w-max gap-3">
+          {visualGalleryFilters.map((filter) => (
+            <button
+              key={filter}
+              type="button"
+              onClick={() => {
+                setActiveFilter(filter);
+                setSelectedIndex(null);
+              }}
+              className={`rounded-full border px-4 py-2.5 text-sm font-medium transition ${
+                activeFilter === filter
+                  ? 'border-teal-700 bg-teal-700 text-white shadow-[0_12px_30px_-16px_rgba(15,118,110,0.7)]'
+                  : 'border-white/90 bg-white/82 text-slate-700 hover:border-slate-300 hover:bg-white'
+              }`}
+            >
+              {filter}
+            </button>
+          ))}
+        </div>
+      </motion.div>
+
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={activeFilter}
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          transition={{ duration: 0.28 }}
+          className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:gap-5 xl:grid-cols-4"
+        >
+          {filteredImages.map((image, index) => (
+            <motion.button
+              key={image.id}
+              type="button"
+              onClick={() => setSelectedIndex(index)}
+              whileHover={{ y: -4 }}
+              whileTap={{ scale: 0.99 }}
+              className="group relative overflow-hidden rounded-[1.35rem] border border-white/85 bg-white/78 p-3 text-left shadow-[0_22px_50px_-34px_rgba(15,23,42,0.38)] backdrop-blur-xl transition duration-300 hover:shadow-[0_28px_70px_-32px_rgba(13,148,136,0.3)]"
+            >
+              <div className="relative aspect-[4/3] overflow-hidden rounded-[1rem] bg-[radial-gradient(circle_at_top,_rgba(45,212,191,0.12),_transparent_34%),linear-gradient(180deg,#ffffff_0%,#f8fafc_100%)]">
+                <img
+                  src={image.src}
+                  alt={image.alt}
+                  className="h-full w-full object-contain p-2 transition duration-300 group-hover:scale-[1.03]"
+                  loading="lazy"
+                  decoding="async"
+                  onError={(event) => {
+                    const target = event.currentTarget as HTMLImageElement;
+                    if (target.src !== communityCampaignImg) target.src = communityCampaignImg;
+                  }}
+                />
+                <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0)_0%,rgba(15,23,42,0.08)_100%)] opacity-0 transition duration-300 group-hover:opacity-100" />
+              </div>
+            </motion.button>
+          ))}
+        </motion.div>
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {selectedIndex !== null && filteredImages.length > 0 && (
+          <VisualStorytellingLightbox
+            images={filteredImages}
+            initialIndex={selectedIndex}
+            onClose={() => setSelectedIndex(null)}
+          />
+        )}
+      </AnimatePresence>
+    </div>
   );
 }
 
@@ -589,6 +840,7 @@ export function PortfolioPage() {
   }, [selectedContent, activeCategory, activeSubcategory]);
 
   const activeCategoryData = portfolioData[activeCategory];
+  const isVisualStorytelling = activeCategory === 'Visual Storytelling';
   const subcategories = Array.isArray(activeCategoryData) ? [] : Object.keys(activeCategoryData);
   const rowItems = getEntriesForSelection(activeCategory, activeSubcategory);
   const totalEntries = portfolioSummary.reduce((sum, item) => sum + item.entries, 0);
@@ -627,59 +879,61 @@ export function PortfolioPage() {
               exit={{ opacity: 0, y: -20, scale: 0.985 }}
               transition={{ duration: 0.35, ease: 'easeOut' }}
             >
-              <motion.section
-                initial={{ opacity: 0, y: 40 }}
-                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
-                transition={{ duration: 0.8 }}
-                className="relative mb-12 overflow-hidden rounded-[2.5rem] border border-white/70 bg-white/60 shadow-[0_28px_100px_-48px_rgba(15,23,42,0.5)] backdrop-blur-xl"
-              >
-                <div className="absolute left-12 top-10 h-36 w-36 rounded-full bg-cyan-200/40 blur-3xl" />
-                <div className="absolute bottom-8 right-8 h-40 w-40 rounded-full bg-amber-200/40 blur-3xl" />
+              {!isVisualStorytelling && (
+                <motion.section
+                  initial={{ opacity: 0, y: 40 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+                  transition={{ duration: 0.8 }}
+                  className="relative mb-12 overflow-hidden rounded-[2.5rem] border border-white/70 bg-white/60 shadow-[0_28px_100px_-48px_rgba(15,23,42,0.5)] backdrop-blur-xl"
+                >
+                  <div className="absolute left-12 top-10 h-36 w-36 rounded-full bg-cyan-200/40 blur-3xl" />
+                  <div className="absolute bottom-8 right-8 h-40 w-40 rounded-full bg-amber-200/40 blur-3xl" />
 
-                <div className="relative grid gap-10 px-6 py-8 md:px-10 md:py-12 lg:grid-cols-[1.2fr_0.8fr]">
-                  <div>
-                    <div className="mt-8 grid gap-4 sm:grid-cols-3">
-                      <div className="rounded-[1.5rem] border border-white/80 bg-white/75 p-4 shadow-sm backdrop-blur">
-                        <div className="text-3xl font-semibold text-slate-950">{categories.length}</div>
-                        <div className="mt-1 text-sm uppercase tracking-[0.18em] text-slate-500">Practice Areas</div>
+                  <div className="relative grid gap-10 px-6 py-8 md:px-10 md:py-12 lg:grid-cols-[1.2fr_0.8fr]">
+                    <div>
+                      <div className="mt-8 grid gap-4 sm:grid-cols-3">
+                        <div className="rounded-[1.5rem] border border-white/80 bg-white/75 p-4 shadow-sm backdrop-blur">
+                          <div className="text-3xl font-semibold text-slate-950">{categories.length}</div>
+                          <div className="mt-1 text-sm uppercase tracking-[0.18em] text-slate-500">Practice Areas</div>
+                        </div>
+                        <div className="rounded-[1.5rem] border border-white/80 bg-white/75 p-4 shadow-sm backdrop-blur">
+                          <div className="text-3xl font-semibold text-slate-950">{totalEntries}+</div>
+                          <div className="mt-1 text-sm uppercase tracking-[0.18em] text-slate-500">Content Stories</div>
+                        </div>
+                        <div className="rounded-[1.5rem] border border-white/80 bg-white/75 p-4 shadow-sm backdrop-blur">
+                          <div className="text-3xl font-semibold text-slate-950">{totalImages}+</div>
+                          <div className="mt-1 text-sm uppercase tracking-[0.18em] text-slate-500">Visual Assets</div>
+                        </div>
                       </div>
-                      <div className="rounded-[1.5rem] border border-white/80 bg-white/75 p-4 shadow-sm backdrop-blur">
-                        <div className="text-3xl font-semibold text-slate-950">{totalEntries}+</div>
-                        <div className="mt-1 text-sm uppercase tracking-[0.18em] text-slate-500">Content Stories</div>
-                      </div>
-                      <div className="rounded-[1.5rem] border border-white/80 bg-white/75 p-4 shadow-sm backdrop-blur">
-                        <div className="text-3xl font-semibold text-slate-950">{totalImages}+</div>
-                        <div className="mt-1 text-sm uppercase tracking-[0.18em] text-slate-500">Visual Assets</div>
+                    </div>
+
+                    <div className="rounded-[2rem] border border-white/60 bg-[linear-gradient(160deg,rgba(15,23,42,0.96)_0%,rgba(15,118,110,0.92)_100%)] p-6 text-white shadow-[0_24px_80px_-40px_rgba(15,23,42,0.55)]">
+                      <div className="text-sm uppercase tracking-[0.24em] text-cyan-200">Current Focus</div>
+                      <h2 className="mt-3 text-2xl font-semibold leading-tight">{activeCategory}</h2>
+                      <div className="mt-6 space-y-3">
+                        {portfolioSummary.map((summary) => (
+                          <button
+                            key={summary.category}
+                            type="button"
+                            onClick={() => setActiveCategory(summary.category)}
+                            className={`flex w-full items-center justify-between rounded-2xl border px-4 py-3 text-left transition ${
+                              activeCategory === summary.category
+                                ? 'border-white/35 bg-white/14'
+                                : 'border-white/10 bg-white/6 hover:bg-white/10'
+                            }`}
+                          >
+                            <div>
+                              <div className="text-sm font-medium text-white">{summary.category}</div>
+                              <div className="text-xs uppercase tracking-[0.18em] text-slate-300">{summary.entries} items</div>
+                            </div>
+                            <ArrowRight size={18} className="text-cyan-200" />
+                          </button>
+                        ))}
                       </div>
                     </div>
                   </div>
-
-                  <div className="rounded-[2rem] border border-white/60 bg-[linear-gradient(160deg,rgba(15,23,42,0.96)_0%,rgba(15,118,110,0.92)_100%)] p-6 text-white shadow-[0_24px_80px_-40px_rgba(15,23,42,0.55)]">
-                    <div className="text-sm uppercase tracking-[0.24em] text-cyan-200">Current Focus</div>
-                    <h2 className="mt-3 text-2xl font-semibold leading-tight">{activeCategory}</h2>
-                    <div className="mt-6 space-y-3">
-                      {portfolioSummary.map((summary) => (
-                        <button
-                          key={summary.category}
-                          type="button"
-                          onClick={() => setActiveCategory(summary.category)}
-                          className={`flex w-full items-center justify-between rounded-2xl border px-4 py-3 text-left transition ${
-                            activeCategory === summary.category
-                              ? 'border-white/35 bg-white/14'
-                              : 'border-white/10 bg-white/6 hover:bg-white/10'
-                          }`}
-                        >
-                          <div>
-                            <div className="text-sm font-medium text-white">{summary.category}</div>
-                            <div className="text-xs uppercase tracking-[0.18em] text-slate-300">{summary.entries} items</div>
-                          </div>
-                          <ArrowRight size={18} className="text-cyan-200" />
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </motion.section>
+                </motion.section>
+              )}
 
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -707,46 +961,52 @@ export function PortfolioPage() {
                 ))}
               </motion.div>
 
-              {subcategories.length > 0 && (
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.55, delay: 0.24 }}
-                  className="mb-8 flex flex-wrap gap-3"
-                >
-                  <button
-                    type="button"
-                    onClick={() => setActiveSubcategory(null)}
-                    className={`rounded-full border px-4 py-2.5 text-sm font-medium transition ${
-                      activeSubcategory === null
-                        ? 'border-cyan-900 bg-cyan-900 text-white'
-                        : 'border-white/80 bg-white/75 text-slate-700 hover:border-slate-300 hover:bg-white'
-                    }`}
-                  >
-                    All
-                  </button>
-                  {subcategories.map((sub) => (
-                    <button
-                      key={sub}
-                      type="button"
-                      onClick={() => setActiveSubcategory(sub)}
-                      className={`rounded-full border px-4 py-2.5 text-sm font-medium transition ${
-                        activeSubcategory === sub
-                          ? 'border-cyan-900 bg-cyan-900 text-white'
-                          : 'border-white/80 bg-white/75 text-slate-700 hover:border-slate-300 hover:bg-white'
-                      }`}
+              {isVisualStorytelling ? (
+                <VisualStorytellingDashboard />
+              ) : (
+                <>
+                  {subcategories.length > 0 && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.55, delay: 0.24 }}
+                      className="mb-8 flex flex-wrap gap-3"
                     >
-                      {sub}
-                    </button>
-                  ))}
-                </motion.div>
-              )}
+                      <button
+                        type="button"
+                        onClick={() => setActiveSubcategory(null)}
+                        className={`rounded-full border px-4 py-2.5 text-sm font-medium transition ${
+                          activeSubcategory === null
+                            ? 'border-cyan-900 bg-cyan-900 text-white'
+                            : 'border-white/80 bg-white/75 text-slate-700 hover:border-slate-300 hover:bg-white'
+                        }`}
+                      >
+                        All
+                      </button>
+                      {subcategories.map((sub) => (
+                        <button
+                          key={sub}
+                          type="button"
+                          onClick={() => setActiveSubcategory(sub)}
+                          className={`rounded-full border px-4 py-2.5 text-sm font-medium transition ${
+                            activeSubcategory === sub
+                              ? 'border-cyan-900 bg-cyan-900 text-white'
+                              : 'border-white/80 bg-white/75 text-slate-700 hover:border-slate-300 hover:bg-white'
+                          }`}
+                        >
+                          {sub}
+                        </button>
+                      ))}
+                    </motion.div>
+                  )}
 
-              <div className="grid auto-rows-fr grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-                {rowItems.map((entry, index) => (
-                  <LandingCard key={`${entry.category}-${entry.subcategory ?? 'all'}-${entry.item.title}`} entry={entry} index={index} onOpen={openEntry} />
-                ))}
-              </div>
+                  <div className="grid auto-rows-fr grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+                    {rowItems.map((entry, index) => (
+                      <LandingCard key={`${entry.category}-${entry.subcategory ?? 'all'}-${entry.item.title}`} entry={entry} index={index} onOpen={openEntry} />
+                    ))}
+                  </div>
+                </>
+              )}
             </motion.div>
           )}
         </AnimatePresence>
