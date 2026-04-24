@@ -83,22 +83,18 @@ const portfolioData = {
       { title: 'Digital Wellness Education', description: 'In the 21st century, the digital world has made everyday life easier and created new platforms and exposure, but many parents also face challenges in managing children\'s digital habits. To address this, I was hired as a facilitator by students of Bageshwori College to lead an awareness session on digital addiction in children at Manjushree Pre School and Montessoris in Nagarkot, Bhaktapur. The target audience was the parents of the school, and the five-hour session used multiple methodologies including pre-tests, post-tests, group division, solution-oriented presentations, slide-based learning, and an energizer game. The expected outcome was to help parents understand the symptoms of digital addiction and its impact on child development while encouraging healthier family practices.', image: '/assets/Community Impact/Community Empowerment/Digital Addicition.jpg', tags: ['Digital Addiction', 'Parenting', 'Nagarkot'], icon: BookOpen },
     ],
   },
-  'Strategic Leadership': {
-    'JCI Leadership': [
-      { title: 'Pre-Induction and LOM Officer Training', description: 'The training was conducted annually, specifically for Presidents and Secretaries General, to provide comprehensive insights into the roles and responsibilities of the presidential tenure. The session was facilitated by Rashmi Shilpakar, National Vice President 2019, at CBR, in collaboration with JCI Bhaktapur and JCI Bhaktapur Lady.', image: '/assets/Strategic Leadership/Pre-Induction and LOM Officer Training.jpg', tags: ['Presidents', 'Secretaries General', 'LOM Training'], icon: Award },
-      { title: 'President Meet - Historic First', description: 'The President\'s Meet marked a historic first in the history of Nepal Junior Jaycees. The event was hosted by JCI Dhulabari Junior at Kanyam, Ilam. All chapter presidents were invited and actively participated in the two-day program, which provided an opportunity for comprehensive training, peer-to-peer learning, and the sharing of leadership experiences.', image: '/assets/Strategic Leadership/President Meet - Historic First.jpg', tags: ['Historic First', 'Kanyam', 'Chapter Presidents'], icon: Trophy },
-      { title: 'International Vice President Visit', description: 'Each year, JCI assigns a Vice President to conduct official chapter visits to monitor progress, provide guidance, and strengthen organizational alignment. During my leadership tenure, our chapter had the distinct opportunity to welcome the International Vice President, marking a significant milestone for the organization. The visit provided valuable insights, strategic feedback, and motivation to enhance chapter performance and leadership effectiveness.', image: '/assets/Strategic Leadership/International Vice President Visit.jpg', tags: ['International Level', 'Official Visit', 'Strategic Feedback'], icon: Trophy },
-      { title: 'Water Distribution - Gaijatra Festival', description: 'The program was organized by JCI Bhaktapur Junior with the support of JCI Bhaktapur and JCI Bhaktapur Lady during the cultural festival of Gaijatra in Bhaktapur. The primary objective was to provide safe drinking water to visitors, particularly those who were new to Bhaktapur and participating in the festival. The initiative aimed to promote public health, ensure visitor comfort, and demonstrate youth-led community service.', image: '/assets/Strategic Leadership/Water Distribution - Gaijatra Festival.jpg', tags: ['Community Service', 'Gaijatra Festival', 'Bhaktapur'], icon: Heart },
-      { title: 'Developing Emotional Intelligence', description: 'The program was organized in collaboration with multiple chapters within Area C and was primarily led by JCI Bhaktapur Junior. The session was facilitated by psychologist Prava Prajapati. The main objective was to enhance participants\' understanding of emotions and develop emotional intelligence. The session focused on self-awareness, emotional regulation, empathy, and effective interpersonal communication.', image: '/assets/Strategic Leadership/Developing Emotional Intelligence.jpg', tags: ['Area C', 'Psychology', 'Emotional Intelligence'], icon: BookOpen },
-      { title: '41st Installation and Award Distribution Ceremony', description: 'The 41st Installation and Award Distribution Ceremony was organized as a formal leadership transition and recognition event. The Chief Guest was Santosh Pariyar, Member of Parliament. The Special Guests included Bikash Manandhar, National President of JCI Nepal, and Rajaram Gautam, National Vice President. The ceremony was held at Sweet Home and marked the formal installation of new leadership along with the recognition and award distribution.', image: '/assets/Strategic Leadership/41st Installation and Award Distribution Ceremony.jpg', tags: ['Leadership Transition', 'Award Distribution', 'Formal Ceremony'], icon: Award },
-    ],
-    'Conventions': [
-      { title: 'Area C Conference Leadership', description: 'The 2023 JCI Nepal Area "C" Conference was held on April 28–29, 2023 at Hotel View Bhrikuti in Godawari, Lalitpur District. The conference brought together members and leaders from multiple chapters within Area C. The primary objective was to strengthen leadership capabilities, foster collaboration, and enhance strategic vision.', image: '/assets/Strategic Leadership/Area C conference.jpg', tags: ['Conference', 'April 28-29, 2023', 'Area C'], icon: Users },
-      { title: '50th JCI Nepal National Convention', description: 'Participated in the 50th JCI Nepal National Convention held from December 15-18, 2023. The convention brought together JCI leaders and members from across Nepal for national-level deliberations, leadership forums, strategic sessions, capacity-building workshops, and networking opportunities.', image: '/assets/Strategic Leadership/50th JCI Nepal National Convention.jpg', tags: ['50th Convention', 'December 15-18, 2023', 'National Event'], icon: Star },
-      { title: '12th National Junior Jaycees Leaders\' Academy 2023', description: 'The 12th National Junior Jaycees Leaders\' Academy 2023 was hosted by Dharan Junior Jaycees under the patronage of Dharan Jaycees from November 8-10, 2023. The three-day academy focused on strengthening leadership capacity, teamwork, and communication skills among Junior Jaycees across Nepal. The program featured motivational sessions, leadership trainings, team-building activities, inter-area engagement, and a national oratory competition.', image: '/assets/Strategic Leadership/12th National Junior Jaycees Leaders\' Academy 2023.jpg', tags: ['Leaders Academy', 'November 8-10, 2023', 'Junior Jaycees'], icon: Star },
-      { title: 'Area C Multi-Chapter Training', description: 'The training was hosted by JCI Banepa Junior in collaboration with Area C chapters, including JCI Bhaktapur Junior. Centered on the theme "Leadership Within You," the program emphasized self-awareness, personal accountability, and values-based leadership as foundations for effective organizational impact. The training was facilitated by the National Past President of JCI Nepal. The Mayor of Banepa Municipality attended as the Chief Guest.', image: '/assets/Strategic Leadership/Area C Multi-Chapter Training.jpg', tags: ['Multi-Chapter', 'Area C', 'Leadership Within You'], icon: Users },
-    ],
-  },
+  'Strategic Leadership': [
+    { title: 'Pre-Induction and LOM Officer Training', description: 'The training was conducted annually, specifically for Presidents and Secretaries General, to provide comprehensive insights into the roles and responsibilities of the presidential tenure. The session was facilitated by Rashmi Shilpakar, National Vice President 2019, at CBR, in collaboration with JCI Bhaktapur and JCI Bhaktapur Lady.', image: '/assets/Strategic Leadership/Pre-Induction and LOM Officer Training.jpg', tags: ['Presidents', 'Secretaries General', 'LOM Training'], icon: Award },
+    { title: 'President Meet - Historic First', description: 'The President\'s Meet marked a historic first in the history of Nepal Junior Jaycees. The event was hosted by JCI Dhulabari Junior at Kanyam, Ilam. All chapter presidents were invited and actively participated in the two-day program, which provided an opportunity for comprehensive training, peer-to-peer learning, and the sharing of leadership experiences.', image: '/assets/Strategic Leadership/President Meet - Historic First.jpg', tags: ['Historic First', 'Kanyam', 'Chapter Presidents'], icon: Trophy },
+    { title: 'International Vice President Visit', description: 'Each year, JCI assigns a Vice President to conduct official chapter visits to monitor progress, provide guidance, and strengthen organizational alignment. During my leadership tenure, our chapter had the distinct opportunity to welcome the International Vice President, marking a significant milestone for the organization. The visit provided valuable insights, strategic feedback, and motivation to enhance chapter performance and leadership effectiveness.', image: '/assets/Strategic Leadership/International Vice President Visit.jpg', tags: ['International Level', 'Official Visit', 'Strategic Feedback'], icon: Trophy },
+    { title: 'Water Distribution - Gaijatra Festival', description: 'The program was organized by JCI Bhaktapur Junior with the support of JCI Bhaktapur and JCI Bhaktapur Lady during the cultural festival of Gaijatra in Bhaktapur. The primary objective was to provide safe drinking water to visitors, particularly those who were new to Bhaktapur and participating in the festival. The initiative aimed to promote public health, ensure visitor comfort, and demonstrate youth-led community service.', image: '/assets/Strategic Leadership/Water Distribution - Gaijatra Festival.jpg', tags: ['Community Service', 'Gaijatra Festival', 'Bhaktapur'], icon: Heart },
+    { title: 'Developing Emotional Intelligence', description: 'The program was organized in collaboration with multiple chapters within Area C and was primarily led by JCI Bhaktapur Junior. The session was facilitated by psychologist Prava Prajapati. The main objective was to enhance participants\' understanding of emotions and develop emotional intelligence. The session focused on self-awareness, emotional regulation, empathy, and effective interpersonal communication.', image: '/assets/Strategic Leadership/Developing Emotional Intelligence.jpg', tags: ['Area C', 'Psychology', 'Emotional Intelligence'], icon: BookOpen },
+    { title: '41st Installation and Award Distribution Ceremony', description: 'The 41st Installation and Award Distribution Ceremony was organized as a formal leadership transition and recognition event. The Chief Guest was Santosh Pariyar, Member of Parliament. The Special Guests included Bikash Manandhar, National President of JCI Nepal, and Rajaram Gautam, National Vice President. The ceremony was held at Sweet Home and marked the formal installation of new leadership along with the recognition and award distribution.', image: '/assets/Strategic Leadership/41st Installation and Award Distribution Ceremony.jpg', tags: ['Leadership Transition', 'Award Distribution', 'Formal Ceremony'], icon: Award },
+    { title: 'Area C Conference Leadership', description: 'The 2023 JCI Nepal Area "C" Conference was held on April 28–29, 2023 at Hotel View Bhrikuti in Godawari, Lalitpur District. The conference brought together members and leaders from multiple chapters within Area C. The primary objective was to strengthen leadership capabilities, foster collaboration, and enhance strategic vision.', image: '/assets/Strategic Leadership/Area C conference.jpg', tags: ['Conference', 'April 28-29, 2023', 'Area C'], icon: Users },
+    { title: '50th JCI Nepal National Convention', description: 'Participated in the 50th JCI Nepal National Convention held from December 15-18, 2023. The convention brought together JCI leaders and members from across Nepal for national-level deliberations, leadership forums, strategic sessions, capacity-building workshops, and networking opportunities.', image: '/assets/Strategic Leadership/50th JCI Nepal National Convention.jpg', tags: ['50th Convention', 'December 15-18, 2023', 'National Event'], icon: Star },
+    { title: '12th National Junior Jaycees Leaders\' Academy 2023', description: 'The 12th National Junior Jaycees Leaders\' Academy 2023 was hosted by Dharan Junior Jaycees under the patronage of Dharan Jaycees from November 8-10, 2023. The three-day academy focused on strengthening leadership capacity, teamwork, and communication skills among Junior Jaycees across Nepal. The program featured motivational sessions, leadership trainings, team-building activities, inter-area engagement, and a national oratory competition.', image: '/assets/Strategic Leadership/12th National Junior Jaycees Leaders\' Academy 2023.jpg', tags: ['Leaders Academy', 'November 8-10, 2023', 'Junior Jaycees'], icon: Star },
+    { title: 'Area C Multi-Chapter Training', description: 'The training was hosted by JCI Banepa Junior in collaboration with Area C chapters, including JCI Bhaktapur Junior. Centered on the theme "Leadership Within You," the program emphasized self-awareness, personal accountability, and values-based leadership as foundations for effective organizational impact. The training was facilitated by the National Past President of JCI Nepal. The Mayor of Banepa Municipality attended as the Chief Guest.', image: '/assets/Strategic Leadership/Area C Multi-Chapter Training.jpg', tags: ['Multi-Chapter', 'Area C', 'Leadership Within You'], icon: Users },
+  ],
   'Visual Storytelling': {
     'Cultural Heritage': [
       { title: 'Architectural Photography - Temples & Landmarks', description: 'Documenting Nepal\'s rich architectural heritage through professional photography of ancient temples, cultural landmarks, and historical sites. Preserving the visual legacy of traditional Nepali architecture and cultural monuments.', images: [{ src: '/assets/Visual Storytelling/heritage/heritage-1.jpg', name: 'Heritage 1' }, { src: '/assets/Visual Storytelling/heritage/heritage-2.jpg', name: 'Heritage 2' }, { src: '/assets/Visual Storytelling/heritage/heritage-3.JPG', name: 'Heritage 3' }, { src: '/assets/Visual Storytelling/heritage/heritage-4.jpg', name: 'Heritage 4' }, { src: '/assets/Visual Storytelling/heritage/heritage-5.JPG', name: 'Heritage 5' }, { src: '/assets/Visual Storytelling/heritage/heritage-6.JPG', name: 'Heritage 6' }, { src: '/assets/Visual Storytelling/heritage/heritage-7.jpg', name: 'Heritage 7' }, { src: '/assets/Visual Storytelling/heritage/heritage-8.jpg', name: 'Heritage 8' }, { src: '/assets/Visual Storytelling/heritage/heritage-9.jpg', name: 'Heritage 9' }], tags: ['Heritage', 'Architecture', 'Culture'], icon: Camera },
@@ -432,8 +428,12 @@ export function PortfolioPage() {
                 <div className="mt-2 text-3xl font-semibold text-slate-950">{activeSummary?.entries ?? rowItems.length}</div>
               </div>
               <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-                <div className="text-sm uppercase tracking-[0.18em] text-slate-500">{activeSubcategory ? 'Current Lens' : 'Visual Archive'}</div>
-                <div className="mt-2 text-base font-semibold text-slate-950">{activeSubcategory ?? 'All Collections'}</div>
+                <div className="text-sm uppercase tracking-[0.18em] text-slate-500">
+                  {activeSubcategory ? 'Current Lens' : activeCategory === 'Visual Storytelling' ? 'Visual Archive' : 'Portfolio Scope'}
+                </div>
+                <div className="mt-2 text-base font-semibold text-slate-950">
+                  {activeSubcategory ?? (activeCategory === 'Visual Storytelling' ? 'All Collections' : 'All Projects')}
+                </div>
               </div>
             </div>
           </div>
@@ -491,9 +491,9 @@ export function PortfolioPage() {
             </div>
           </div>
         ) : (
-          <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
-            <div className="lg:col-span-3">
-              {activeSubcategory && (
+          <div className={activeSubcategory ? 'grid grid-cols-1 gap-6 lg:grid-cols-12' : ''}>
+            {activeSubcategory && (
+              <div className="lg:col-span-3">
                 <motion.aside
                   initial={{ opacity: 0, x: -12 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -521,16 +521,15 @@ export function PortfolioPage() {
                     </div>
                   </div>
                 </motion.aside>
-              )}
-            </div>
+              </div>
+            )}
 
-            <div className="lg:col-span-9">
+            <div className={activeSubcategory ? 'lg:col-span-9' : ''}>
               <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                 {rowItems.map((item: any, index: number) => {
                   const images = uniqueImages(item.images || (item.image ? [item.image] : []));
                   const cover = images[0] || item.image;
                   const coverSrc = typeof cover === 'string' ? cover : cover.src;
-                  const useFaceSafeFit = FACE_SAFE_TITLES.has(item.title);
                   const shortDescription =
                     item.description.length > 190 ? `${item.description.slice(0, 190)}...` : item.description;
                   const Icon = item.icon || Star;
@@ -543,11 +542,11 @@ export function PortfolioPage() {
                       transition={{ duration: 0.45, delay: 0.04 * index }}
                       className="group flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white shadow-[0_20px_60px_-45px_rgba(15,23,42,0.55)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_30px_70px_-40px_rgba(15,23,42,0.55)]"
                     >
-                      <div className="overflow-hidden border-b border-slate-200 bg-slate-100">
+                      <div className="flex aspect-[16/10] items-center justify-center overflow-hidden border-b border-slate-200 bg-[linear-gradient(180deg,#f8fafc_0%,#e2e8f0_100%)] p-4">
                         <img
                           src={coverSrc}
                           alt={`${item.title} cover`}
-                          className={useFaceSafeFit ? 'h-64 w-full bg-slate-100 object-contain' : 'aspect-[16/9] w-full object-contain transition duration-500 group-hover:scale-[1.03]'}
+                          className="h-full w-full object-contain transition duration-300 group-hover:brightness-105"
                           loading="lazy"
                           decoding="async"
                           onError={(e) => { const t = e.currentTarget as HTMLImageElement; if (t.src !== communityCampaignImg) t.src = communityCampaignImg; }}
