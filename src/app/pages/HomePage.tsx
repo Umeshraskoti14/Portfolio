@@ -2,6 +2,8 @@ import { animate, motion, useInView } from 'motion/react';
 import { ArrowRight, Download, Facebook, Instagram, Linkedin, Mail } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { About } from '../components/About';
+import { siteText } from '../content/siteText';
+import { useUiPreferences } from '../context/UiPreferencesContext';
 import { PortfolioPage } from './PortfolioPage';
 import { Skills } from '../components/Skills';
 import { Contact } from '../components/Contact';
@@ -29,6 +31,8 @@ function AnimatedCounter({ value, suffix = '', isInView }: { value: number; suff
 }
 
 export function HomePage() {
+  const { language } = useUiPreferences();
+  const text = siteText[language];
   const ref = useRef(null);
   const isInView = useInView(ref, { amount: 0.2, once: false });
 
@@ -43,7 +47,7 @@ export function HomePage() {
     <div>
       <motion.section
         id="home"
-        className="relative flex min-h-screen items-start overflow-hidden bg-[radial-gradient(circle_at_top_left,_rgba(34,197,94,0.16),_transparent_22%),radial-gradient(circle_at_top_right,_rgba(14,165,233,0.12),_transparent_24%),linear-gradient(180deg,#f8fafc_0%,#ffffff_48%,#f1f5f9_100%)] pt-24 pb-12 md:items-center md:pb-0"
+        className="relative flex min-h-screen items-start overflow-hidden bg-[radial-gradient(circle_at_top_left,_rgba(34,197,94,0.16),_transparent_22%),radial-gradient(circle_at_top_right,_rgba(14,165,233,0.12),_transparent_24%),linear-gradient(180deg,#f8fafc_0%,#ffffff_48%,#f1f5f9_100%)] pt-24 pb-12 dark:bg-[radial-gradient(circle_at_top_left,_rgba(16,185,129,0.18),_transparent_22%),radial-gradient(circle_at_top_right,_rgba(56,189,248,0.14),_transparent_24%),linear-gradient(180deg,#020617_0%,#0f172a_48%,#111827_100%)] md:items-center md:pb-0"
         ref={ref}
         initial={{ opacity: 0 }}
         animate={{ opacity: isInView ? 1 : 0.3 }}
@@ -107,7 +111,7 @@ export function HomePage() {
                 animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 26 }}
                 transition={{ duration: 0.7, delay: 0.15 }}
               >
-                Leading with Purpose. Documenting with Heart.
+                {text.home.tagline}
               </motion.div>
 
               <motion.h1
@@ -129,19 +133,19 @@ export function HomePage() {
                   <div className="text-3xl font-semibold text-slate-950">
                     <AnimatedCounter value={3} suffix="+" isInView={isInView} />
                   </div>
-                  <div className="mt-1 text-sm uppercase tracking-[0.18em] text-slate-500">Years Experience</div>
+                  <div className="mt-1 text-sm uppercase tracking-[0.18em] text-slate-500">{text.home.stats.experience}</div>
                 </div>
                 <div className="rounded-2xl border border-slate-200 bg-white/90 p-4 shadow-sm backdrop-blur">
                   <div className="text-3xl font-semibold text-slate-950">
                     <AnimatedCounter value={4} isInView={isInView} />
                   </div>
-                  <div className="mt-1 text-sm uppercase tracking-[0.18em] text-slate-500">Key Projects</div>
+                  <div className="mt-1 text-sm uppercase tracking-[0.18em] text-slate-500">{text.home.stats.projects}</div>
                 </div>
                 <div className="rounded-2xl border border-slate-200 bg-white/90 p-4 shadow-sm backdrop-blur">
                   <div className="text-3xl font-semibold text-slate-950">
                     <AnimatedCounter value={1000} suffix="+" isInView={isInView} />
                   </div>
-                  <div className="mt-1 text-sm uppercase tracking-[0.18em] text-slate-500">People Reached</div>
+                  <div className="mt-1 text-sm uppercase tracking-[0.18em] text-slate-500">{text.home.stats.reached}</div>
                 </div>
               </motion.div>
 
@@ -157,7 +161,7 @@ export function HomePage() {
                   whileHover={{ scale: 1.03, y: -2 }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  Explore Portfolio
+                  {text.home.explore}
                   <ArrowRight size={18} />
                 </motion.button>
                 <motion.a
@@ -167,7 +171,7 @@ export function HomePage() {
                   whileHover={{ scale: 1.03, y: -2 }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  Download CV
+                  {text.home.downloadCv}
                   <Download size={18} />
                 </motion.a>
               </motion.div>
@@ -179,10 +183,10 @@ export function HomePage() {
                 transition={{ duration: 0.8, delay: 0.7 }}
               >
                 {[
-                  { icon: Facebook, href: 'https://www.facebook.com/twin.raskoti.3', label: 'Facebook' },
-                  { icon: Instagram, href: 'https://www.instagram.com/umesh_raskoti?igsh=MW9qOWJ3aDYzdG83MQ==', label: 'Instagram' },
-                  { icon: Linkedin, href: 'https://linkedin.com', label: 'LinkedIn' },
-                  { icon: Mail, href: 'mailto:umeshraskoti14@gmail.com', label: 'Email' },
+                  { icon: Facebook, href: 'https://www.facebook.com/twin.raskoti.3', label: text.home.socials.facebook },
+                  { icon: Instagram, href: 'https://www.instagram.com/umesh_raskoti?igsh=MW9qOWJ3aDYzdG83MQ==', label: text.home.socials.instagram },
+                  { icon: Linkedin, href: 'https://linkedin.com', label: text.home.socials.linkedIn },
+                  { icon: Mail, href: 'mailto:umeshraskoti14@gmail.com', label: text.home.socials.email },
                 ].map((social, index) => (
                   <motion.a
                     key={social.label}
@@ -225,8 +229,8 @@ export function HomePage() {
                 animate={{ y: [0, -10, 0] }}
                 transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
               >
-                <div className="text-xs uppercase tracking-[0.18em] text-slate-500">Current Focus</div>
-                <div className="mt-2 text-xs font-semibold text-slate-900 sm:text-sm">Youth advocacy and community-centered coordination</div>
+                <div className="text-xs uppercase tracking-[0.18em] text-slate-500">{text.home.currentFocusLabel}</div>
+                <div className="mt-2 text-xs font-semibold text-slate-900 sm:text-sm">{text.home.currentFocusValue}</div>
               </motion.div>
 
               <motion.div
@@ -234,8 +238,8 @@ export function HomePage() {
                 animate={{ y: [0, 10, 0] }}
                 transition={{ duration: 5.6, repeat: Infinity, ease: 'easeInOut' }}
               >
-                <div className="text-xs uppercase tracking-[0.18em] text-slate-300">Based In</div>
-                <div className="mt-2 text-base font-semibold sm:text-lg">Bhaktapur, Nepal</div>
+                <div className="text-xs uppercase tracking-[0.18em] text-slate-300">{text.home.basedInLabel}</div>
+                <div className="mt-2 text-base font-semibold sm:text-lg">{text.home.basedInValue}</div>
               </motion.div>
             </motion.div>
           </motion.div>
@@ -248,7 +252,7 @@ export function HomePage() {
           transition={{ y: { duration: 2, repeat: Infinity }, opacity: { delay: 1.5 } }}
         >
           <div className="flex flex-col items-center gap-2">
-            <span className="text-sm text-slate-500">Scroll to explore</span>
+            <span className="text-sm text-slate-500">{text.home.scroll}</span>
             <div className="flex h-10 w-6 justify-center rounded-full border-2 border-slate-400">
               <motion.div
                 className="mt-2 h-2 w-1 rounded-full bg-slate-600"

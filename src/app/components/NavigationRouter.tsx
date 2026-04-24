@@ -1,19 +1,22 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ArrowRight, Menu, X } from 'lucide-react';
-
-const navItems = [
-  { name: 'Home', href: '#home' },
-  { name: 'About', href: '#about' },
-  { name: 'Portfolio', href: '#portfolio' },
-  { name: 'Skills', href: '#skills' },
-  { name: 'Contact', href: '#contact' },
-];
+import { siteText } from '../content/siteText';
+import { useUiPreferences } from '../context/UiPreferencesContext';
 
 export function NavigationRouter() {
+  const { language } = useUiPreferences();
+  const text = siteText[language];
+  const navItems = [
+    { name: text.navigation.home, href: '#home' },
+    { name: text.navigation.about, href: '#about' },
+    { name: text.navigation.portfolio, href: '#portfolio' },
+    { name: text.navigation.skills, href: '#skills' },
+    { name: text.navigation.contact, href: '#contact' },
+  ];
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState('Home');
+  const [activeSection, setActiveSection] = useState('#home');
 
   const scrollToSection = (href: string) => {
     const element = document.querySelector(href);
@@ -43,7 +46,7 @@ export function NavigationRouter() {
         const visible = entries.find((entry) => entry.isIntersecting);
         if (!visible) return;
         const match = navItems.find((item) => item.href === `#${visible.target.id}`);
-        if (match) setActiveSection(match.name);
+        if (match) setActiveSection(match.href);
       },
       { rootMargin: '-35% 0px -50% 0px', threshold: 0.1 },
     );
@@ -67,7 +70,7 @@ export function NavigationRouter() {
         transition={{ duration: 0.5 }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled
-            ? 'border-b border-slate-200/80 bg-white/85 shadow-[0_10px_30px_-20px_rgba(15,23,42,0.35)] backdrop-blur-xl'
+            ? 'border-b border-slate-200/80 bg-white/85 shadow-[0_10px_30px_-20px_rgba(15,23,42,0.35)] backdrop-blur-xl dark:border-slate-700/80 dark:bg-slate-950/80'
             : 'bg-transparent'
         }`}
       >
@@ -75,22 +78,22 @@ export function NavigationRouter() {
           <div className="flex h-16 items-center justify-between md:h-20">
             <motion.button
               onClick={() => scrollToSection('#home')}
-              className="text-lg font-semibold tracking-tight text-slate-950 sm:text-xl md:text-2xl"
+              className="text-lg font-semibold tracking-tight text-slate-950 sm:text-xl md:text-2xl dark:text-slate-100"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
               Umesh Raskoti
             </motion.button>
 
-            <div className="hidden items-center gap-3 rounded-full border border-slate-200 bg-white/85 px-3 py-2 shadow-sm backdrop-blur md:flex">
+            <div className="hidden items-center gap-3 rounded-full border border-slate-200 bg-white/85 px-3 py-2 shadow-sm backdrop-blur dark:border-slate-700 dark:bg-slate-950/75 md:flex">
               {navItems.map((item, index) => (
                 <button
                   key={item.name}
                   onClick={() => scrollToSection(item.href)}
                   className={`relative rounded-full px-4 py-2 text-sm font-medium transition-colors ${
-                    activeSection === item.name
-                      ? 'bg-slate-950 text-white'
-                      : 'text-slate-600 hover:text-slate-950'
+                    activeSection === item.href
+                      ? 'bg-slate-950 text-white dark:bg-white dark:text-slate-950'
+                      : 'text-slate-600 hover:text-slate-950 dark:text-slate-300 dark:hover:text-white'
                   }`}
                 >
                   <motion.div
@@ -109,15 +112,15 @@ export function NavigationRouter() {
               <button
                 type="button"
                 onClick={() => scrollToSection('#contact')}
-                className="inline-flex items-center gap-2 rounded-full bg-slate-950 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-slate-800"
+                className="inline-flex items-center gap-2 rounded-full bg-slate-950 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-slate-800 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-200"
               >
-                Connect
+                {text.navigation.connect}
                 <ArrowRight size={16} />
               </button>
             </div>
 
             <motion.button
-              className="rounded-full border border-slate-200 bg-white/85 p-2 text-slate-900 shadow-sm backdrop-blur md:hidden"
+              className="rounded-full border border-slate-200 bg-white/85 p-2 text-slate-900 shadow-sm backdrop-blur dark:border-slate-700 dark:bg-slate-950/80 dark:text-slate-100 md:hidden"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               whileTap={{ scale: 0.9 }}
             >
@@ -134,7 +137,7 @@ export function NavigationRouter() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: '100%' }}
             transition={{ type: 'tween' }}
-            className="fixed inset-0 z-40 bg-[linear-gradient(180deg,#ffffff_0%,#f8fafc_100%)] md:hidden"
+            className="fixed inset-0 z-40 bg-[linear-gradient(180deg,#ffffff_0%,#f8fafc_100%)] dark:bg-[linear-gradient(180deg,#020617_0%,#0f172a_100%)] md:hidden"
           >
             <div className="flex h-full flex-col items-center justify-center space-y-6 px-6 pt-24">
               {navItems.map((item, index) => (
@@ -142,7 +145,7 @@ export function NavigationRouter() {
                   key={item.name}
                   onClick={() => scrollToSection(item.href)}
                   className={`text-2xl transition-colors ${
-                    activeSection === item.name ? 'text-slate-950' : 'text-slate-500 hover:text-slate-900'
+                    activeSection === item.href ? 'text-slate-950 dark:text-white' : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
                   }`}
                 >
                   <motion.div
@@ -157,9 +160,9 @@ export function NavigationRouter() {
               <button
                 type="button"
                 onClick={() => scrollToSection('#contact')}
-                className="mt-4 inline-flex items-center gap-2 rounded-full bg-slate-950 px-6 py-3 text-white"
+                className="mt-4 inline-flex items-center gap-2 rounded-full bg-slate-950 px-6 py-3 text-white dark:bg-white dark:text-slate-950"
               >
-                Connect
+                {text.navigation.connect}
                 <ArrowRight size={16} />
               </button>
             </div>

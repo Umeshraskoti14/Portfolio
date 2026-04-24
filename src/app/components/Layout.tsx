@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { FloatingActionFab } from './FloatingActionFab';
 import { NavigationRouter } from './NavigationRouter';
 import { Footer } from './Footer';
 
@@ -8,6 +9,7 @@ export function Layout({ children }: { children: ReactNode }) {
       <NavigationRouter />
       {children}
       <Footer />
+      <FloatingActionFab />
     </div>
   );
 }

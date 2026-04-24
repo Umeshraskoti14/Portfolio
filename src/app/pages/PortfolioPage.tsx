@@ -1,6 +1,8 @@
 import { AnimatePresence, motion, useInView } from 'motion/react';
 import { useRef, useState, useEffect } from 'react';
 import { ArrowRight, BookOpen, Briefcase, Camera, Heart, Lightbulb, MapPin, Star, Target, Trophy, Users, Award, X } from 'lucide-react';
+import { siteText, translatePortfolioCategory, translatePortfolioFilter, translatePortfolioSubcategory } from '../content/siteText';
+import { useUiPreferences } from '../context/UiPreferencesContext';
 const communityCampaignImg = '/assets/Visual Storytelling/heritage/heritage-1.jpg';
 
 const portfolioData = {
@@ -364,6 +366,8 @@ function LandingCard({
   const shortDescription =
     entry.item.description.length > 150 ? `${entry.item.description.slice(0, 150)}...` : entry.item.description;
   const Icon = entry.item.icon || Star;
+  const { language } = useUiPreferences();
+  const text = siteText[language];
 
   return (
     <motion.article
@@ -413,7 +417,7 @@ function LandingCard({
           onClick={() => onOpen(entry)}
           className="mt-6 inline-flex items-center justify-center gap-2 rounded-full border border-slate-200 bg-white/90 px-4 py-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-slate-300 hover:bg-slate-950 hover:text-white"
         >
-          See More
+          {text.portfolio.seeMore}
           <ArrowRight size={16} />
         </button>
       </div>
@@ -541,6 +545,8 @@ function VisualStorytellingLightbox({
 }
 
 function VisualStorytellingDashboard() {
+  const { language } = useUiPreferences();
+  const text = siteText[language];
   const [activeFilter, setActiveFilter] = useState<VisualGalleryFilter>('All');
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const filteredImages =
@@ -558,9 +564,9 @@ function VisualStorytellingDashboard() {
       >
         <div className="h-px w-16 bg-gradient-to-r from-teal-600 via-cyan-500 to-transparent" />
         <h2 className="mt-4 text-2xl font-semibold tracking-tight text-slate-950 [font-family:'Iowan_Old_Style','Palatino_Linotype','Book_Antiqua',serif] sm:text-3xl">
-          Visual Storytelling
+          {text.portfolio.visualTitle}
         </h2>
-        <p className="mt-2 text-sm text-slate-500">Collection of field visuals / project documentation</p>
+        <p className="mt-2 text-sm text-slate-500">{text.portfolio.visualDescription}</p>
       </motion.section>
 
       <motion.div
@@ -584,7 +590,7 @@ function VisualStorytellingDashboard() {
                   : 'border-white/90 bg-white/82 text-slate-700 hover:border-slate-300 hover:bg-white'
               }`}
             >
-              {filter}
+              {translatePortfolioFilter(language, filter)}
             </button>
           ))}
         </div>
@@ -653,6 +659,10 @@ function PortfolioDetailView({
   const overviewParagraphs = getOverviewParagraphs(entry.item.description);
   const relatedEntries = getRelatedEntries(entry, 3);
   const Icon = entry.item.icon || Star;
+  const { language } = useUiPreferences();
+  const text = siteText[language];
+  const categoryLabel = translatePortfolioCategory(language, entry.category);
+  const subcategoryLabel = translatePortfolioSubcategory(language, entry.subcategory);
 
   return (
     <div className="space-y-8 md:space-y-10">
@@ -663,14 +673,14 @@ function PortfolioDetailView({
           className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/90 px-4 py-2 text-sm font-semibold text-slate-900 transition hover:border-slate-300 hover:bg-slate-950 hover:text-white"
         >
           <ArrowRight size={16} className="rotate-180" />
-          Back to Portfolio
+          {text.portfolio.backToPortfolio}
         </button>
         <div className="flex flex-wrap items-center gap-2 text-sm text-slate-500">
-          <span>{entry.category}</span>
+          <span>{categoryLabel}</span>
           {entry.subcategory && (
             <>
               <span className="text-slate-300">/</span>
-              <span>{entry.subcategory}</span>
+              <span>{subcategoryLabel}</span>
             </>
           )}
         </div>
@@ -695,10 +705,10 @@ function PortfolioDetailView({
           <div className="rounded-[2rem] border border-white/80 bg-white/78 p-6 shadow-[0_24px_80px_-40px_rgba(15,23,42,0.45)] backdrop-blur-xl md:p-8">
             <div className="mb-4 flex flex-wrap gap-2">
               <span className="rounded-full border border-cyan-200 bg-cyan-50 px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-cyan-900">
-                Feature Story
+                {text.portfolio.featureStory}
               </span>
               <span className="rounded-full border border-slate-200 bg-white px-3 py-1 text-[0.68rem] font-medium uppercase tracking-[0.16em] text-slate-600">
-                {entry.subcategory ?? entry.category}
+                {subcategoryLabel ?? categoryLabel}
               </span>
             </div>
 
@@ -709,7 +719,7 @@ function PortfolioDetailView({
                     <Icon size={20} />
                   </div>
                   <span className="text-sm font-medium uppercase tracking-[0.18em] text-slate-500">
-                    {entry.category}
+                    {categoryLabel}
                   </span>
                 </div>
 
@@ -726,7 +736,7 @@ function PortfolioDetailView({
                     rel="noopener noreferrer"
                     className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 sm:w-auto"
                   >
-                    Visit Reference
+                    {text.portfolio.visitReference}
                     <ArrowRight size={16} />
                   </a>
                 )}
@@ -735,7 +745,7 @@ function PortfolioDetailView({
                   onClick={() => scrollToSelector('#contact')}
                   className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-slate-200 bg-white/90 px-5 py-3 text-sm font-semibold text-slate-900 transition hover:border-slate-300 hover:bg-slate-50 sm:w-auto"
                 >
-                  Contact
+                  {text.portfolio.contact}
                   <ArrowRight size={16} />
                 </button>
               </div>
@@ -746,9 +756,9 @@ function PortfolioDetailView({
 
       <section className="space-y-6">
         <div className="rounded-[2rem] border border-white/70 bg-white/72 p-6 shadow-[0_22px_70px_-45px_rgba(15,23,42,0.45)] backdrop-blur-xl md:p-8">
-          <div className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-slate-500">Detailed Content Overview</div>
+          <div className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-slate-500">{text.portfolio.detailedContentOverview}</div>
           <h2 className="mt-3 text-2xl font-semibold tracking-tight text-slate-950 md:text-3xl [font-family:'Iowan_Old_Style','Palatino_Linotype','Book_Antiqua',serif]">
-            Overview
+            {text.portfolio.overview}
           </h2>
           <div className="mt-6 space-y-5 text-base leading-8 text-slate-600">
             {overviewParagraphs.map((paragraph) => (
@@ -761,7 +771,7 @@ function PortfolioDetailView({
           <div className="rounded-[2rem] border border-white/70 bg-white/72 p-6 shadow-[0_22px_70px_-45px_rgba(15,23,42,0.45)] backdrop-blur-xl">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between sm:gap-6">
               <div className="shrink-0 text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-slate-500 sm:pt-1">
-                Quick Positioning
+                {text.portfolio.quickPositioning}
               </div>
               <div className="flex flex-wrap gap-2">
               {entry.item.tags?.map((tag) => (
@@ -777,9 +787,9 @@ function PortfolioDetailView({
 
       {relatedEntries.length > 0 && (
         <section className="rounded-[2rem] border border-white/70 bg-white/72 p-6 shadow-[0_22px_70px_-45px_rgba(15,23,42,0.45)] backdrop-blur-xl md:p-8">
-          <div className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-slate-500">Similar Content Recommendations</div>
+          <div className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-slate-500">{text.portfolio.similarContentRecommendations}</div>
           <h2 className="mt-3 text-2xl font-semibold tracking-tight text-slate-950 md:text-3xl [font-family:'Iowan_Old_Style','Palatino_Linotype','Book_Antiqua',serif]">
-            Related portfolio stories
+            {text.portfolio.relatedPortfolioStories}
           </h2>
           <div className="mt-8 grid gap-4 lg:grid-cols-3">
             {relatedEntries.map((related) => {
@@ -806,14 +816,14 @@ function PortfolioDetailView({
                     />
                   </div>
                   <div className="mt-4 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
-                    {related.subcategory ?? related.category}
+                    {translatePortfolioSubcategory(language, related.subcategory) ?? translatePortfolioCategory(language, related.category)}
                   </div>
                   <h3 className="mt-2 text-lg font-semibold text-slate-950">{related.item.title}</h3>
                   <p className="mt-2 text-sm leading-7 text-slate-600">
                     {related.item.description.length > 100 ? `${related.item.description.slice(0, 100)}...` : related.item.description}
                   </p>
                   <div className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-slate-900">
-                    Explore Story
+                    {text.portfolio.exploreStory}
                     <ArrowRight size={16} />
                   </div>
                 </button>
@@ -828,6 +838,8 @@ function PortfolioDetailView({
 }
 
 export function PortfolioPage() {
+  const { language } = useUiPreferences();
+  const text = siteText[language];
   const ref = useRef<HTMLDivElement | null>(null);
   const hasMountedRef = useRef(false);
   const isInView = useInView(ref, { amount: 0.1, once: true });
@@ -854,9 +866,9 @@ export function PortfolioPage() {
   const totalEntries = portfolioSummary.reduce((sum, item) => sum + item.entries, 0);
   const totalImages = portfolioSummary.reduce((sum, item) => sum + item.images, 0);
   const summaryMetrics = [
-    { label: 'Practice Areas', value: categories.length },
-    { label: 'Content Stories', value: `${totalEntries}+` },
-    { label: 'Visual Assets', value: `${totalImages}+` },
+    { label: text.portfolio.summaryMetrics.practiceAreas, value: categories.length },
+    { label: text.portfolio.summaryMetrics.contentStories, value: `${totalEntries}+` },
+    { label: text.portfolio.summaryMetrics.visualAssets, value: `${totalImages}+` },
   ];
 
   const openEntry = (entry: PortfolioEntry) => {
@@ -864,7 +876,7 @@ export function PortfolioPage() {
   };
 
   return (
-    <div id="portfolio" className="cursor-none min-h-screen bg-[radial-gradient(circle_at_top,_rgba(14,165,233,0.12),_transparent_28%),radial-gradient(circle_at_bottom_right,_rgba(245,158,11,0.12),_transparent_24%),linear-gradient(180deg,#f8fafc_0%,#ffffff_46%,#f8fafc_100%)] pt-20 pb-16 text-slate-900 md:pt-24 md:pb-20">
+    <div id="portfolio" className="cursor-none min-h-screen bg-[radial-gradient(circle_at_top,_rgba(14,165,233,0.12),_transparent_28%),radial-gradient(circle_at_bottom_right,_rgba(245,158,11,0.12),_transparent_24%),linear-gradient(180deg,#f8fafc_0%,#ffffff_46%,#f8fafc_100%)] pt-20 pb-16 text-slate-900 dark:bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.14),_transparent_28%),radial-gradient(circle_at_bottom_right,_rgba(245,158,11,0.12),_transparent_24%),linear-gradient(180deg,#020617_0%,#0f172a_46%,#111827_100%)] md:pt-24 md:pb-20">
       <CustomCursor />
       <motion.div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" ref={ref} initial={{ opacity: 0 }} animate={{ opacity: isInView ? 1 : 0.3 }} transition={{ duration: 0.6 }}>
         <AnimatePresence mode="wait" initial={false}>
@@ -916,8 +928,8 @@ export function PortfolioPage() {
                     </div>
 
                     <div className="mt-5 rounded-[1.8rem] border border-white/60 bg-[linear-gradient(160deg,rgba(15,23,42,0.96)_0%,rgba(15,118,110,0.92)_100%)] p-5 text-white shadow-[0_24px_80px_-40px_rgba(15,23,42,0.55)] md:p-6">
-                      <div className="text-[0.72rem] uppercase tracking-[0.22em] text-cyan-200">Current Focus</div>
-                      <h2 className="mt-2 text-xl font-semibold leading-tight md:text-2xl">{activeCategory}</h2>
+                      <div className="text-[0.72rem] uppercase tracking-[0.22em] text-cyan-200">{text.portfolio.currentFocus}</div>
+                      <h2 className="mt-2 text-xl font-semibold leading-tight md:text-2xl">{translatePortfolioCategory(language, activeCategory)}</h2>
                       <div className="mt-5 grid gap-3 lg:grid-cols-2 xl:grid-cols-3">
                         {portfolioSummary.map((summary) => (
                           <button
@@ -932,9 +944,9 @@ export function PortfolioPage() {
                           >
                             <div className="min-w-0">
                               <div className="inline-flex rounded-full border border-white/15 bg-white/10 px-2.5 py-1 text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-cyan-100">
-                                {summary.entries} items
+                                {summary.entries} {text.portfolio.items}
                               </div>
-                              <div className="mt-3 text-base font-semibold leading-snug text-white md:text-[1.05rem]">{summary.category}</div>
+                              <div className="mt-3 text-base font-semibold leading-snug text-white md:text-[1.05rem]">{translatePortfolioCategory(language, summary.category)}</div>
                             </div>
                             <div className="mt-3 flex justify-end">
                               <ArrowRight size={16} className="text-cyan-200 transition group-hover:translate-x-1" />
@@ -968,7 +980,7 @@ export function PortfolioPage() {
                         : 'border-white/80 bg-white/75 text-slate-700 hover:border-slate-300 hover:bg-white'
                     }`}
                   >
-                    {category}
+                    {translatePortfolioCategory(language, category)}
                   </motion.button>
                 ))}
               </motion.div>
@@ -993,7 +1005,7 @@ export function PortfolioPage() {
                             : 'border-white/80 bg-white/75 text-slate-700 hover:border-slate-300 hover:bg-white'
                         }`}
                       >
-                        All
+                        {text.portfolio.all}
                       </button>
                       {subcategories.map((sub) => (
                         <button
@@ -1006,7 +1018,7 @@ export function PortfolioPage() {
                               : 'border-white/80 bg-white/75 text-slate-700 hover:border-slate-300 hover:bg-white'
                           }`}
                         >
-                          {sub}
+                          {translatePortfolioSubcategory(language, sub)}
                         </button>
                       ))}
                     </motion.div>

@@ -1,32 +1,18 @@
 import { motion, useInView } from 'motion/react';
 import { useRef } from 'react';
 import { Code2, Palette, Rocket, Users } from 'lucide-react';
+import { siteText } from '../content/siteText';
+import { useUiPreferences } from '../context/UiPreferencesContext';
 const profilePic = '/assets/About me/About Me.jpeg';
-
-const features = [
-  {
-    icon: Code2,
-    title: 'Program Coordination',
-    description: 'Expert in organizing and managing social development programs and community initiatives.',
-  },
-  {
-    icon: Palette,
-    title: 'Advocacy & Training',
-    description: 'Certified in TOT and TBT, facilitating awareness sessions and community engagement.',
-  },
-  {
-    icon: Rocket,
-    title: 'Leadership',
-    description: 'Best Leadership Award 2023 by JCI Nepal, with proven track record in team management.',
-  },
-  {
-    icon: Users,
-    title: 'Community Impact',
-    description: 'Passionate about creating sustainable social change through collaborative efforts.',
-  },
-];
+const featureIcons = [Code2, Palette, Rocket, Users];
 
 export function About() {
+  const { language } = useUiPreferences();
+  const text = siteText[language];
+  const features = text.about.features.map((feature, index) => ({
+    ...feature,
+    icon: featureIcons[index],
+  }));
   const ref = useRef(null);
   const isInView = useInView(ref, { amount: 0.2 });
 
@@ -39,7 +25,7 @@ export function About() {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <div className="mb-4 text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-slate-500">About Me</div>
+          <div className="mb-4 text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-slate-500">{text.about.eyebrow}</div>
           <div className="mx-auto h-1 w-20 bg-slate-900" />
         </motion.div>
 
@@ -63,8 +49,8 @@ export function About() {
               />
             </div>
             <div className="absolute bottom-4 left-4 right-4 rounded-2xl bg-white/92 px-4 py-3 shadow-lg backdrop-blur sm:bottom-8 sm:left-8 sm:right-auto">
-              <div className="text-xs uppercase tracking-[0.18em] text-slate-500">Approach</div>
-              <div className="mt-1 text-sm font-semibold text-slate-900">People-first, evidence-based, visually aware</div>
+              <div className="text-xs uppercase tracking-[0.18em] text-slate-500">{text.about.approachLabel}</div>
+              <div className="mt-1 text-sm font-semibold text-slate-900">{text.about.approachValue}</div>
             </div>
           </motion.div>
 
@@ -74,13 +60,11 @@ export function About() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="flex h-full flex-col justify-center gap-6 rounded-[2rem] border border-slate-200 bg-white/90 p-6 shadow-sm backdrop-blur md:p-10"
           >
-            <p className="text-slate-600 leading-8">
-              I have always believed that real change does not happen from the sidelines. It happens through action, empathy, and being present in the community. My journey in social work and psychology has been guided by a simple goal: to understand people better so I can serve them more effectively. Whether I am contributing to urban development projects at Kathmandu Metropolitan City or leading initiatives as President of JCI Bhaktapur Junior, I find the greatest meaning in work that helps others discover and strengthen their own voice.
-            </p>
-
-            <p className="text-slate-600 leading-8">
-              I see myself as a social worker at heart, but I carry a camera to stay grounded. Photography allows me to notice and preserve the quiet stories of resilience that often go unseen. For me, social work is not only a career path but a long-term commitment to helping transform society for the better. I am always looking for ways to blend leadership, advocacy, and creativity to leave a lasting and positive impact on communities.
-            </p>
+            {text.about.paragraphs.map((paragraph) => (
+              <p key={paragraph} className="text-slate-600 leading-8">
+                {paragraph}
+              </p>
+            ))}
           </motion.div>
         </div>
 

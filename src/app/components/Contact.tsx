@@ -1,8 +1,12 @@
 import { motion, useInView } from 'motion/react';
 import { useRef, useState } from 'react';
 import { ArrowRight, Facebook, Instagram, Linkedin, Mail, MapPin, Phone, Send } from 'lucide-react';
+import { siteText } from '../content/siteText';
+import { useUiPreferences } from '../context/UiPreferencesContext';
 
 export function Contact() {
+  const { language } = useUiPreferences();
+  const text = siteText[language];
   const ref = useRef(null);
   const isInView = useInView(ref, { amount: 0.2 });
   const [formData, setFormData] = useState({
@@ -28,7 +32,7 @@ export function Contact() {
 
   return (
     <section id="contact" className="relative overflow-hidden py-20 md:py-32" ref={ref}>
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(16,185,129,0.12),_transparent_22%),linear-gradient(180deg,#f8fafc_0%,#ffffff_100%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(16,185,129,0.12),_transparent_22%),linear-gradient(180deg,#f8fafc_0%,#ffffff_100%)] dark:bg-[radial-gradient(circle_at_top_left,_rgba(16,185,129,0.15),_transparent_22%),linear-gradient(180deg,#0f172a_0%,#020617_100%)]" />
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -36,11 +40,11 @@ export function Contact() {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <div className="mb-4 text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-slate-500">Contact</div>
-          <h2 className="text-3xl md:text-5xl font-semibold tracking-tight text-slate-950 mb-4">Let’s connect around meaningful projects and creative collaborations.</h2>
+          <div className="mb-4 text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-slate-500">{text.contact.eyebrow}</div>
+          <h2 className="text-3xl md:text-5xl font-semibold tracking-tight text-slate-950 mb-4">{text.contact.title}</h2>
           <div className="mx-auto mb-8 h-1 w-20 bg-slate-900" />
           <p className="mx-auto max-w-3xl text-lg leading-8 text-slate-600">
-            If you are working on community outreach, advocacy, documentation, training, or a story-led campaign, I’d be glad to hear from you.
+            {text.contact.description}
           </p>
         </motion.div>
 
@@ -51,16 +55,16 @@ export function Contact() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="rounded-[2rem] border border-slate-200 bg-white/90 p-6 shadow-sm backdrop-blur md:p-10"
           >
-            <h3 className="mb-6 text-2xl font-semibold text-slate-950">Contact Information</h3>
+            <h3 className="mb-6 text-2xl font-semibold text-slate-950">{text.contact.infoTitle}</h3>
             <p className="mb-8 leading-8 text-slate-600">
-              Reach out through any of the options below. The form on the right opens your email app with your message pre-filled, so sending a message works immediately.
+              {text.contact.infoLead}
             </p>
 
             <div className="space-y-6">
               {[
-                { icon: Mail, label: 'Email', value: 'umeshraskoti14@gmail.com', color: 'bg-gradient-to-br from-emerald-500 to-emerald-600' },
-                { icon: Phone, label: 'Phone', value: '+977 9867233437', color: 'bg-gradient-to-br from-sky-500 to-sky-600' },
-                { icon: MapPin, label: 'Location', value: 'Suryabinayak, Bhaktapur 44800', color: 'bg-gradient-to-br from-slate-800 to-slate-900' },
+                { icon: Mail, label: text.contact.labels.email, value: 'umeshraskoti14@gmail.com', color: 'bg-gradient-to-br from-emerald-500 to-emerald-600' },
+                { icon: Phone, label: text.contact.labels.phone, value: '+977 9867233437', color: 'bg-gradient-to-br from-sky-500 to-sky-600' },
+                { icon: MapPin, label: text.contact.labels.location, value: 'Suryabinayak, Bhaktapur 44800', color: 'bg-gradient-to-br from-slate-800 to-slate-900' },
               ].map((item, index) => (
                 <motion.div
                   key={item.label}
@@ -86,13 +90,13 @@ export function Contact() {
               transition={{ duration: 0.6, delay: 0.8 }}
               className="mt-8"
             >
-              <h4 className="mb-4 font-semibold text-slate-900">Follow Me</h4>
+              <h4 className="mb-4 font-semibold text-slate-900">{text.contact.follow}</h4>
               <div className="flex gap-4">
                 {[
-                  { name: 'Facebook', icon: Facebook, href: 'https://www.facebook.com/twin.raskoti.3', color: 'hover:bg-blue-600' },
-                  { name: 'Instagram', icon: Instagram, href: 'https://www.instagram.com/umesh_raskoti?igsh=MW9qOWJ3aDYzdG83MQ==', color: 'hover:bg-pink-600' },
-                  { name: 'LinkedIn', icon: Linkedin, href: 'https://linkedin.com', color: 'hover:bg-blue-700' },
-                  { name: 'Email', icon: Mail, href: 'mailto:umeshraskoti14@gmail.com', color: 'hover:bg-emerald-600' },
+                  { name: text.contact.followLinks.facebook, icon: Facebook, href: 'https://www.facebook.com/twin.raskoti.3', color: 'hover:bg-blue-600' },
+                  { name: text.contact.followLinks.instagram, icon: Instagram, href: 'https://www.instagram.com/umesh_raskoti?igsh=MW9qOWJ3aDYzdG83MQ==', color: 'hover:bg-pink-600' },
+                  { name: text.contact.followLinks.linkedIn, icon: Linkedin, href: 'https://linkedin.com', color: 'hover:bg-blue-700' },
+                  { name: text.contact.followLinks.email, icon: Mail, href: 'mailto:umeshraskoti14@gmail.com', color: 'hover:bg-emerald-600' },
                 ].map((platform, index) => (
                   <motion.a
                     key={platform.name}
@@ -121,17 +125,17 @@ export function Contact() {
             <form onSubmit={handleSubmit} className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-[0_24px_80px_-42px_rgba(15,23,42,0.45)] md:p-10">
               <div className="mb-8 flex flex-col items-start justify-between gap-4 sm:flex-row">
                 <div>
-                  <div className="text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-slate-500">Quick Message</div>
-                  <h3 className="mt-2 text-2xl font-semibold text-slate-950">Send an introduction</h3>
+                  <div className="text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-slate-500">{text.contact.quickMessage}</div>
+                  <h3 className="mt-2 text-2xl font-semibold text-slate-950">{text.contact.introTitle}</h3>
                 </div>
                 <div className="hidden rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-sm text-slate-500 sm:block">
-                  Response-friendly
+                  {text.contact.responseFriendly}
                 </div>
               </div>
 
               <div className="mb-6">
                 <label htmlFor="name" className="mb-2 block font-medium text-slate-700">
-                  Name
+                  {text.contact.fields.name}
                 </label>
                 <input
                   type="text"
@@ -141,13 +145,13 @@ export function Contact() {
                   onChange={handleChange}
                   required
                   className="w-full rounded-2xl border border-slate-300 px-4 py-3 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-slate-900"
-                  placeholder="Your name"
+                  placeholder={text.contact.placeholders.name}
                 />
               </div>
 
               <div className="mb-6">
                 <label htmlFor="email" className="mb-2 block font-medium text-slate-700">
-                  Email
+                  {text.contact.fields.email}
                 </label>
                 <input
                   type="email"
@@ -157,13 +161,13 @@ export function Contact() {
                   onChange={handleChange}
                   required
                   className="w-full rounded-2xl border border-slate-300 px-4 py-3 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-slate-900"
-                  placeholder="your.email@example.com"
+                  placeholder={text.contact.placeholders.email}
                 />
               </div>
 
               <div className="mb-6">
                 <label htmlFor="message" className="mb-2 block font-medium text-slate-700">
-                  Message
+                  {text.contact.fields.message}
                 </label>
                 <textarea
                   id="message"
@@ -173,12 +177,12 @@ export function Contact() {
                   required
                   rows={5}
                   className="w-full resize-none rounded-2xl border border-slate-300 px-4 py-3 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-slate-900"
-                  placeholder="Tell me about your project..."
+                  placeholder={text.contact.placeholders.message}
                 />
               </div>
 
               <p className="mb-6 text-sm leading-7 text-slate-500">
-                Submitting this form opens your email client with a prepared message so you can send it directly.
+                {text.contact.submitHint}
               </p>
 
               <motion.button
@@ -187,7 +191,7 @@ export function Contact() {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
-                Send Message
+                {text.contact.send}
                 <Send size={18} />
               </motion.button>
 
@@ -195,7 +199,7 @@ export function Contact() {
                 href="mailto:umeshraskoti14@gmail.com"
                 className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-slate-600 transition hover:text-slate-950"
               >
-                Or email directly
+                {text.contact.directEmail}
                 <ArrowRight size={16} />
               </a>
             </form>

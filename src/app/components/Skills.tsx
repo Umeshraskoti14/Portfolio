@@ -1,43 +1,18 @@
 import { motion, useInView } from 'motion/react';
 import { useRef } from 'react';
-
-const skillCategories = [
-  {
-    title: 'Professional Skills',
-    skills: [
-      { name: 'Program Management', level: 90 },
-      { name: 'Data Management', level: 85 },
-      { name: 'Community Advocacy', level: 95 },
-      { name: 'Project Coordination', level: 90 },
-    ],
-  },
-  {
-    title: 'Technical Skills',
-    skills: [
-      { name: 'MS Office Suite', level: 90 },
-      { name: 'Kobo Collect', level: 80 },
-      { name: 'Adobe Lightroom', level: 85 },
-      { name: 'Canva Design', level: 90 },
-    ],
-  },
-  {
-    title: 'Specialized Training',
-    skills: [
-      { name: 'TOT Certification', level: 95 },
-      { name: 'TBT Training', level: 90 },
-      { name: 'Counseling', level: 85 },
-      { name: 'Photography', level: 88 },
-    ],
-  },
-];
+import { siteText } from '../content/siteText';
+import { useUiPreferences } from '../context/UiPreferencesContext';
 
 export function Skills() {
+  const { language } = useUiPreferences();
+  const text = siteText[language];
+  const skillCategories = text.skills.categories;
   const ref = useRef(null);
   const isInView = useInView(ref, { amount: 0.2 });
 
   return (
     <section id="skills" className="relative overflow-hidden py-20 md:py-32" ref={ref}>
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(125,211,252,0.18),_transparent_25%),linear-gradient(180deg,#ffffff_0%,#f8fafc_100%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(125,211,252,0.18),_transparent_25%),linear-gradient(180deg,#ffffff_0%,#f8fafc_100%)] dark:bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.15),_transparent_25%),linear-gradient(180deg,#020617_0%,#111827_100%)]" />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -45,10 +20,10 @@ export function Skills() {
           transition={{ duration: 0.8 }}
           className="relative text-center mb-16"
         >
-          <h2 className="text-3xl md:text-5xl font-semibold tracking-tight text-slate-950 mb-4">Skills & Expertise</h2>
+          <h2 className="text-3xl md:text-5xl font-semibold tracking-tight text-slate-950 mb-4">{text.skills.title}</h2>
           <div className="w-20 h-1 bg-slate-900 mx-auto mb-8" />
           <p className="mx-auto max-w-3xl text-lg leading-8 text-slate-600">
-            A practical toolkit built from program implementation, community engagement, facilitation, documentation, and visual storytelling.
+            {text.skills.description}
           </p>
         </motion.div>
 
@@ -90,13 +65,9 @@ export function Skills() {
           transition={{ duration: 0.8, delay: 0.8 }}
           className="relative mt-16 rounded-[2rem] border border-slate-200 bg-white/90 p-6 text-center shadow-sm backdrop-blur sm:p-8"
         >
-          <h3 className="mb-6 text-xl font-semibold text-slate-950 sm:text-2xl">Tools, Platforms, and Working Languages</h3>
+          <h3 className="mb-6 text-xl font-semibold text-slate-950 sm:text-2xl">{text.skills.toolsTitle}</h3>
           <div className="flex flex-wrap justify-center gap-3 sm:gap-4">
-            {[
-              'MS Word', 'MS Excel', 'PowerPoint', 'Kobo Collect', 'Google Forms',
-              'Microsoft Teams', 'Zoom', 'Adobe Lightroom', 'Photoshop', 'CapCut',
-              'Canva', 'English', 'Nepali', 'Hindi', 'Magar',
-            ].map((tech, index) => (
+            {text.skills.tools.map((tech, index) => (
               <motion.span
                 key={tech}
                 className="rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-sm text-slate-700 transition-all hover:-translate-y-1 hover:border-slate-300 hover:bg-white hover:shadow-md sm:px-5"

@@ -39,6 +39,21 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+  --page-background:
+    radial-gradient(circle at top left, rgba(16, 185, 129, 0.08), transparent 24%),
+    linear-gradient(180deg, #f8fafc 0%, #ffffff 40%, #f8fafc 100%);
+  --surface-primary: rgba(255, 255, 255, 0.92);
+  --surface-secondary: rgba(248, 250, 252, 0.88);
+  --surface-border-strong: rgba(148, 163, 184, 0.22);
+  --copy-strong: #0f172a;
+  --copy-base: #475569;
+  --copy-muted: #64748b;
+  --fab-bg: rgba(15, 23, 42, 0.94);
+  --fab-bg-hover: rgba(15, 23, 42, 0.86);
+  --fab-fg: #f8fafc;
+  --fab-border: rgba(15, 23, 42, 0.14);
+  --fab-icon-bg: rgba(255, 255, 255, 0.14);
+  --fab-shadow: 0 24px 80px -30px rgba(15, 23, 42, 0.38);
 }
 
 .dark {
@@ -76,6 +91,21 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(0.269 0 0);
   --sidebar-ring: oklch(0.439 0 0);
+  --page-background:
+    radial-gradient(circle at top left, rgba(16, 185, 129, 0.12), transparent 24%),
+    linear-gradient(180deg, #020617 0%, #0f172a 42%, #111827 100%);
+  --surface-primary: rgba(15, 23, 42, 0.84);
+  --surface-secondary: rgba(30, 41, 59, 0.9);
+  --surface-border-strong: rgba(148, 163, 184, 0.26);
+  --copy-strong: #f8fafc;
+  --copy-base: #dbe4f0;
+  --copy-muted: #94a3b8;
+  --fab-bg: rgba(241, 245, 249, 0.96);
+  --fab-bg-hover: rgba(226, 232, 240, 0.98);
+  --fab-fg: #0f172a;
+  --fab-border: rgba(148, 163, 184, 0.24);
+  --fab-icon-bg: rgba(15, 23, 42, 0.08);
+  --fab-shadow: 0 28px 80px -30px rgba(2, 6, 23, 0.55);
 }
 
 @theme inline {

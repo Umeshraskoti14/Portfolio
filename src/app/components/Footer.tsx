@@ -1,8 +1,12 @@
 import { motion, useInView } from 'motion/react';
 import { ArrowUpRight, Heart } from 'lucide-react';
 import { useRef } from 'react';
+import { siteText } from '../content/siteText';
+import { useUiPreferences } from '../context/UiPreferencesContext';
 
 export function Footer() {
+  const { language } = useUiPreferences();
+  const text = siteText[language];
   const ref = useRef(null);
   const isInView = useInView(ref, { amount: 0.3 });
 
@@ -20,13 +24,13 @@ export function Footer() {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <div className="text-xs uppercase tracking-[0.2em] text-slate-400">Portfolio</div>
+            <div className="text-xs uppercase tracking-[0.2em] text-slate-400">{text.footer.eyebrow}</div>
             <p className="mt-3 flex items-center gap-2 text-slate-300">
-              Made with <Heart size={16} className="text-red-500" fill="currentColor" /> by{' '}
+              {text.footer.madeWith} <Heart size={16} className="text-red-500" fill="currentColor" /> {text.footer.by}{' '}
               <span className="text-white font-semibold">Umesh Raskoti</span>
             </p>
             <p className="mt-2 max-w-md text-sm leading-7 text-slate-400">
-              Social work, advocacy, leadership, and documentary storytelling brought together in one practice-led portfolio.
+              {text.footer.description}
             </p>
           </motion.div>
 
@@ -37,11 +41,11 @@ export function Footer() {
             className="flex flex-wrap justify-center gap-4 md:justify-start"
           >
             {[
-              { name: 'Home', href: '#home' },
-              { name: 'About', href: '#about' },
-              { name: 'Portfolio', href: '#portfolio' },
-              { name: 'Skills', href: '#skills' },
-              { name: 'Contact', href: '#contact' }
+              { name: text.footer.home, href: '#home' },
+              { name: text.footer.about, href: '#about' },
+              { name: text.footer.portfolio, href: '#portfolio' },
+              { name: text.footer.skills, href: '#skills' },
+              { name: text.footer.contact, href: '#contact' }
             ].map((item) => (
               <a key={item.name} href={item.href} className="text-sm text-slate-400 transition-colors hover:text-white">
                 <motion.div
@@ -62,7 +66,7 @@ export function Footer() {
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            Back to Top
+            {text.footer.backToTop}
             <ArrowUpRight size={16} />
           </motion.button>
         </div>
@@ -73,7 +77,7 @@ export function Footer() {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="mt-8 border-t border-white/10 pt-8 text-center text-sm text-slate-400"
         >
-          <p>© {new Date().getFullYear()} Umesh Raskoti. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Umesh Raskoti. {text.footer.rights}</p>
         </motion.div>
       </div>
     </footer>
