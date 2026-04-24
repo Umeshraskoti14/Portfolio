@@ -211,28 +211,6 @@ function CustomCursor() {
   );
 }
 
-function GalleryModal({ item, startIndex = 0, onClose }: { item: any; startIndex?: number; onClose: () => void }) {
-  const [idx, setIdx] = useState(startIndex);
-  useEffect(() => { setIdx(startIndex); }, [item, startIndex]);
-  if (!item) return null;
-  const imgs = uniqueImages((item.images || [item.image]).map((img: any) => (typeof img === 'string' ? { src: img } : img))) as Array<{ src: string; name?: string }>;
-  const prev = () => setIdx((i) => (i - 1 + imgs.length) % imgs.length);
-  const next = () => setIdx((i) => (i + 1) % imgs.length);
-  const current = imgs[idx];
-  useEffect(() => { const preloads: HTMLImageElement[] = []; imgs.forEach((img) => { const p = new Image(); p.src = img.src; preloads.push(p); }); return () => { preloads.forEach((p) => { p.src = ''; }); }; }, [imgs]);
-  return (
-    <motion.div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} onClick={onClose}>
-      <motion.div className="relative max-w-[95vw] max-h-[90vh] w-full overflow-hidden" initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.95, opacity: 0 }} transition={{ duration: 0.2 }} onClick={(e) => e.stopPropagation()}>
-        <motion.img key={current.src} src={current.src} alt={current.name ?? item.title} loading="eager" decoding="async" onClick={onClose} onError={(e) => { const t = e.currentTarget as HTMLImageElement; if (t.src !== communityCampaignImg) t.src = communityCampaignImg; }} className="w-full max-h-[85vh] object-contain rounded-lg" initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.2 }} />
-        <div className="absolute bottom-4 left-4 right-4 text-white text-sm text-center">{current.name ?? item.title}</div>
-        <button onClick={(e) => { e.stopPropagation(); prev(); }} className="absolute left-2 top-1/2 -translate-y-1/2 text-white text-3xl">‹</button>
-        <button onClick={(e) => { e.stopPropagation(); next(); }} className="absolute right-2 top-1/2 -translate-y-1/2 text-white text-3xl">›</button>
-        <button onClick={(e) => { e.stopPropagation(); onClose(); }} className="absolute top-2 right-2 text-white text-2xl">×</button>
-      </motion.div>
-    </motion.div>
-  );
-}
-
 type PortfolioData = typeof portfolioData;
 type PortfolioCategory = keyof PortfolioData;
 type PortfolioItem = {
@@ -255,37 +233,11 @@ type GalleryAsset = {
 };
 
 const categories = Object.keys(portfolioData) as PortfolioCategory[];
-const categoryMeta: Record<PortfolioCategory, { eyebrow: string; title: string; description: string }> = {
-  'Community Impact': {
-    eyebrow: 'Social Development',
-    title: 'Community-centered work presented as a polished portfolio of programs, advocacy, and action.',
-    description: 'Programs, advocacy, and field-based initiatives across communities in Nepal.',
-  },
-  'Strategic Leadership': {
-    eyebrow: 'Leadership Practice',
-    title: 'Leadership stories translated into a premium editorial-style portfolio experience.',
-    description: 'From conventions to chapter stewardship, each item is presented with stronger structure, clearer storytelling, and a more professional visual rhythm.',
-  },
-  'Visual Storytelling': {
-    eyebrow: 'Photography Collections',
-    title: 'A refined gallery-led experience for documentary, landscape, and heritage storytelling.',
-    description: 'Collections are now surfaced as premium content cards, each opening into a dedicated landing page with gallery, insights, and related work.',
-  },
-};
 
 function normalizeImages(item: PortfolioItem): GalleryAsset[] {
   return uniqueImages(item.images || (item.image ? [item.image] : [])).map((img) =>
     typeof img === 'string' ? { src: img } : { src: img.src, name: img.name }
   );
-}
-
-function dedupeGalleryAssets(images: GalleryAsset[]) {
-  const seen = new Set<string>();
-  return images.filter((image) => {
-    if (seen.has(image.src)) return false;
-    seen.add(image.src);
-    return true;
-  });
 }
 
 function getCategoryEntriesWithContext(category: PortfolioCategory): PortfolioEntry[] {
@@ -342,101 +294,6 @@ function getOverviewParagraphs(description: string) {
   return [sentences.slice(0, splitPoint).join(' '), sentences.slice(splitPoint).join(' ')];
 }
 
-function getAudienceMetric(description: string) {
-  const patterns = [
-    /total of (\d{1,4})/i,
-    /(\d{1,4})\s+(?:participants|students|youth|children|farmers|parents|members|chapters|visitors)/i,
-    /for (\d{1,4})\s+(?:participants|students|youth|children|farmers|parents|members)/i,
-    /reached (\d{1,4})/i,
-  ];
-
-  for (const pattern of patterns) {
-    const match = description.match(pattern);
-    if (match) return Number(match[1]);
-  }
-
-  return null;
-}
-
-function getDetailStats(entry: PortfolioEntry) {
-  const audience = getAudienceMetric(entry.item.description);
-  const imageCount = getItemImageCount(entry.item);
-  const themeCount = Math.max(entry.item.tags?.length ?? 0, 1);
-
-  return [
-    {
-      label: 'Audience Touchpoints',
-      value: audience ? `${audience}+` : `${24 + themeCount * 6}+`,
-      caption: audience ? 'Named participants or direct learners' : 'Estimated engagement signal from the documented scope',
-    },
-    {
-      label: 'Visual Assets',
-      value: `${imageCount}`,
-      caption: imageCount > 1 ? 'Gallery-ready images attached to this story' : 'Primary visual currently featured for this story',
-    },
-    {
-      label: 'Key Themes',
-      value: `${themeCount}`,
-      caption: entry.subcategory ?? `${entry.category} portfolio item`,
-    },
-  ];
-}
-
-function getAnalyticsBars(entry: PortfolioEntry) {
-  const imageCount = getItemImageCount(entry.item);
-  const audience = getAudienceMetric(entry.item.description) ?? 18 + (entry.item.tags?.length ?? 0) * 5;
-  const tagWeight = entry.item.tags?.length ?? 0;
-  const documentationWeight = Math.min(96, 50 + Math.round(entry.item.description.length / 20) + imageCount * 7);
-
-  return [
-    {
-      label: 'Program Clarity',
-      value: Math.min(98, 56 + tagWeight * 8 + (entry.subcategory ? 8 : 4)),
-      tone: 'from-cyan-500 to-sky-500',
-      note: 'Narrative strength, structure, and portfolio readiness.',
-    },
-    {
-      label: 'Community Reach',
-      value: Math.min(99, 42 + Math.round(Math.min(audience, 96) * 0.62)),
-      tone: 'from-emerald-500 to-teal-500',
-      note: 'An indicative score based on explicit reach signals in the story.',
-    },
-    {
-      label: 'Documentation Depth',
-      value: documentationWeight,
-      tone: 'from-amber-400 to-orange-500',
-      note: 'Weighted by narrative detail, visual support, and tags.',
-    },
-  ];
-}
-
-function getFeatureCards(entry: PortfolioEntry) {
-  const sentences = getDescriptionSentences(entry.item.description);
-  const tags = entry.item.tags ?? [];
-
-  return [
-    {
-      label: 'Context',
-      title: entry.subcategory ?? entry.category,
-      description: sentences[0] ?? `${entry.item.title} sits within a broader body of work focused on professional and community-facing outcomes.`,
-    },
-    {
-      label: 'Execution Lens',
-      title: tags[0] ?? 'Program Design',
-      description:
-        sentences[1] ??
-        `This work highlights ${tags.slice(0, 2).join(' and ').toLowerCase() || 'careful coordination and delivery'} within a polished showcase format.`,
-    },
-    {
-      label: 'Why It Matters',
-      title: tags[1] ?? 'Impact Positioning',
-      description:
-        sentences[2] ??
-        `The page is structured to surface the scope, visual evidence, and professional depth of this portfolio item in a more premium way.`,
-    },
-  ];
-}
-
 function getRelatedEntries(entry: PortfolioEntry, limit = 3) {
   const allEntries = getCategoryEntriesWithContext(entry.category).filter((candidate) => candidate.item.title !== entry.item.title);
   const sameSubcategory = entry.subcategory
@@ -447,22 +304,6 @@ function getRelatedEntries(entry: PortfolioEntry, limit = 3) {
   );
 
   return [...sameSubcategory, ...remaining].slice(0, limit);
-}
-
-function getGalleryAssets(entry: PortfolioEntry, limit = 6) {
-  const directImages = normalizeImages(entry.item);
-  if (directImages.length >= 4) return directImages.slice(0, limit);
-
-  const contextualImages = getRelatedEntries(entry, 4).flatMap((related) =>
-    normalizeImages(related.item)
-      .slice(0, 1)
-      .map((image) => ({
-        src: image.src,
-        name: image.name ?? related.item.title,
-      }))
-  );
-
-  return dedupeGalleryAssets([...directImages, ...contextualImages]).slice(0, Math.max(limit, 4));
 }
 
 function scrollToSelector(selector: string) {
@@ -500,17 +341,6 @@ function LandingCard({
       className="group flex h-full min-h-[31rem] flex-col rounded-[2rem] border border-white/70 bg-white/65 p-3 shadow-[0_28px_90px_-52px_rgba(15,23,42,0.55)] backdrop-blur-xl transition duration-300 hover:-translate-y-1.5 hover:shadow-[0_30px_90px_-40px_rgba(15,23,42,0.45)]"
     >
       <div className="flex h-full flex-col rounded-[1.6rem] border border-slate-200/70 bg-white/88 p-5">
-        <div className="mb-4 flex flex-wrap gap-2">
-          <span className="rounded-full border border-cyan-200 bg-cyan-50 px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-cyan-900">
-            {entry.category}
-          </span>
-          {entry.subcategory && (
-            <span className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-[0.68rem] font-medium uppercase tracking-[0.16em] text-slate-600">
-              {entry.subcategory}
-            </span>
-          )}
-        </div>
-
         <div className="flex h-56 items-center justify-center rounded-[1.5rem] border border-slate-200/80 bg-[radial-gradient(circle_at_top,_rgba(125,211,252,0.22),_transparent_35%),linear-gradient(180deg,#ffffff_0%,#f8fafc_100%)] p-4 shadow-inner shadow-slate-200/50">
           <img
             src={coverImage}
@@ -563,21 +393,15 @@ function LandingCard({
 function PortfolioDetailView({
   entry,
   onBack,
-  onOpenGallery,
   onSelectRelated,
 }: {
   entry: PortfolioEntry;
   onBack: () => void;
-  onOpenGallery: (item: { title: string; images: Array<{ src: string; name?: string }> }, startIndex: number) => void;
   onSelectRelated: (entry: PortfolioEntry) => void;
 }) {
   const coverImage = normalizeImages(entry.item)[0]?.src ?? communityCampaignImg;
   const overviewParagraphs = getOverviewParagraphs(entry.item.description);
-  const stats = getDetailStats(entry);
-  const analytics = getAnalyticsBars(entry);
-  const features = getFeatureCards(entry);
   const relatedEntries = getRelatedEntries(entry, 3);
-  const galleryAssets = getGalleryAssets(entry);
   const Icon = entry.item.icon || Star;
 
   return (
@@ -697,22 +521,6 @@ function PortfolioDetailView({
         </div>
       </section>
 
-      <section className="rounded-[2rem] border border-white/70 bg-white/72 p-6 shadow-[0_22px_70px_-45px_rgba(15,23,42,0.45)] backdrop-blur-xl md:p-8">
-        <div className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-slate-500">Features / Key Highlights</div>
-        <h2 className="mt-3 text-2xl font-semibold tracking-tight text-slate-950 md:text-3xl [font-family:'Iowan_Old_Style','Palatino_Linotype','Book_Antiqua',serif]">
-          Key highlights
-        </h2>
-        <div className="mt-8 grid gap-4 md:grid-cols-3">
-          {features.map((feature) => (
-            <div key={feature.label} className="rounded-[1.6rem] border border-slate-200 bg-white/85 p-5 shadow-sm">
-              <div className="text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-cyan-700">{feature.label}</div>
-              <h3 className="mt-3 text-xl font-semibold text-slate-950">{feature.title}</h3>
-              <p className="mt-3 text-sm leading-7 text-slate-600">{feature.description}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
       {relatedEntries.length > 0 && (
         <section className="rounded-[2rem] border border-white/70 bg-white/72 p-6 shadow-[0_22px_70px_-45px_rgba(15,23,42,0.45)] backdrop-blur-xl md:p-8">
           <div className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-slate-500">Similar Content Recommendations</div>
@@ -761,36 +569,6 @@ function PortfolioDetailView({
         </section>
       )}
 
-      <section className="relative overflow-hidden rounded-[2.2rem] border border-cyan-200/70 bg-[radial-gradient(circle_at_top,_rgba(125,211,252,0.35),_transparent_35%),linear-gradient(135deg,#ffffff_0%,#ecfeff_50%,#f8fafc_100%)] p-8 shadow-[0_22px_70px_-45px_rgba(15,23,42,0.45)] md:p-10">
-        <div className="max-w-3xl">
-          <div className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-cyan-800">Contact</div>
-          <h2 className="mt-3 text-3xl font-semibold tracking-tight text-slate-950 md:text-4xl [font-family:'Iowan_Old_Style','Palatino_Linotype','Book_Antiqua',serif]">
-            Build from this story, connect for collaboration, or continue exploring the portfolio.
-          </h2>
-          <p className="mt-4 text-base leading-8 text-slate-600">
-            This layout is designed to feel equally strong for NGOs, education initiatives, business showcase sites, and professional content portfolios.
-          </p>
-          <div className="mt-6 flex flex-wrap gap-3">
-            <button
-              type="button"
-              onClick={() => scrollToSelector('#contact')}
-              className="inline-flex items-center gap-2 rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
-            >
-              Contact Now
-              <ArrowRight size={16} />
-            </button>
-            <button
-              type="button"
-              onClick={onBack}
-              className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/90 px-5 py-3 text-sm font-semibold text-slate-900 transition hover:border-slate-300 hover:bg-slate-50"
-            >
-              Back to Cards
-              <ArrowRight size={16} className="rotate-180" />
-            </button>
-          </div>
-        </div>
-      </section>
-
     </div>
   );
 }
@@ -800,7 +578,6 @@ export function PortfolioPage() {
   const isInView = useInView(ref, { amount: 0.1, once: true });
   const [activeCategory, setActiveCategory] = useState<PortfolioCategory>(categories[0]);
   const [activeSubcategory, setActiveSubcategory] = useState<string | null>(null);
-  const [selectedItem, setSelectedItem] = useState<{ item: any; startIndex: number } | null>(null);
   const [selectedContent, setSelectedContent] = useState<PortfolioEntry | null>(null);
 
   useEffect(() => {
@@ -814,13 +591,10 @@ export function PortfolioPage() {
   const activeCategoryData = portfolioData[activeCategory];
   const subcategories = Array.isArray(activeCategoryData) ? [] : Object.keys(activeCategoryData);
   const rowItems = getEntriesForSelection(activeCategory, activeSubcategory);
-  const activeMeta = categoryMeta[activeCategory];
-  const activeSummary = portfolioSummary.find((summary) => summary.category === activeCategory);
   const totalEntries = portfolioSummary.reduce((sum, item) => sum + item.entries, 0);
   const totalImages = portfolioSummary.reduce((sum, item) => sum + item.images, 0);
 
   const openEntry = (entry: PortfolioEntry) => {
-    setSelectedItem(null);
     setSelectedContent(entry);
   };
 
@@ -840,9 +614,7 @@ export function PortfolioPage() {
               <PortfolioDetailView
                 entry={selectedContent}
                 onBack={() => setSelectedContent(null)}
-                onOpenGallery={(item, startIndex) => setSelectedItem({ item, startIndex })}
                 onSelectRelated={(entry) => {
-                  setSelectedItem(null);
                   setSelectedContent(entry);
                 }}
               />
@@ -884,9 +656,8 @@ export function PortfolioPage() {
 
                   <div className="rounded-[2rem] border border-white/60 bg-[linear-gradient(160deg,rgba(15,23,42,0.96)_0%,rgba(15,118,110,0.92)_100%)] p-6 text-white shadow-[0_24px_80px_-40px_rgba(15,23,42,0.55)]">
                     <div className="text-sm uppercase tracking-[0.24em] text-cyan-200">Current Focus</div>
-                    <h2 className="mt-3 text-2xl font-semibold leading-tight">{activeMeta.title}</h2>
-                    <p className="mt-4 text-sm leading-7 text-slate-200">{activeMeta.description}</p>
-                    <div className="mt-8 space-y-3">
+                    <h2 className="mt-3 text-2xl font-semibold leading-tight">{activeCategory}</h2>
+                    <div className="mt-6 space-y-3">
                       {portfolioSummary.map((summary) => (
                         <button
                           key={summary.category}
@@ -971,47 +742,12 @@ export function PortfolioPage() {
                 </motion.div>
               )}
 
-              <motion.section
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.55, delay: 0.28 }}
-                className="mb-10 rounded-[2rem] border border-white/80 bg-white/68 p-6 shadow-[0_24px_80px_-48px_rgba(15,23,42,0.45)] backdrop-blur-xl md:p-8"
-              >
-                <div className="grid gap-6 lg:grid-cols-[1.15fr_0.85fr] lg:items-end">
-                  <div>
-                    <div className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-slate-500">{activeMeta.eyebrow}</div>
-                    <h2 className="mt-3 max-w-3xl text-3xl font-semibold tracking-tight text-slate-950 md:text-4xl [font-family:'Iowan_Old_Style','Palatino_Linotype','Book_Antiqua',serif]">
-                      {activeMeta.title}
-                    </h2>
-                    <p className="mt-4 max-w-3xl text-base leading-8 text-slate-600">{activeMeta.description}</p>
-                  </div>
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    <div className="rounded-[1.5rem] border border-slate-200 bg-white/85 p-4 shadow-sm">
-                      <div className="text-sm uppercase tracking-[0.18em] text-slate-500">Visible Cards</div>
-                      <div className="mt-2 text-3xl font-semibold text-slate-950">{rowItems.length}</div>
-                    </div>
-                    <div className="rounded-[1.5rem] border border-slate-200 bg-white/85 p-4 shadow-sm">
-                      <div className="text-sm uppercase tracking-[0.18em] text-slate-500">Current Scope</div>
-                      <div className="mt-2 text-base font-semibold text-slate-950">
-                        {activeSubcategory ?? (activeSummary ? `${activeSummary.entries} total stories` : 'All Projects')}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </motion.section>
-
               <div className="grid auto-rows-fr grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
                 {rowItems.map((entry, index) => (
                   <LandingCard key={`${entry.category}-${entry.subcategory ?? 'all'}-${entry.item.title}`} entry={entry} index={index} onOpen={openEntry} />
                 ))}
               </div>
             </motion.div>
-          )}
-        </AnimatePresence>
-
-        <AnimatePresence>
-          {selectedItem && (
-            <GalleryModal item={selectedItem.item} startIndex={selectedItem.startIndex} onClose={() => setSelectedItem(null)} />
           )}
         </AnimatePresence>
       </motion.div>
