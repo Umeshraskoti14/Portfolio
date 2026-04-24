@@ -45,8 +45,7 @@ export function Skills() {
           transition={{ duration: 0.8 }}
           className="relative text-center mb-16"
         >
-          <div className="mb-4 text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-slate-500">Capabilities</div>
-          <h2 className="text-4xl md:text-5xl font-semibold tracking-tight text-slate-950 mb-4">Skills shaped by field coordination, advocacy, and creative communication.</h2>
+          <h2 className="text-4xl md:text-5xl font-semibold tracking-tight text-slate-950 mb-4">Skills & Expertise</h2>
           <div className="w-20 h-1 bg-slate-900 mx-auto mb-8" />
           <p className="mx-auto max-w-3xl text-lg leading-8 text-slate-600">
             A practical toolkit built from program implementation, community engagement, facilitation, documentation, and visual storytelling.
@@ -60,7 +59,7 @@ export function Skills() {
               initial={{ opacity: 0, y: 50 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
               transition={{ duration: 0.6, delay: categoryIndex * 0.2 }}
-              className="rounded-[1.8rem] border border-slate-200 bg-white p-6 shadow-sm"
+              className="flex h-full flex-col rounded-[1.8rem] border border-slate-200 bg-white p-6 shadow-sm"
             >
               <h3 className="mb-6 text-xl font-semibold text-slate-950">{category.title}</h3>
               <div className="space-y-4">

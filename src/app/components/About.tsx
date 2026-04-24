@@ -1,6 +1,6 @@
 import { motion, useInView } from 'motion/react';
 import { useRef } from 'react';
-import { ArrowRight, Code2, Palette, Rocket, Users } from 'lucide-react';
+import { Code2, Palette, Rocket, Users } from 'lucide-react';
 const profilePic = '/assets/About me/Umesh.png';
 
 const features = [
@@ -40,16 +40,15 @@ export function About() {
           className="text-center mb-16"
         >
           <div className="mb-4 text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-slate-500">About Me</div>
-          <h2 className="text-4xl md:text-5xl font-semibold tracking-tight text-slate-950 mb-4">Grounded in fieldwork, advocacy, and visual documentation.</h2>
           <div className="mx-auto h-1 w-20 bg-slate-900" />
         </motion.div>
 
-        <div className="mb-16 grid grid-cols-1 gap-8 lg:grid-cols-[0.9fr_1.1fr]">
+        <div className="mb-16 grid grid-cols-1 items-stretch gap-8 lg:grid-cols-[0.9fr_1.1fr]">
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative overflow-hidden rounded-[2rem] border border-slate-200 bg-white p-4 shadow-[0_24px_80px_-42px_rgba(15,23,42,0.45)]"
+            className="relative h-full overflow-hidden rounded-[2rem] border border-slate-200 bg-white p-4 shadow-[0_24px_80px_-42px_rgba(15,23,42,0.45)]"
           >
             <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-r from-emerald-100 via-sky-100 to-amber-100" />
             <div className="relative flex aspect-[4/4.6] items-center justify-center overflow-hidden rounded-[1.6rem] border border-slate-200 bg-[linear-gradient(180deg,#f8fafc_0%,#e2e8f0_100%)]">
@@ -73,52 +72,15 @@ export function About() {
             initial={{ opacity: 0, x: 50 }}
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="flex flex-col justify-center rounded-[2rem] border border-slate-200 bg-white/90 p-8 shadow-sm backdrop-blur md:p-10"
+            className="flex h-full flex-col justify-center gap-6 rounded-[2rem] border border-slate-200 bg-white/90 p-8 shadow-sm backdrop-blur md:p-10"
           >
-            <div className="text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-slate-500">Profile</div>
-            <h3 className="mt-4 text-2xl md:text-4xl font-semibold tracking-tight text-slate-950 mb-6">
-              Social Impact Through Multiple Lenses
-            </h3>
-            <p className="mb-4 text-slate-600 leading-8">
+            <p className="text-slate-600 leading-8">
               I have always believed that real change does not happen from the sidelines. It happens through action, empathy, and being present in the community. My journey in social work and psychology has been guided by a simple goal: to understand people better so I can serve them more effectively. Whether I am contributing to urban development projects at Kathmandu Metropolitan City or leading initiatives as President of JCI Bhaktapur Junior, I find the greatest meaning in work that helps others discover and strengthen their own voice.
             </p>
 
-            <p className="mb-8 text-slate-600 leading-8">
+            <p className="text-slate-600 leading-8">
               I see myself as a social worker at heart, but I carry a camera to stay grounded. Photography allows me to notice and preserve the quiet stories of resilience that often go unseen. For me, social work is not only a career path but a long-term commitment to helping transform society for the better. I am always looking for ways to blend leadership, advocacy, and creativity to leave a lasting and positive impact on communities.
             </p>
-
-            <div className="mb-6 flex flex-wrap gap-4">
-              <a
-                href="/Umesh_Raskoti_Resume.pdf"
-                download
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-slate-950 px-6 py-3 text-white shadow-lg shadow-slate-950/15 transition hover:bg-slate-800"
-              >
-                Download CV
-                <ArrowRight size={16} />
-              </a>
-              <button
-                type="button"
-                onClick={() => document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })}
-                className="inline-flex items-center justify-center rounded-full border border-slate-300 px-6 py-3 font-semibold text-slate-700 transition hover:border-slate-400 hover:bg-slate-50"
-              >
-                Start a Conversation
-              </button>
-            </div>
-
-            <div className="flex flex-wrap gap-3">
-              {['Social Work', 'SRHR Advocacy', 'Program Management', 'Data Analysis', 'Community Development'].map((tech, index) => (
-                <motion.span
-                  key={tech}
-                  className="rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-sm text-slate-700"
-                  initial={{ opacity: 0, scale: 0 }}
-                  animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
-                  transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
-                  whileHover={{ scale: 1.1 }}
-                >
-                  {tech}
-                </motion.span>
-              ))}
-            </div>
           </motion.div>
         </div>
 
@@ -130,7 +92,7 @@ export function About() {
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
               transition={{ duration: 0.6, delay: 0.8 + index * 0.1 }}
               whileHover={{ y: -10 }}
-              className="rounded-[1.6rem] border border-slate-200 bg-white p-6 shadow-sm transition hover:shadow-lg"
+              className="flex h-full flex-col rounded-[1.6rem] border border-slate-200 bg-white p-6 shadow-sm transition hover:shadow-lg"
             >
               <motion.div
                 className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-950 text-white"

@@ -395,7 +395,6 @@ function LandingCard({
             <h3 className="text-[1.45rem] font-semibold leading-tight tracking-tight text-slate-950 [font-family:'Iowan_Old_Style','Palatino_Linotype','Book_Antiqua',serif]">
               {entry.item.title}
             </h3>
-            <p className="mt-1 text-sm text-slate-500">{Math.max(getItemImageCount(entry.item), 1)} visual asset{getItemImageCount(entry.item) > 1 ? 's' : ''}</p>
           </div>
         </div>
 
@@ -845,6 +844,11 @@ export function PortfolioPage() {
   const rowItems = getEntriesForSelection(activeCategory, activeSubcategory);
   const totalEntries = portfolioSummary.reduce((sum, item) => sum + item.entries, 0);
   const totalImages = portfolioSummary.reduce((sum, item) => sum + item.images, 0);
+  const summaryMetrics = [
+    { label: 'Practice Areas', value: categories.length },
+    { label: 'Content Stories', value: `${totalEntries}+` },
+    { label: 'Visual Assets', value: `${totalImages}+` },
+  ];
 
   const openEntry = (entry: PortfolioEntry) => {
     setSelectedContent(entry);
@@ -889,44 +893,43 @@ export function PortfolioPage() {
                   <div className="absolute left-12 top-10 h-36 w-36 rounded-full bg-cyan-200/40 blur-3xl" />
                   <div className="absolute bottom-8 right-8 h-40 w-40 rounded-full bg-amber-200/40 blur-3xl" />
 
-                  <div className="relative grid gap-10 px-6 py-8 md:px-10 md:py-12 lg:grid-cols-[1.2fr_0.8fr]">
-                    <div>
-                      <div className="mt-8 grid gap-4 sm:grid-cols-3">
-                        <div className="rounded-[1.5rem] border border-white/80 bg-white/75 p-4 shadow-sm backdrop-blur">
-                          <div className="text-3xl font-semibold text-slate-950">{categories.length}</div>
-                          <div className="mt-1 text-sm uppercase tracking-[0.18em] text-slate-500">Practice Areas</div>
+                  <div className="relative px-6 py-8 md:px-10 md:py-12">
+                    <div className="grid gap-4 md:grid-cols-3">
+                      {summaryMetrics.map((metric) => (
+                        <div
+                          key={metric.label}
+                          className="flex min-h-[8.75rem] flex-col justify-between rounded-[1.7rem] border border-white/80 bg-white/78 p-5 shadow-sm backdrop-blur"
+                        >
+                          <div className="text-sm uppercase tracking-[0.18em] text-slate-500">{metric.label}</div>
+                          <div className="mt-5 text-4xl font-semibold tracking-tight text-slate-950">{metric.value}</div>
                         </div>
-                        <div className="rounded-[1.5rem] border border-white/80 bg-white/75 p-4 shadow-sm backdrop-blur">
-                          <div className="text-3xl font-semibold text-slate-950">{totalEntries}+</div>
-                          <div className="mt-1 text-sm uppercase tracking-[0.18em] text-slate-500">Content Stories</div>
-                        </div>
-                        <div className="rounded-[1.5rem] border border-white/80 bg-white/75 p-4 shadow-sm backdrop-blur">
-                          <div className="text-3xl font-semibold text-slate-950">{totalImages}+</div>
-                          <div className="mt-1 text-sm uppercase tracking-[0.18em] text-slate-500">Visual Assets</div>
-                        </div>
-                      </div>
+                      ))}
                     </div>
 
-                    <div className="rounded-[2rem] border border-white/60 bg-[linear-gradient(160deg,rgba(15,23,42,0.96)_0%,rgba(15,118,110,0.92)_100%)] p-6 text-white shadow-[0_24px_80px_-40px_rgba(15,23,42,0.55)]">
+                    <div className="mt-6 rounded-[2rem] border border-white/60 bg-[linear-gradient(160deg,rgba(15,23,42,0.96)_0%,rgba(15,118,110,0.92)_100%)] p-6 text-white shadow-[0_24px_80px_-40px_rgba(15,23,42,0.55)] md:p-7">
                       <div className="text-sm uppercase tracking-[0.24em] text-cyan-200">Current Focus</div>
                       <h2 className="mt-3 text-2xl font-semibold leading-tight">{activeCategory}</h2>
-                      <div className="mt-6 space-y-3">
+                      <div className="mt-6 grid gap-3 lg:grid-cols-2 xl:grid-cols-3">
                         {portfolioSummary.map((summary) => (
                           <button
                             key={summary.category}
                             type="button"
                             onClick={() => setActiveCategory(summary.category)}
-                            className={`flex w-full items-center justify-between rounded-2xl border px-4 py-3 text-left transition ${
+                            className={`group flex min-h-[8.5rem] w-full flex-col justify-between rounded-[1.5rem] border px-5 py-4 text-left transition ${
                               activeCategory === summary.category
-                                ? 'border-white/35 bg-white/14'
+                                ? 'border-white/35 bg-white/14 shadow-[0_18px_48px_-36px_rgba(255,255,255,0.55)]'
                                 : 'border-white/10 bg-white/6 hover:bg-white/10'
                             }`}
                           >
-                            <div>
-                              <div className="text-sm font-medium text-white">{summary.category}</div>
-                              <div className="text-xs uppercase tracking-[0.18em] text-slate-300">{summary.entries} items</div>
+                            <div className="min-w-0">
+                              <div className="inline-flex rounded-full border border-white/15 bg-white/10 px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-cyan-100">
+                                {summary.entries} items
+                              </div>
+                              <div className="mt-4 text-lg font-semibold leading-snug text-white">{summary.category}</div>
                             </div>
-                            <ArrowRight size={18} className="text-cyan-200" />
+                            <div className="mt-5 flex justify-end">
+                              <ArrowRight size={18} className="text-cyan-200 transition group-hover:translate-x-1" />
+                            </div>
                           </button>
                         ))}
                       </div>

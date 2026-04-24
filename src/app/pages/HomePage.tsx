@@ -1,5 +1,5 @@
 import { animate, motion, useInView } from 'motion/react';
-import { ArrowRight, Download, Facebook, Instagram, Linkedin, Mail, Sparkles } from 'lucide-react';
+import { ArrowRight, Download, Facebook, Instagram, Linkedin, Mail } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { About } from '../components/About';
 import { PortfolioPage } from './PortfolioPage';
@@ -100,7 +100,7 @@ export function HomePage() {
                 animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 26 }}
                 transition={{ duration: 0.7, delay: 0.15 }}
               >
-                Social impact professional and documentary storyteller
+                Leading with Purpose. Documenting with Heart.
               </motion.div>
 
               <motion.h1
@@ -111,15 +111,6 @@ export function HomePage() {
               >
                 Umesh Raskoti
               </motion.h1>
-
-              <motion.p
-                className="mt-6 max-w-2xl text-xl leading-8 text-slate-600 md:text-2xl"
-                initial={{ opacity: 0, y: 34 }}
-                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 34 }}
-                transition={{ duration: 0.8, delay: 0.34 }}
-              >
-                Building community trust through social work, youth advocacy, strategic leadership, and photography that preserves the story behind the work.
-              </motion.p>
 
               <motion.div
                 className="mt-8 grid gap-4 sm:grid-cols-3"
