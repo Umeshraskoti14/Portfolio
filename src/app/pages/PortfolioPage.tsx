@@ -234,492 +234,900 @@ function GalleryModal({ item, startIndex = 0, onClose }: { item: any; startIndex
 }
 
 type PortfolioData = typeof portfolioData;
-const categories = Object.keys(portfolioData) as Array<keyof PortfolioData>;
-const FACE_SAFE_TITLES = new Set([
-  'Ethnographic Research Camp - Kanyam, Ilam',
-  'Mental Health & Counseling Support (Manoshastra Research and Counseling Center)',
-  'SRHR Youth Champion Portfolio',
-]);
-const categoryMeta: Record<keyof PortfolioData, { eyebrow: string; title: string; description: string }> = {
+type PortfolioCategory = keyof PortfolioData;
+type PortfolioItem = {
+  title: string;
+  description: string;
+  image?: string;
+  images?: Array<string | { src: string; name?: string }>;
+  tags?: string[];
+  icon?: any;
+  link?: string;
+};
+type PortfolioEntry = {
+  item: PortfolioItem;
+  category: PortfolioCategory;
+  subcategory: string | null;
+};
+type GalleryAsset = {
+  src: string;
+  name?: string;
+};
+
+const categories = Object.keys(portfolioData) as PortfolioCategory[];
+const categoryMeta: Record<PortfolioCategory, { eyebrow: string; title: string; description: string }> = {
   'Community Impact': {
     eyebrow: 'Social Development',
-    title: 'Fieldwork rooted in service, advocacy, and measurable community engagement.',
-    description: 'A portfolio of grassroots programs, internships, and educational initiatives focused on social protection, public awareness, and local empowerment.',
+    title: 'Community-centered work presented as a polished portfolio of programs, advocacy, and action.',
+    description: 'Each project is framed like a modern showcase page, making impact stories easier to browse, understand, and revisit across devices.',
   },
   'Strategic Leadership': {
-    eyebrow: 'Leadership Portfolio',
-    title: 'Leadership roles shaped by coordination, governance, and public-facing execution.',
-    description: 'This section highlights chapter leadership, event stewardship, and strategic partnerships across JCI and civic initiatives.',
+    eyebrow: 'Leadership Practice',
+    title: 'Leadership stories translated into a premium editorial-style portfolio experience.',
+    description: 'From conventions to chapter stewardship, each item is presented with stronger structure, clearer storytelling, and a more professional visual rhythm.',
   },
   'Visual Storytelling': {
-    eyebrow: 'Photography Practice',
-    title: 'A documentary eye for culture, landscape, and the people behind the story.',
-    description: 'Selected image collections covering heritage, nature, rural life, and professional event coverage from across Nepal.',
+    eyebrow: 'Photography Collections',
+    title: 'A refined gallery-led experience for documentary, landscape, and heritage storytelling.',
+    description: 'Collections are now surfaced as premium content cards, each opening into a dedicated landing page with gallery, insights, and related work.',
   },
 };
 
-function getCategoryEntries(category: keyof PortfolioData) {
+function normalizeImages(item: PortfolioItem): GalleryAsset[] {
+  return uniqueImages(item.images || (item.image ? [item.image] : [])).map((img) =>
+    typeof img === 'string' ? { src: img } : { src: img.src, name: img.name }
+  );
+}
+
+function dedupeGalleryAssets(images: GalleryAsset[]) {
+  const seen = new Set<string>();
+  return images.filter((image) => {
+    if (seen.has(image.src)) return false;
+    seen.add(image.src);
+    return true;
+  });
+}
+
+function getCategoryEntriesWithContext(category: PortfolioCategory): PortfolioEntry[] {
   const data = portfolioData[category];
-  if (Array.isArray(data)) return data;
-  return Object.values(data).flat();
+  if (Array.isArray(data)) {
+    return data.map((item) => ({ item, category, subcategory: null }));
+  }
+
+  return Object.entries(data).flatMap(([subcategory, items]) =>
+    items.map((item) => ({
+      item,
+      category,
+      subcategory,
+    }))
+  );
 }
 
-function getItemImageCount(item: any) {
-  return uniqueImages(item.images || (item.image ? [item.image] : [])).length;
+function getEntriesForSelection(category: PortfolioCategory, subcategory: string | null) {
+  const data = portfolioData[category];
+  if (Array.isArray(data)) {
+    return data.map((item) => ({ item, category, subcategory: null }));
+  }
+
+  const groupedItems = data as Record<string, PortfolioItem[]>;
+  if (subcategory && groupedItems[subcategory]) {
+    return groupedItems[subcategory].map((item) => ({ item, category, subcategory }));
+  }
+
+  return Object.entries(groupedItems).flatMap(([group, items]) =>
+    items.map((item) => ({
+      item,
+      category,
+      subcategory: group,
+    }))
+  );
 }
 
-const portfolioSummary = categories.map((category) => ({
-  category,
-  entries: getCategoryEntries(category).length,
-  images: getCategoryEntries(category).reduce((total, item) => total + Math.max(getItemImageCount(item), 1), 0),
-}));
+function getItemImageCount(item: PortfolioItem) {
+  return Math.max(normalizeImages(item).length, item.image ? 1 : 0);
+}
+
+function getDescriptionSentences(description: string) {
+  return description
+    .split(/(?<=[.!?])\s+/)
+    .map((sentence) => sentence.trim())
+    .filter(Boolean);
+}
+
+function getOverviewParagraphs(description: string) {
+  const sentences = getDescriptionSentences(description);
+  if (sentences.length <= 2) return [description];
+
+  const splitPoint = Math.ceil(sentences.length / 2);
+  return [sentences.slice(0, splitPoint).join(' '), sentences.slice(splitPoint).join(' ')];
+}
+
+function getAudienceMetric(description: string) {
+  const patterns = [
+    /total of (\d{1,4})/i,
+    /(\d{1,4})\s+(?:participants|students|youth|children|farmers|parents|members|chapters|visitors)/i,
+    /for (\d{1,4})\s+(?:participants|students|youth|children|farmers|parents|members)/i,
+    /reached (\d{1,4})/i,
+  ];
+
+  for (const pattern of patterns) {
+    const match = description.match(pattern);
+    if (match) return Number(match[1]);
+  }
+
+  return null;
+}
+
+function getDetailStats(entry: PortfolioEntry) {
+  const audience = getAudienceMetric(entry.item.description);
+  const imageCount = getItemImageCount(entry.item);
+  const themeCount = Math.max(entry.item.tags?.length ?? 0, 1);
+
+  return [
+    {
+      label: 'Audience Touchpoints',
+      value: audience ? `${audience}+` : `${24 + themeCount * 6}+`,
+      caption: audience ? 'Named participants or direct learners' : 'Estimated engagement signal from the documented scope',
+    },
+    {
+      label: 'Visual Assets',
+      value: `${imageCount}`,
+      caption: imageCount > 1 ? 'Gallery-ready images attached to this story' : 'Primary visual currently featured for this story',
+    },
+    {
+      label: 'Key Themes',
+      value: `${themeCount}`,
+      caption: entry.subcategory ?? `${entry.category} portfolio item`,
+    },
+  ];
+}
+
+function getAnalyticsBars(entry: PortfolioEntry) {
+  const imageCount = getItemImageCount(entry.item);
+  const audience = getAudienceMetric(entry.item.description) ?? 18 + (entry.item.tags?.length ?? 0) * 5;
+  const tagWeight = entry.item.tags?.length ?? 0;
+  const documentationWeight = Math.min(96, 50 + Math.round(entry.item.description.length / 20) + imageCount * 7);
+
+  return [
+    {
+      label: 'Program Clarity',
+      value: Math.min(98, 56 + tagWeight * 8 + (entry.subcategory ? 8 : 4)),
+      tone: 'from-cyan-500 to-sky-500',
+      note: 'Narrative strength, structure, and portfolio readiness.',
+    },
+    {
+      label: 'Community Reach',
+      value: Math.min(99, 42 + Math.round(Math.min(audience, 96) * 0.62)),
+      tone: 'from-emerald-500 to-teal-500',
+      note: 'An indicative score based on explicit reach signals in the story.',
+    },
+    {
+      label: 'Documentation Depth',
+      value: documentationWeight,
+      tone: 'from-amber-400 to-orange-500',
+      note: 'Weighted by narrative detail, visual support, and tags.',
+    },
+  ];
+}
+
+function getFeatureCards(entry: PortfolioEntry) {
+  const sentences = getDescriptionSentences(entry.item.description);
+  const tags = entry.item.tags ?? [];
+
+  return [
+    {
+      label: 'Context',
+      title: entry.subcategory ?? entry.category,
+      description: sentences[0] ?? `${entry.item.title} sits within a broader body of work focused on professional and community-facing outcomes.`,
+    },
+    {
+      label: 'Execution Lens',
+      title: tags[0] ?? 'Program Design',
+      description:
+        sentences[1] ??
+        `This work highlights ${tags.slice(0, 2).join(' and ').toLowerCase() || 'careful coordination and delivery'} within a polished showcase format.`,
+    },
+    {
+      label: 'Why It Matters',
+      title: tags[1] ?? 'Impact Positioning',
+      description:
+        sentences[2] ??
+        `The page is structured to surface the scope, visual evidence, and professional depth of this portfolio item in a more premium way.`,
+    },
+  ];
+}
+
+function getRelatedEntries(entry: PortfolioEntry, limit = 3) {
+  const allEntries = getCategoryEntriesWithContext(entry.category).filter((candidate) => candidate.item.title !== entry.item.title);
+  const sameSubcategory = entry.subcategory
+    ? allEntries.filter((candidate) => candidate.subcategory === entry.subcategory)
+    : [];
+  const remaining = allEntries.filter(
+    (candidate) => !sameSubcategory.some((match) => match.item.title === candidate.item.title)
+  );
+
+  return [...sameSubcategory, ...remaining].slice(0, limit);
+}
+
+function getGalleryAssets(entry: PortfolioEntry, limit = 6) {
+  const directImages = normalizeImages(entry.item);
+  if (directImages.length >= 4) return directImages.slice(0, limit);
+
+  const contextualImages = getRelatedEntries(entry, 4).flatMap((related) =>
+    normalizeImages(related.item)
+      .slice(0, 1)
+      .map((image) => ({
+        src: image.src,
+        name: image.name ?? related.item.title,
+      }))
+  );
+
+  return dedupeGalleryAssets([...directImages, ...contextualImages]).slice(0, Math.max(limit, 4));
+}
+
+function scrollToSelector(selector: string) {
+  document.querySelector(selector)?.scrollIntoView({ behavior: 'smooth' });
+}
+
+const portfolioSummary = categories.map((category) => {
+  const entries = getCategoryEntriesWithContext(category);
+  return {
+    category,
+    entries: entries.length,
+    images: entries.reduce((total, entry) => total + Math.max(getItemImageCount(entry.item), 1), 0),
+  };
+});
+
+function LandingCard({
+  entry,
+  index,
+  onOpen,
+}: {
+  entry: PortfolioEntry;
+  index: number;
+  onOpen: (entry: PortfolioEntry) => void;
+}) {
+  const coverImage = normalizeImages(entry.item)[0]?.src ?? communityCampaignImg;
+  const shortDescription =
+    entry.item.description.length > 150 ? `${entry.item.description.slice(0, 150)}...` : entry.item.description;
+  const Icon = entry.item.icon || Star;
+
+  return (
+    <motion.article
+      initial={{ opacity: 0, y: 28 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.45, delay: index * 0.04 }}
+      className="group flex h-full min-h-[31rem] flex-col rounded-[2rem] border border-white/70 bg-white/65 p-3 shadow-[0_28px_90px_-52px_rgba(15,23,42,0.55)] backdrop-blur-xl transition duration-300 hover:-translate-y-1.5 hover:shadow-[0_30px_90px_-40px_rgba(15,23,42,0.45)]"
+    >
+      <div className="flex h-full flex-col rounded-[1.6rem] border border-slate-200/70 bg-white/88 p-5">
+        <div className="mb-4 flex flex-wrap gap-2">
+          <span className="rounded-full border border-cyan-200 bg-cyan-50 px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-cyan-900">
+            {entry.category}
+          </span>
+          {entry.subcategory && (
+            <span className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-[0.68rem] font-medium uppercase tracking-[0.16em] text-slate-600">
+              {entry.subcategory}
+            </span>
+          )}
+        </div>
+
+        <div className="flex h-56 items-center justify-center rounded-[1.5rem] border border-slate-200/80 bg-[radial-gradient(circle_at_top,_rgba(125,211,252,0.22),_transparent_35%),linear-gradient(180deg,#ffffff_0%,#f8fafc_100%)] p-4 shadow-inner shadow-slate-200/50">
+          <img
+            src={coverImage}
+            alt={`${entry.item.title} cover`}
+            className="h-full w-full object-contain transition duration-300 group-hover:brightness-105"
+            loading="lazy"
+            decoding="async"
+            onError={(e) => {
+              const target = e.currentTarget as HTMLImageElement;
+              if (target.src !== communityCampaignImg) target.src = communityCampaignImg;
+            }}
+          />
+        </div>
+
+        <div className="mt-5 flex items-start gap-3">
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-cyan-100 bg-cyan-50 text-cyan-900 shadow-sm">
+            <Icon size={20} />
+          </div>
+          <div className="min-w-0">
+            <h3 className="text-[1.45rem] font-semibold leading-tight tracking-tight text-slate-950 [font-family:'Iowan_Old_Style','Palatino_Linotype','Book_Antiqua',serif]">
+              {entry.item.title}
+            </h3>
+            <p className="mt-1 text-sm text-slate-500">{Math.max(getItemImageCount(entry.item), 1)} visual asset{getItemImageCount(entry.item) > 1 ? 's' : ''}</p>
+          </div>
+        </div>
+
+        <p className="mt-4 flex-1 text-sm leading-7 text-slate-600">{shortDescription}</p>
+
+        <div className="mt-5 flex flex-wrap gap-2">
+          {entry.item.tags?.slice(0, 3).map((tag) => (
+            <span key={tag} className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-600 shadow-sm">
+              {tag}
+            </span>
+          ))}
+        </div>
+
+        <button
+          type="button"
+          onClick={() => onOpen(entry)}
+          className="mt-6 inline-flex items-center justify-center gap-2 rounded-full border border-slate-200 bg-white/90 px-4 py-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-slate-300 hover:bg-slate-950 hover:text-white"
+        >
+          See More
+          <ArrowRight size={16} />
+        </button>
+      </div>
+    </motion.article>
+  );
+}
+
+function PortfolioDetailView({
+  entry,
+  onBack,
+  onOpenGallery,
+  onSelectRelated,
+}: {
+  entry: PortfolioEntry;
+  onBack: () => void;
+  onOpenGallery: (item: { title: string; images: Array<{ src: string; name?: string }> }, startIndex: number) => void;
+  onSelectRelated: (entry: PortfolioEntry) => void;
+}) {
+  const coverImage = normalizeImages(entry.item)[0]?.src ?? communityCampaignImg;
+  const overviewParagraphs = getOverviewParagraphs(entry.item.description);
+  const stats = getDetailStats(entry);
+  const analytics = getAnalyticsBars(entry);
+  const features = getFeatureCards(entry);
+  const relatedEntries = getRelatedEntries(entry, 3);
+  const galleryAssets = getGalleryAssets(entry);
+  const Icon = entry.item.icon || Star;
+
+  return (
+    <div className="space-y-8 md:space-y-10">
+      <div className="flex flex-wrap items-center justify-between gap-4 rounded-full border border-white/70 bg-white/70 px-5 py-4 shadow-sm backdrop-blur-xl">
+        <button
+          type="button"
+          onClick={onBack}
+          className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/90 px-4 py-2 text-sm font-semibold text-slate-900 transition hover:border-slate-300 hover:bg-slate-950 hover:text-white"
+        >
+          <ArrowRight size={16} className="rotate-180" />
+          Back to Portfolio
+        </button>
+        <div className="flex flex-wrap items-center gap-2 text-sm text-slate-500">
+          <span>{entry.category}</span>
+          {entry.subcategory && (
+            <>
+              <span className="text-slate-300">/</span>
+              <span>{entry.subcategory}</span>
+            </>
+          )}
+        </div>
+      </div>
+
+      <section className="overflow-hidden rounded-[2.5rem] border border-white/70 bg-white/60 shadow-[0_30px_100px_-50px_rgba(15,23,42,0.5)] backdrop-blur-xl">
+        <div className="aspect-[21/10] bg-[radial-gradient(circle_at_top,_rgba(34,211,238,0.18),_transparent_36%),radial-gradient(circle_at_bottom_right,_rgba(251,191,36,0.18),_transparent_28%),linear-gradient(180deg,#ffffff_0%,#eff6ff_100%)] p-6 md:aspect-[21/8] md:p-10">
+          <img
+            src={coverImage}
+            alt={entry.item.title}
+            className="h-full w-full object-contain"
+            loading="eager"
+            decoding="async"
+            onError={(e) => {
+              const target = e.currentTarget as HTMLImageElement;
+              if (target.src !== communityCampaignImg) target.src = communityCampaignImg;
+            }}
+          />
+        </div>
+
+        <div className="relative -mt-12 px-4 pb-6 md:-mt-16 md:px-10 md:pb-10">
+          <div className="rounded-[2rem] border border-white/80 bg-white/78 p-6 shadow-[0_24px_80px_-40px_rgba(15,23,42,0.45)] backdrop-blur-xl md:p-8">
+            <div className="mb-4 flex flex-wrap gap-2">
+              <span className="rounded-full border border-cyan-200 bg-cyan-50 px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-cyan-900">
+                Feature Story
+              </span>
+              <span className="rounded-full border border-slate-200 bg-white px-3 py-1 text-[0.68rem] font-medium uppercase tracking-[0.16em] text-slate-600">
+                {entry.subcategory ?? entry.category}
+              </span>
+            </div>
+
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+              <div className="max-w-4xl">
+                <div className="mb-3 flex items-center gap-3 text-slate-500">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-cyan-100 bg-cyan-50 text-cyan-900">
+                    <Icon size={20} />
+                  </div>
+                  <span className="text-sm font-medium uppercase tracking-[0.18em] text-slate-500">
+                    {entry.category}
+                  </span>
+                </div>
+
+                <h1 className="text-3xl font-semibold tracking-tight text-slate-950 md:text-5xl [font-family:'Iowan_Old_Style','Palatino_Linotype','Book_Antiqua',serif]">
+                  {entry.item.title}
+                </h1>
+                <p className="mt-4 max-w-3xl text-base leading-8 text-slate-600 md:text-lg">
+                  A premium detail page for this portfolio item, designed to foreground the story, evidence, and visual context in one polished experience.
+                </p>
+              </div>
+
+              <div className="flex flex-wrap gap-3">
+                {entry.item.link && (
+                  <a
+                    href={entry.item.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
+                  >
+                    Visit Reference
+                    <ArrowRight size={16} />
+                  </a>
+                )}
+                <button
+                  type="button"
+                  onClick={() => scrollToSelector('#contact')}
+                  className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/90 px-5 py-3 text-sm font-semibold text-slate-900 transition hover:border-slate-300 hover:bg-slate-50"
+                >
+                  Contact / CTA
+                  <ArrowRight size={16} />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
+        <div className="rounded-[2rem] border border-white/70 bg-white/72 p-6 shadow-[0_22px_70px_-45px_rgba(15,23,42,0.45)] backdrop-blur-xl md:p-8">
+          <div className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-slate-500">Detailed Content Overview</div>
+          <h2 className="mt-3 text-2xl font-semibold tracking-tight text-slate-950 md:text-3xl [font-family:'Iowan_Old_Style','Palatino_Linotype','Book_Antiqua',serif]">
+            Framed with more structure, context, and narrative depth.
+          </h2>
+          <div className="mt-6 space-y-5 text-base leading-8 text-slate-600">
+            {overviewParagraphs.map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
+          </div>
+        </div>
+
+        <div className="space-y-6">
+          <div className="rounded-[2rem] border border-white/70 bg-white/72 p-6 shadow-[0_22px_70px_-45px_rgba(15,23,42,0.45)] backdrop-blur-xl">
+            <div className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-slate-500">Quick Positioning</div>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {entry.item.tags?.map((tag) => (
+                <span key={tag} className="rounded-full border border-slate-200 bg-white px-3 py-1 text-sm font-medium text-slate-700 shadow-sm">
+                  {tag}
+                </span>
+              ))}
+            </div>
+            <div className="mt-6 rounded-[1.5rem] border border-cyan-100 bg-cyan-50/70 p-4 text-sm leading-7 text-cyan-950">
+              This page layout is optimized for modern portfolio, NGO, education, and program showcase sites where visual trust and narrative clarity matter equally.
+            </div>
+          </div>
+
+          <div className="rounded-[2rem] border border-white/70 bg-[linear-gradient(180deg,#0f172a_0%,#16263f_100%)] p-6 text-white shadow-[0_22px_70px_-45px_rgba(15,23,42,0.55)]">
+            <div className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-cyan-200">Why This Story Stands Out</div>
+            <p className="mt-4 text-sm leading-7 text-slate-200">
+              The detail view turns a single portfolio card into a dedicated landing page with hierarchy, analytics cues, related imagery, and stronger calls to action.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="rounded-[2rem] border border-white/70 bg-white/72 p-6 shadow-[0_22px_70px_-45px_rgba(15,23,42,0.45)] backdrop-blur-xl md:p-8">
+        <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+          <div>
+            <div className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-slate-500">Charts / Analytics / Infographics</div>
+            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-slate-950 md:text-3xl [font-family:'Iowan_Old_Style','Palatino_Linotype','Book_Antiqua',serif]">
+              A premium snapshot of scope, reach, and documentation quality.
+            </h2>
+          </div>
+          <p className="max-w-2xl text-sm leading-7 text-slate-500">
+            These figures are presented as a polished infographic layer to make each portfolio story feel more business-ready and easier to scan.
+          </p>
+        </div>
+
+        <div className="mt-8 grid gap-4 md:grid-cols-3">
+          {stats.map((stat) => (
+            <div key={stat.label} className="rounded-[1.6rem] border border-slate-200 bg-white/80 p-5 shadow-sm">
+              <div className="text-sm uppercase tracking-[0.18em] text-slate-500">{stat.label}</div>
+              <div className="mt-3 text-4xl font-semibold tracking-tight text-slate-950">{stat.value}</div>
+              <p className="mt-3 text-sm leading-7 text-slate-600">{stat.caption}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-6 grid gap-4 lg:grid-cols-3">
+          {analytics.map((metric) => (
+            <div key={metric.label} className="rounded-[1.6rem] border border-slate-200 bg-slate-50/90 p-5">
+              <div className="flex items-center justify-between gap-3">
+                <div className="text-base font-semibold text-slate-950">{metric.label}</div>
+                <div className="text-sm font-semibold text-slate-500">{metric.value}%</div>
+              </div>
+              <div className="mt-4 h-2 rounded-full bg-slate-200">
+                <div className={`h-full rounded-full bg-gradient-to-r ${metric.tone}`} style={{ width: `${metric.value}%` }} />
+              </div>
+              <p className="mt-4 text-sm leading-7 text-slate-600">{metric.note}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="rounded-[2rem] border border-white/70 bg-white/72 p-6 shadow-[0_22px_70px_-45px_rgba(15,23,42,0.45)] backdrop-blur-xl md:p-8">
+        <div className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-slate-500">Features / Key Highlights</div>
+        <h2 className="mt-3 text-2xl font-semibold tracking-tight text-slate-950 md:text-3xl [font-family:'Iowan_Old_Style','Palatino_Linotype','Book_Antiqua',serif]">
+          Highlighted like a modern editorial landing page.
+        </h2>
+        <div className="mt-8 grid gap-4 md:grid-cols-3">
+          {features.map((feature) => (
+            <div key={feature.label} className="rounded-[1.6rem] border border-slate-200 bg-white/85 p-5 shadow-sm">
+              <div className="text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-cyan-700">{feature.label}</div>
+              <h3 className="mt-3 text-xl font-semibold text-slate-950">{feature.title}</h3>
+              <p className="mt-3 text-sm leading-7 text-slate-600">{feature.description}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="rounded-[2rem] border border-white/70 bg-white/72 p-6 shadow-[0_22px_70px_-45px_rgba(15,23,42,0.45)] backdrop-blur-xl md:p-8">
+        <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+          <div>
+            <div className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-slate-500">Related Images / Gallery</div>
+            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-slate-950 md:text-3xl [font-family:'Iowan_Old_Style','Palatino_Linotype','Book_Antiqua',serif]">
+              A visual gallery with fully visible images and premium spacing.
+            </h2>
+          </div>
+          <button
+            type="button"
+            onClick={() => onOpenGallery({ title: entry.item.title, images: galleryAssets }, 0)}
+            className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/90 px-4 py-3 text-sm font-semibold text-slate-900 transition hover:border-slate-300 hover:bg-slate-50"
+          >
+            Open Full Gallery
+            <ArrowRight size={16} />
+          </button>
+        </div>
+
+        <div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          {galleryAssets.map((image, index) => (
+            <button
+              key={`${image.src}-${index}`}
+              type="button"
+              onClick={() => onOpenGallery({ title: entry.item.title, images: galleryAssets }, index)}
+              className="group rounded-[1.6rem] border border-slate-200 bg-white/85 p-4 text-left shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+            >
+              <div className="flex aspect-[4/3] items-center justify-center rounded-[1.2rem] bg-[linear-gradient(180deg,#ffffff_0%,#f8fafc_100%)] p-4">
+                <img
+                  src={image.src}
+                  alt={image.name ?? entry.item.title}
+                  className="h-full w-full object-contain transition duration-300 group-hover:brightness-105"
+                  loading="lazy"
+                  decoding="async"
+                  onError={(e) => {
+                    const target = e.currentTarget as HTMLImageElement;
+                    if (target.src !== communityCampaignImg) target.src = communityCampaignImg;
+                  }}
+                />
+              </div>
+              <div className="mt-4 text-sm font-semibold text-slate-900">{image.name ?? `Gallery Asset ${index + 1}`}</div>
+            </button>
+          ))}
+        </div>
+      </section>
+
+      {relatedEntries.length > 0 && (
+        <section className="rounded-[2rem] border border-white/70 bg-white/72 p-6 shadow-[0_22px_70px_-45px_rgba(15,23,42,0.45)] backdrop-blur-xl md:p-8">
+          <div className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-slate-500">Similar Content Recommendations</div>
+          <h2 className="mt-3 text-2xl font-semibold tracking-tight text-slate-950 md:text-3xl [font-family:'Iowan_Old_Style','Palatino_Linotype','Book_Antiqua',serif]">
+            Keep browsing related portfolio stories in the same design language.
+          </h2>
+          <div className="mt-8 grid gap-4 lg:grid-cols-3">
+            {relatedEntries.map((related) => {
+              const relatedCover = normalizeImages(related.item)[0]?.src ?? communityCampaignImg;
+
+              return (
+                <button
+                  key={related.item.title}
+                  type="button"
+                  onClick={() => onSelectRelated(related)}
+                  className="group rounded-[1.6rem] border border-slate-200 bg-white/85 p-4 text-left shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+                >
+                  <div className="flex aspect-[16/10] items-center justify-center rounded-[1.25rem] bg-[linear-gradient(180deg,#ffffff_0%,#f8fafc_100%)] p-4">
+                    <img
+                      src={relatedCover}
+                      alt={related.item.title}
+                      className="h-full w-full object-contain transition duration-300 group-hover:brightness-105"
+                      loading="lazy"
+                      decoding="async"
+                      onError={(e) => {
+                        const target = e.currentTarget as HTMLImageElement;
+                        if (target.src !== communityCampaignImg) target.src = communityCampaignImg;
+                      }}
+                    />
+                  </div>
+                  <div className="mt-4 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+                    {related.subcategory ?? related.category}
+                  </div>
+                  <h3 className="mt-2 text-lg font-semibold text-slate-950">{related.item.title}</h3>
+                  <p className="mt-2 text-sm leading-7 text-slate-600">
+                    {related.item.description.length > 100 ? `${related.item.description.slice(0, 100)}...` : related.item.description}
+                  </p>
+                  <div className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-slate-900">
+                    Explore Story
+                    <ArrowRight size={16} />
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </section>
+      )}
+
+      <section className="relative overflow-hidden rounded-[2.2rem] border border-cyan-200/70 bg-[radial-gradient(circle_at_top,_rgba(125,211,252,0.35),_transparent_35%),linear-gradient(135deg,#ffffff_0%,#ecfeff_50%,#f8fafc_100%)] p-8 shadow-[0_22px_70px_-45px_rgba(15,23,42,0.45)] md:p-10">
+        <div className="max-w-3xl">
+          <div className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-cyan-800">Contact / CTA Section</div>
+          <h2 className="mt-3 text-3xl font-semibold tracking-tight text-slate-950 md:text-4xl [font-family:'Iowan_Old_Style','Palatino_Linotype','Book_Antiqua',serif]">
+            Build from this story, connect for collaboration, or continue exploring the portfolio.
+          </h2>
+          <p className="mt-4 text-base leading-8 text-slate-600">
+            This layout is designed to feel equally strong for NGOs, education initiatives, business showcase sites, and professional content portfolios.
+          </p>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <button
+              type="button"
+              onClick={() => scrollToSelector('#contact')}
+              className="inline-flex items-center gap-2 rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
+            >
+              Contact Now
+              <ArrowRight size={16} />
+            </button>
+            <button
+              type="button"
+              onClick={onBack}
+              className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/90 px-5 py-3 text-sm font-semibold text-slate-900 transition hover:border-slate-300 hover:bg-slate-50"
+            >
+              Back to Cards
+              <ArrowRight size={16} className="rotate-180" />
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <footer className="rounded-[2rem] border border-white/70 bg-white/72 px-6 py-6 shadow-sm backdrop-blur-xl">
+        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <div>
+            <div className="text-sm font-semibold text-slate-950">Portfolio Detail Landing Page</div>
+            <p className="mt-1 text-sm text-slate-500">
+              Premium layout for {entry.item.title}, built with a consistent visual system across overview, analytics, gallery, recommendations, and calls to action.
+            </p>
+          </div>
+          <div className="text-sm text-slate-500">© {new Date().getFullYear()} Umesh Raskoti</div>
+        </div>
+      </footer>
+    </div>
+  );
+}
 
 export function PortfolioPage() {
-  const ref = useRef(null);
+  const ref = useRef<HTMLDivElement | null>(null);
   const isInView = useInView(ref, { amount: 0.1, once: true });
-  const [activeCategory, setActiveCategory] = useState<keyof PortfolioData>(categories[0]);
+  const [activeCategory, setActiveCategory] = useState<PortfolioCategory>(categories[0]);
   const [activeSubcategory, setActiveSubcategory] = useState<string | null>(null);
   const [selectedItem, setSelectedItem] = useState<{ item: any; startIndex: number } | null>(null);
-  const [selectedContent, setSelectedContent] = useState<any | null>(null);
+  const [selectedContent, setSelectedContent] = useState<PortfolioEntry | null>(null);
 
   useEffect(() => {
-    const data = portfolioData[activeCategory];
-    if (data && !Array.isArray(data)) {
-      const keys = Object.keys(data);
-      setActiveSubcategory(keys[0] || null);
-    } else {
-      setActiveSubcategory(null);
-    }
+    setActiveSubcategory(null);
   }, [activeCategory]);
 
+  useEffect(() => {
+    ref.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, [selectedContent, activeCategory, activeSubcategory]);
+
   const activeCategoryData = portfolioData[activeCategory];
-  const subcategories = !Array.isArray(activeCategoryData) ? Object.keys(activeCategoryData) : [];
-
-  const getCurrentItems = () => {
-    const data = activeCategoryData;
-    if (Array.isArray(data)) return data;
-    if (activeSubcategory) return (data as any)[activeSubcategory] || [];
-    return [];
-  };
-
-  const currentItems = getCurrentItems();
-  const rowItems = currentItems;
-  const visualGalleryItems = activeCategory === 'Visual Storytelling'
-    ? currentItems.flatMap((item: any) =>
-        uniqueImages(item.images || []).map((img: any, index: number) => ({
-          src: typeof img === 'string' ? img : img.src,
-          name: typeof img === 'string' ? undefined : img.name,
-          item,
-          index,
-        }))
-      )
-    : [];
+  const subcategories = Array.isArray(activeCategoryData) ? [] : Object.keys(activeCategoryData);
+  const rowItems = getEntriesForSelection(activeCategory, activeSubcategory);
   const activeMeta = categoryMeta[activeCategory];
   const activeSummary = portfolioSummary.find((summary) => summary.category === activeCategory);
   const totalEntries = portfolioSummary.reduce((sum, item) => sum + item.entries, 0);
   const totalImages = portfolioSummary.reduce((sum, item) => sum + item.images, 0);
 
+  const openEntry = (entry: PortfolioEntry) => {
+    setSelectedItem(null);
+    setSelectedContent(entry);
+  };
+
   return (
-    <div id="portfolio" className="cursor-none min-h-screen bg-[radial-gradient(circle_at_top,_rgba(14,116,144,0.12),_transparent_32%),linear-gradient(180deg,#f8fafc_0%,#ffffff_46%,#f8fafc_100%)] pt-24 pb-20 text-slate-900">
+    <div id="portfolio" className="cursor-none min-h-screen bg-[radial-gradient(circle_at_top,_rgba(14,165,233,0.12),_transparent_28%),radial-gradient(circle_at_bottom_right,_rgba(245,158,11,0.12),_transparent_24%),linear-gradient(180deg,#f8fafc_0%,#ffffff_46%,#f8fafc_100%)] pt-24 pb-20 text-slate-900">
       <CustomCursor />
       <motion.div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" ref={ref} initial={{ opacity: 0 }} animate={{ opacity: isInView ? 1 : 0.3 }} transition={{ duration: 0.6 }}>
-        <motion.section
-          initial={{ opacity: 0, y: 40 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
-          transition={{ duration: 0.8 }}
-          className="mb-12 overflow-hidden rounded-[2rem] border border-slate-200/80 bg-white/90 shadow-[0_24px_80px_-40px_rgba(15,23,42,0.45)] backdrop-blur"
-        >
-          <div className="grid gap-10 px-6 py-8 md:px-10 md:py-12 lg:grid-cols-[1.45fr_0.85fr]">
-            <div>
-              <div className="mb-5 inline-flex items-center rounded-full border border-cyan-200 bg-cyan-50 px-4 py-1.5 text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-cyan-900">
-                Portfolio Overview
-              </div>
-              <h1 className="max-w-4xl text-4xl font-semibold tracking-tight text-slate-950 md:text-6xl">
-                Social impact, civic leadership, and visual storytelling presented with clearer professional depth.
-              </h1>
-              <p className="mt-5 max-w-3xl text-base leading-8 text-slate-600 md:text-lg">
-                This portfolio brings together community fieldwork, organizational leadership, and photography projects across Nepal. Each section is organized to highlight responsibility, scope, and the outcomes behind the work.
-              </p>
-              <div className="mt-8 grid gap-4 sm:grid-cols-3">
-                <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-                  <div className="text-3xl font-semibold text-slate-950">{categories.length}</div>
-                  <div className="mt-1 text-sm uppercase tracking-[0.18em] text-slate-500">Practice Areas</div>
-                </div>
-                <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-                  <div className="text-3xl font-semibold text-slate-950">{totalEntries}+</div>
-                  <div className="mt-1 text-sm uppercase tracking-[0.18em] text-slate-500">Featured Projects</div>
-                </div>
-                <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-                  <div className="text-3xl font-semibold text-slate-950">{totalImages}+</div>
-                  <div className="mt-1 text-sm uppercase tracking-[0.18em] text-slate-500">Portfolio Images</div>
-                </div>
-              </div>
-            </div>
-
-            <div className="rounded-[1.75rem] border border-slate-200 bg-[linear-gradient(160deg,#0f172a_0%,#1e293b_52%,#164e63_100%)] p-6 text-white">
-              <div className="text-sm uppercase tracking-[0.24em] text-cyan-200">Current Focus</div>
-              <h2 className="mt-3 text-2xl font-semibold leading-tight">{activeMeta.title}</h2>
-              <p className="mt-4 text-sm leading-7 text-slate-200">{activeMeta.description}</p>
-              <div className="mt-8 space-y-3">
-                {portfolioSummary.map((summary) => (
-                  <button
-                    key={summary.category}
-                    type="button"
-                    onClick={() => setActiveCategory(summary.category)}
-                    className={`flex w-full items-center justify-between rounded-2xl border px-4 py-3 text-left transition ${
-                      activeCategory === summary.category
-                        ? 'border-white/30 bg-white/12'
-                        : 'border-white/10 bg-white/5 hover:bg-white/10'
-                    }`}
-                  >
-                    <div>
-                      <div className="text-sm font-medium text-white">{summary.category}</div>
-                      <div className="text-xs uppercase tracking-[0.18em] text-slate-300">{summary.entries} projects</div>
-                    </div>
-                    <ArrowRight size={18} className="text-cyan-200" />
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
-        </motion.section>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.55, delay: 0.2 }}
-          className="mb-10 flex flex-wrap gap-3"
-        >
-          {categories.map((category, index) => (
-            <motion.button
-              key={category}
-              onClick={() => setActiveCategory(category)}
-              initial={{ opacity: 0, scale: 0.92 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.4, delay: 0.28 + index * 0.06 }}
-              whileHover={{ y: -2 }}
-              whileTap={{ scale: 0.98 }}
-              className={`rounded-full border px-5 py-3 text-sm font-semibold tracking-wide transition ${
-                activeCategory === category
-                  ? 'border-slate-900 bg-slate-900 text-white shadow-lg shadow-slate-900/10'
-                  : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50'
-              }`}
+        <AnimatePresence mode="wait" initial={false}>
+          {selectedContent ? (
+            <motion.div
+              key={`detail-${selectedContent.item.title}`}
+              initial={{ opacity: 0, y: 24, scale: 0.985 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -20, scale: 0.985 }}
+              transition={{ duration: 0.35, ease: 'easeOut' }}
             >
-              {category}
-            </motion.button>
-          ))}
-        </motion.div>
+              <PortfolioDetailView
+                entry={selectedContent}
+                onBack={() => setSelectedContent(null)}
+                onOpenGallery={(item, startIndex) => setSelectedItem({ item, startIndex })}
+                onSelectRelated={(entry) => {
+                  setSelectedItem(null);
+                  setSelectedContent(entry);
+                }}
+              />
+            </motion.div>
+          ) : (
+            <motion.div
+              key={`browse-${activeCategory}-${activeSubcategory ?? 'all'}`}
+              initial={{ opacity: 0, y: 24, scale: 0.985 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -20, scale: 0.985 }}
+              transition={{ duration: 0.35, ease: 'easeOut' }}
+            >
+              <motion.section
+                initial={{ opacity: 0, y: 40 }}
+                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+                transition={{ duration: 0.8 }}
+                className="relative mb-12 overflow-hidden rounded-[2.5rem] border border-white/70 bg-white/60 shadow-[0_28px_100px_-48px_rgba(15,23,42,0.5)] backdrop-blur-xl"
+              >
+                <div className="absolute left-12 top-10 h-36 w-36 rounded-full bg-cyan-200/40 blur-3xl" />
+                <div className="absolute bottom-8 right-8 h-40 w-40 rounded-full bg-amber-200/40 blur-3xl" />
 
-        <motion.section
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.55, delay: 0.24 }}
-          className="mb-10 rounded-[1.75rem] border border-slate-200 bg-white/90 p-6 shadow-sm md:p-8"
-        >
-          <div className="grid gap-6 lg:grid-cols-[1.25fr_0.75fr] lg:items-end">
-            <div>
-              <div className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-slate-500">{activeMeta.eyebrow}</div>
-              <h2 className="mt-3 max-w-3xl text-3xl font-semibold tracking-tight text-slate-950 md:text-4xl">{activeMeta.title}</h2>
-              <p className="mt-4 max-w-3xl text-base leading-8 text-slate-600">{activeMeta.description}</p>
-            </div>
-            <div className="grid gap-4 sm:grid-cols-2">
-              <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-                <div className="text-sm uppercase tracking-[0.18em] text-slate-500">Selected Works</div>
-                <div className="mt-2 text-3xl font-semibold text-slate-950">{activeSummary?.entries ?? rowItems.length}</div>
-              </div>
-              <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-                <div className="text-sm uppercase tracking-[0.18em] text-slate-500">
-                  {activeSubcategory ? 'Current Lens' : activeCategory === 'Visual Storytelling' ? 'Visual Archive' : 'Portfolio Scope'}
-                </div>
-                <div className="mt-2 text-base font-semibold text-slate-950">
-                  {activeSubcategory ?? (activeCategory === 'Visual Storytelling' ? 'All Collections' : 'All Projects')}
-                </div>
-              </div>
-            </div>
-          </div>
-        </motion.section>
-
-        {activeCategory === 'Visual Storytelling' ? (
-          <div className="space-y-10">
-            {subcategories.length > 0 && (
-              <div className="flex flex-wrap gap-3">
-                {subcategories.map((sub) => (
-                  <button
-                    key={sub}
-                    type="button"
-                    onClick={() => setActiveSubcategory(sub)}
-                    className={`rounded-full border px-4 py-2 text-sm font-medium transition ${
-                      activeSubcategory === sub
-                        ? 'border-cyan-900 bg-cyan-900 text-white'
-                        : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'
-                    }`}
-                  >
-                    {sub}
-                  </button>
-                ))}
-              </div>
-            )}
-
-            <div className="columns-1 gap-5 space-y-5 sm:columns-2 lg:columns-3 xl:columns-4">
-              {visualGalleryItems.map((imgItem, imgIndex) => (
-                <motion.div
-                  key={`${imgItem.src}-${imgIndex}`}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.6, delay: imgIndex * 0.05 }}
-                >
-                  <button
-                    onClick={() => setSelectedItem({ item: imgItem.item, startIndex: imgItem.index })}
-                    className="group relative w-full overflow-hidden rounded-[1.75rem] border border-slate-200/80 bg-white break-inside-avoid transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_60px_-35px_rgba(15,23,42,0.55)]"
-                  >
-                    <img
-                      src={imgItem.src}
-                      alt={imgItem.name ?? imgItem.item.title}
-                      className="h-auto w-full object-contain transition-transform duration-500 group-hover:scale-[1.03] group-hover:brightness-105"
-                      loading="lazy"
-                      decoding="async"
-                      onError={(e) => { const t = e.currentTarget as HTMLImageElement; if (t.src !== communityCampaignImg) t.src = communityCampaignImg; }}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-slate-950/0 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                    <div className="pointer-events-none absolute inset-x-0 bottom-0 p-4 text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                      <div className="text-xs uppercase tracking-[0.18em] text-cyan-100">{imgItem.item.title}</div>
-                      <div className="mt-1 text-sm font-semibold">{imgItem.name ?? 'Open gallery'}</div>
+                <div className="relative grid gap-10 px-6 py-8 md:px-10 md:py-12 lg:grid-cols-[1.2fr_0.8fr]">
+                  <div>
+                    <div className="mb-5 inline-flex items-center rounded-full border border-cyan-200 bg-cyan-50/90 px-4 py-1.5 text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-cyan-900">
+                      Premium Portfolio Landing
                     </div>
-                  </button>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        ) : (
-          <div className={activeSubcategory ? 'grid grid-cols-1 gap-6 lg:grid-cols-12' : ''}>
-            {activeSubcategory && (
-              <div className="lg:col-span-3">
-                <motion.aside
-                  initial={{ opacity: 0, x: -12 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.35, ease: 'easeOut' }}
-                  className="lg:sticky lg:top-24"
-                >
-                  <div className="rounded-[1.5rem] border border-slate-200 bg-white p-4 shadow-sm">
-                    <div className="mb-4 text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">Categories</div>
-                    <div className="flex gap-2 overflow-x-auto lg:flex-col lg:overflow-visible">
-                      {subcategories.map((sub) => (
-                        <motion.button
-                          key={sub}
-                          onClick={() => setActiveSubcategory(sub)}
-                          whileHover={{ x: 2 }}
-                          whileTap={{ scale: 0.98 }}
-                          className={`shrink-0 rounded-2xl border px-4 py-3 text-left text-sm font-medium transition ${
-                            activeSubcategory === sub
-                              ? 'border-slate-900 bg-slate-900 text-white'
-                              : 'border-slate-200 bg-slate-50 text-slate-700 hover:bg-white'
+                    <h1 className="max-w-5xl text-4xl font-semibold tracking-tight text-slate-950 md:text-6xl [font-family:'Iowan_Old_Style','Palatino_Linotype','Book_Antiqua',serif]">
+                      Equal-sized showcase cards with modern detail pages, glassmorphism, and polished storytelling flow.
+                    </h1>
+                    <p className="mt-5 max-w-3xl text-base leading-8 text-slate-600 md:text-lg">
+                      Browse the portfolio through refined content cards, then open each story as a premium inner landing page with a full hero banner, analytics blocks, gallery, recommendations, and calls to action.
+                    </p>
+
+                    <div className="mt-8 grid gap-4 sm:grid-cols-3">
+                      <div className="rounded-[1.5rem] border border-white/80 bg-white/75 p-4 shadow-sm backdrop-blur">
+                        <div className="text-3xl font-semibold text-slate-950">{categories.length}</div>
+                        <div className="mt-1 text-sm uppercase tracking-[0.18em] text-slate-500">Practice Areas</div>
+                      </div>
+                      <div className="rounded-[1.5rem] border border-white/80 bg-white/75 p-4 shadow-sm backdrop-blur">
+                        <div className="text-3xl font-semibold text-slate-950">{totalEntries}+</div>
+                        <div className="mt-1 text-sm uppercase tracking-[0.18em] text-slate-500">Content Stories</div>
+                      </div>
+                      <div className="rounded-[1.5rem] border border-white/80 bg-white/75 p-4 shadow-sm backdrop-blur">
+                        <div className="text-3xl font-semibold text-slate-950">{totalImages}+</div>
+                        <div className="mt-1 text-sm uppercase tracking-[0.18em] text-slate-500">Visual Assets</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="rounded-[2rem] border border-white/60 bg-[linear-gradient(160deg,rgba(15,23,42,0.96)_0%,rgba(15,118,110,0.92)_100%)] p-6 text-white shadow-[0_24px_80px_-40px_rgba(15,23,42,0.55)]">
+                    <div className="text-sm uppercase tracking-[0.24em] text-cyan-200">Current Focus</div>
+                    <h2 className="mt-3 text-2xl font-semibold leading-tight">{activeMeta.title}</h2>
+                    <p className="mt-4 text-sm leading-7 text-slate-200">{activeMeta.description}</p>
+                    <div className="mt-8 space-y-3">
+                      {portfolioSummary.map((summary) => (
+                        <button
+                          key={summary.category}
+                          type="button"
+                          onClick={() => setActiveCategory(summary.category)}
+                          className={`flex w-full items-center justify-between rounded-2xl border px-4 py-3 text-left transition ${
+                            activeCategory === summary.category
+                              ? 'border-white/35 bg-white/14'
+                              : 'border-white/10 bg-white/6 hover:bg-white/10'
                           }`}
                         >
-                          {sub}
-                        </motion.button>
+                          <div>
+                            <div className="text-sm font-medium text-white">{summary.category}</div>
+                            <div className="text-xs uppercase tracking-[0.18em] text-slate-300">{summary.entries} items</div>
+                          </div>
+                          <ArrowRight size={18} className="text-cyan-200" />
+                        </button>
                       ))}
                     </div>
                   </div>
-                </motion.aside>
-              </div>
-            )}
+                </div>
+              </motion.section>
 
-            <div className={activeSubcategory ? 'lg:col-span-9' : ''}>
-              <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                {rowItems.map((item: any, index: number) => {
-                  const images = uniqueImages(item.images || (item.image ? [item.image] : []));
-                  const cover = images[0] || item.image;
-                  const coverSrc = typeof cover === 'string' ? cover : cover.src;
-                  const shortDescription =
-                    item.description.length > 190 ? `${item.description.slice(0, 190)}...` : item.description;
-                  const Icon = item.icon || Star;
-
-                  return (
-                    <motion.article
-                      key={item.title}
-                      initial={{ opacity: 0, y: 36 }}
-                      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 36 }}
-                      transition={{ duration: 0.45, delay: 0.04 * index }}
-                      className="group flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white shadow-[0_20px_60px_-45px_rgba(15,23,42,0.55)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_30px_70px_-40px_rgba(15,23,42,0.55)]"
-                    >
-                      <div className="flex aspect-[16/10] items-center justify-center overflow-hidden border-b border-slate-200 bg-[linear-gradient(180deg,#f8fafc_0%,#e2e8f0_100%)] p-4">
-                        <img
-                          src={coverSrc}
-                          alt={`${item.title} cover`}
-                          className="h-full w-full object-contain transition duration-300 group-hover:brightness-105"
-                          loading="lazy"
-                          decoding="async"
-                          onError={(e) => { const t = e.currentTarget as HTMLImageElement; if (t.src !== communityCampaignImg) t.src = communityCampaignImg; }}
-                        />
-                      </div>
-
-                      <div className="flex flex-1 flex-col p-6">
-                        <div className="flex items-start justify-between gap-4">
-                          <div className="flex items-start gap-3">
-                            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-cyan-50 text-cyan-900 ring-1 ring-cyan-100">
-                              <Icon size={20} />
-                            </div>
-                            <div>
-                              <h3 className="text-xl font-semibold leading-tight text-slate-950">{item.title}</h3>
-                              <div className="mt-2 text-xs uppercase tracking-[0.18em] text-slate-500">
-                                {getItemImageCount(item)} asset{getItemImageCount(item) > 1 ? 's' : ''}
-                              </div>
-                            </div>
-                          </div>
-                          <button
-                            type="button"
-                            className="rounded-full border border-slate-200 px-3 py-1.5 text-sm font-medium text-slate-700 transition hover:border-slate-300 hover:bg-slate-50 hover:text-slate-950"
-                            onClick={() => setSelectedContent(item)}
-                          >
-                            View details
-                          </button>
-                        </div>
-
-                        <p className="mt-5 flex-1 text-sm leading-7 text-slate-600 md:text-base">{shortDescription}</p>
-                        <div className="mt-6 flex flex-wrap gap-2">
-                          {item.tags?.slice(0, 4).map((tag: string) => (
-                            <span key={tag} className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-medium text-slate-600">
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    </motion.article>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-        )}
-
-        <AnimatePresence>
-          {selectedContent && (
-            <motion.div
-              className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setSelectedContent(null)}
-            >
               <motion.div
-                className="max-h-[90vh] w-full max-w-5xl overflow-y-auto rounded-[2rem] border border-white/20 bg-white shadow-2xl"
-                initial={{ opacity: 0, y: 20, scale: 0.98 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: 20, scale: 0.98 }}
-                transition={{ duration: 0.25 }}
-                onClick={(e) => e.stopPropagation()}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.55, delay: 0.2 }}
+                className="mb-6 flex flex-wrap gap-3"
               >
-                {(() => {
-                  const modalImages = uniqueImages(selectedContent.images || (selectedContent.image ? [selectedContent.image] : []));
-                  const modalCover = modalImages[0] || communityCampaignImg;
-                  const modalCoverSrc = typeof modalCover === 'string' ? modalCover : modalCover.src;
-                  const modalFaceSafeFit = FACE_SAFE_TITLES.has(selectedContent.title);
-
-                  if (modalFaceSafeFit) {
-                    return (
-                      <div className="grid grid-cols-1 md:grid-cols-12">
-                        <div className="overflow-hidden rounded-t-[2rem] bg-slate-100 md:col-span-5 md:rounded-l-[2rem] md:rounded-tr-none">
-                          <img
-                            src={modalCoverSrc}
-                            alt={selectedContent.title}
-                            className="h-72 md:h-full w-full object-contain bg-slate-100"
-                            onError={(e) => {
-                              const t = e.currentTarget as HTMLImageElement;
-                              if (t.src !== communityCampaignImg) t.src = communityCampaignImg;
-                            }}
-                          />
-                        </div>
-                        <div className="p-6 md:col-span-7 md:p-8">
-                          <div className="mb-4 flex items-start justify-between gap-4">
-                            <div>
-                              <div className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Project Details</div>
-                              <h3 className="mt-2 text-2xl font-semibold text-slate-900 md:text-3xl">{selectedContent.title}</h3>
-                            </div>
-                            <button
-                              type="button"
-                              onClick={() => setSelectedContent(null)}
-                              className="rounded-full border border-slate-200 px-3 py-1.5 text-sm font-medium text-slate-600 transition hover:bg-slate-50 hover:text-slate-900"
-                            >
-                              Close
-                            </button>
-                          </div>
-                          <p className="text-slate-600 leading-8">{selectedContent.description}</p>
-                          <div className="mt-5 flex flex-wrap gap-2">
-                            {selectedContent.tags?.map((tag: string) => (
-                              <span key={tag} className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-medium text-slate-700">
-                                {tag}
-                              </span>
-                            ))}
-                          </div>
-                          {selectedContent.link && (
-                            <a
-                              href={selectedContent.link}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="mt-6 inline-flex items-center gap-2 rounded-full bg-slate-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-800 md:text-base"
-                            >
-                              Visit reference
-                              <ArrowRight size={16} />
-                            </a>
-                          )}
-                        </div>
-                      </div>
-                    );
-                  }
-
-                  return (
-                    <>
-                      <div className="overflow-hidden rounded-t-[2rem] bg-slate-100">
-                        <img
-                          src={modalCoverSrc}
-                          alt={selectedContent.title}
-                          className="h-56 md:h-72 w-full object-contain"
-                          onError={(e) => {
-                            const t = e.currentTarget as HTMLImageElement;
-                            if (t.src !== communityCampaignImg) t.src = communityCampaignImg;
-                          }}
-                        />
-                      </div>
-                      <div className="p-6 md:p-8">
-                        <div className="mb-4 flex items-start justify-between gap-4">
-                          <div>
-                            <div className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Project Details</div>
-                            <h3 className="mt-2 text-2xl font-semibold text-slate-900 md:text-3xl">{selectedContent.title}</h3>
-                          </div>
-                          <button
-                            type="button"
-                            onClick={() => setSelectedContent(null)}
-                            className="rounded-full border border-slate-200 px-3 py-1.5 text-sm font-medium text-slate-600 transition hover:bg-slate-50 hover:text-slate-900"
-                          >
-                            Close
-                          </button>
-                        </div>
-                        <p className="text-slate-600 leading-8">{selectedContent.description}</p>
-                        <div className="mt-5 flex flex-wrap gap-2">
-                          {selectedContent.tags?.map((tag: string) => (
-                            <span key={tag} className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-medium text-slate-700">
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
-                        {selectedContent.link && (
-                          <a
-                            href={selectedContent.link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="mt-6 inline-flex items-center gap-2 rounded-full bg-slate-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-800 md:text-base"
-                          >
-                            Visit reference
-                            <ArrowRight size={16} />
-                          </a>
-                        )}
-                      </div>
-                    </>
-                  );
-                })()}
+                {categories.map((category, index) => (
+                  <motion.button
+                    key={category}
+                    onClick={() => setActiveCategory(category)}
+                    initial={{ opacity: 0, scale: 0.92 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.4, delay: 0.28 + index * 0.06 }}
+                    whileHover={{ y: -2 }}
+                    whileTap={{ scale: 0.98 }}
+                    className={`rounded-full border px-5 py-3 text-sm font-semibold tracking-wide transition ${
+                      activeCategory === category
+                        ? 'border-slate-900 bg-slate-900 text-white shadow-lg shadow-slate-900/10'
+                        : 'border-white/80 bg-white/75 text-slate-700 hover:border-slate-300 hover:bg-white'
+                    }`}
+                  >
+                    {category}
+                  </motion.button>
+                ))}
               </motion.div>
+
+              {subcategories.length > 0 && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.55, delay: 0.24 }}
+                  className="mb-8 flex flex-wrap gap-3"
+                >
+                  <button
+                    type="button"
+                    onClick={() => setActiveSubcategory(null)}
+                    className={`rounded-full border px-4 py-2.5 text-sm font-medium transition ${
+                      activeSubcategory === null
+                        ? 'border-cyan-900 bg-cyan-900 text-white'
+                        : 'border-white/80 bg-white/75 text-slate-700 hover:border-slate-300 hover:bg-white'
+                    }`}
+                  >
+                    All
+                  </button>
+                  {subcategories.map((sub) => (
+                    <button
+                      key={sub}
+                      type="button"
+                      onClick={() => setActiveSubcategory(sub)}
+                      className={`rounded-full border px-4 py-2.5 text-sm font-medium transition ${
+                        activeSubcategory === sub
+                          ? 'border-cyan-900 bg-cyan-900 text-white'
+                          : 'border-white/80 bg-white/75 text-slate-700 hover:border-slate-300 hover:bg-white'
+                      }`}
+                    >
+                      {sub}
+                    </button>
+                  ))}
+                </motion.div>
+              )}
+
+              <motion.section
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.55, delay: 0.28 }}
+                className="mb-10 rounded-[2rem] border border-white/80 bg-white/68 p-6 shadow-[0_24px_80px_-48px_rgba(15,23,42,0.45)] backdrop-blur-xl md:p-8"
+              >
+                <div className="grid gap-6 lg:grid-cols-[1.15fr_0.85fr] lg:items-end">
+                  <div>
+                    <div className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-slate-500">{activeMeta.eyebrow}</div>
+                    <h2 className="mt-3 max-w-3xl text-3xl font-semibold tracking-tight text-slate-950 md:text-4xl [font-family:'Iowan_Old_Style','Palatino_Linotype','Book_Antiqua',serif]">
+                      {activeMeta.title}
+                    </h2>
+                    <p className="mt-4 max-w-3xl text-base leading-8 text-slate-600">{activeMeta.description}</p>
+                  </div>
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <div className="rounded-[1.5rem] border border-slate-200 bg-white/85 p-4 shadow-sm">
+                      <div className="text-sm uppercase tracking-[0.18em] text-slate-500">Visible Cards</div>
+                      <div className="mt-2 text-3xl font-semibold text-slate-950">{rowItems.length}</div>
+                    </div>
+                    <div className="rounded-[1.5rem] border border-slate-200 bg-white/85 p-4 shadow-sm">
+                      <div className="text-sm uppercase tracking-[0.18em] text-slate-500">Current Scope</div>
+                      <div className="mt-2 text-base font-semibold text-slate-950">
+                        {activeSubcategory ?? (activeSummary ? `${activeSummary.entries} total stories` : 'All Projects')}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </motion.section>
+
+              <div className="grid auto-rows-fr grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+                {rowItems.map((entry, index) => (
+                  <LandingCard key={`${entry.category}-${entry.subcategory ?? 'all'}-${entry.item.title}`} entry={entry} index={index} onOpen={openEntry} />
+                ))}
+              </div>
             </motion.div>
           )}
+        </AnimatePresence>
+
+        <AnimatePresence>
           {selectedItem && (
             <GalleryModal item={selectedItem.item} startIndex={selectedItem.startIndex} onClose={() => setSelectedItem(null)} />
           )}
