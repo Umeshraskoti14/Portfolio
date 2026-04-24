@@ -829,6 +829,7 @@ function PortfolioDetailView({
 
 export function PortfolioPage() {
   const ref = useRef<HTMLDivElement | null>(null);
+  const hasMountedRef = useRef(false);
   const isInView = useInView(ref, { amount: 0.1, once: true });
   const [activeCategory, setActiveCategory] = useState<PortfolioCategory>(categories[0]);
   const [activeSubcategory, setActiveSubcategory] = useState<string | null>(null);
@@ -839,6 +840,10 @@ export function PortfolioPage() {
   }, [activeCategory]);
 
   useEffect(() => {
+    if (!hasMountedRef.current) {
+      hasMountedRef.current = true;
+      return;
+    }
     ref.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }, [selectedContent, activeCategory, activeSubcategory]);
 

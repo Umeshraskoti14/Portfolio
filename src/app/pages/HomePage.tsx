@@ -32,6 +32,13 @@ export function HomePage() {
   const ref = useRef(null);
   const isInView = useInView(ref, { amount: 0.2, once: false });
 
+  useEffect(() => {
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+  }, []);
+
   return (
     <div>
       <motion.section
