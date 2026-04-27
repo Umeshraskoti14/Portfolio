@@ -34,6 +34,7 @@ const portfolioData = {
         title: 'Ethnographic Research Camp - Kanyam, Ilam',
         description: 'The Ethnographic Camp was a practical field activity organized by the Faculty of Humanities and Social Work at Khwopa College in 2024 as part of the academic requirements for the fourth-year Bachelor of Arts in Social Work (BASW) program. The six-day camp was conducted in Ilam district in collaboration with students from Sociology and Journalism. Students were assigned to carry out fieldwork independently. The major purpose of the camp was to conduct ethnographic research in the community of Kanyam and to launch mini-projects in different parts of Ilam. Key activities included ethnographic research, launching mini-projects, community engagement, dialogues with local representatives, awareness sessions, group presentations, and a closing ceremony. A total of 85 students participated in the camp. In this program, I served as Grievances and Idea Management Head. My responsibilities included managing logistics, handling grievances and conflicts, supporting students facing physical and mental challenges, and contributing to the overall coordination of the camp in collaboration with the Camp Coordinator and the field instructor. This role significantly enhanced my conflict resolution, crisis management, leadership, and problem-solving skills in a real community setting.',
         image: '/assets/Community Impact/Social Work Camps/Ethnographic Research Camp - Kanyam, Ilam.jpg',
+        videoEmbedUrl: 'https://www.youtube.com/embed/FbreQF3kYuI',
         tags: ['Grievance Management', 'Ilam', 'Ethnographic Research'],
         icon: BookOpen
       }
@@ -222,6 +223,7 @@ type PortfolioItem = {
   description: string;
   image?: string;
   images?: Array<string | { src: string; name?: string }>;
+  videoEmbedUrl?: string;
   tags?: string[];
   icon?: any;
   link?: string;
@@ -771,6 +773,24 @@ function PortfolioDetailView({
             ))}
           </div>
         </div>
+
+        {entry.item.videoEmbedUrl && (
+          <div className="rounded-[2rem] border border-white/70 bg-white/72 p-4 shadow-[0_22px_70px_-45px_rgba(15,23,42,0.45)] backdrop-blur-xl md:p-6">
+            <div className="overflow-hidden rounded-[1.5rem] border border-slate-200 bg-slate-950 shadow-sm">
+              <div className="aspect-video">
+                <iframe
+                  src={entry.item.videoEmbedUrl}
+                  title={`${localizedItem.title} video`}
+                  className="h-full w-full"
+                  loading="lazy"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  allowFullScreen
+                />
+              </div>
+            </div>
+          </div>
+        )}
 
         <div className="w-full">
           <div className="rounded-[2rem] border border-white/70 bg-white/72 p-6 shadow-[0_22px_70px_-45px_rgba(15,23,42,0.45)] backdrop-blur-xl">
