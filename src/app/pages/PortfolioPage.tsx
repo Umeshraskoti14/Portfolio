@@ -1,4 +1,4 @@
-import { AnimatePresence, motion, useInView } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useRef, useState, useEffect } from 'react';
 import { ArrowRight, BookOpen, Briefcase, Camera, Heart, Lightbulb, MapPin, Star, Target, Trophy, Users, Award, X } from 'lucide-react';
 import { getLocalizedPortfolioItem } from '../content/portfolioTranslations';
@@ -850,7 +850,6 @@ export function PortfolioPage() {
   const text = siteText[language];
   const ref = useRef<HTMLDivElement | null>(null);
   const hasMountedRef = useRef(false);
-  const isInView = useInView(ref, { amount: 0.1, once: true });
   const [activeCategory, setActiveCategory] = useState<PortfolioCategory>(categories[0]);
   const [activeSubcategory, setActiveSubcategory] = useState<string | null>(null);
   const [selectedContent, setSelectedContent] = useState<PortfolioEntry | null>(null);
@@ -886,7 +885,13 @@ export function PortfolioPage() {
   return (
     <div id="portfolio" className="cursor-none min-h-screen bg-[radial-gradient(circle_at_top,_rgba(14,165,233,0.12),_transparent_28%),radial-gradient(circle_at_bottom_right,_rgba(245,158,11,0.12),_transparent_24%),linear-gradient(180deg,#f8fafc_0%,#ffffff_46%,#f8fafc_100%)] pt-20 pb-16 text-slate-900 dark:bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.14),_transparent_28%),radial-gradient(circle_at_bottom_right,_rgba(245,158,11,0.12),_transparent_24%),linear-gradient(180deg,#020617_0%,#0f172a_46%,#111827_100%)] md:pt-24 md:pb-20">
       <CustomCursor />
-      <motion.div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" ref={ref} initial={{ opacity: 0 }} animate={{ opacity: isInView ? 1 : 0.3 }} transition={{ duration: 0.6 }}>
+      <motion.div
+        className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"
+        ref={ref}
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.45, ease: 'easeOut' }}
+      >
         <AnimatePresence mode="wait" initial={false}>
           {selectedContent ? (
             <motion.div
@@ -914,9 +919,9 @@ export function PortfolioPage() {
             >
               {!isVisualStorytelling && (
                 <motion.section
-                  initial={{ opacity: 0, y: 40 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
-                  transition={{ duration: 0.8 }}
+                  initial={{ opacity: 0, y: 28 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.55, ease: 'easeOut', delay: 0.08 }}
                   className="relative mb-12 overflow-hidden rounded-[2.5rem] border border-white/70 bg-white/60 shadow-[0_28px_100px_-48px_rgba(15,23,42,0.5)] backdrop-blur-xl"
                 >
                   <div className="absolute left-12 top-10 h-36 w-36 rounded-full bg-cyan-200/40 blur-3xl" />
