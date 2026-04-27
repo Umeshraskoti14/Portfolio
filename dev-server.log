@@ -3,21 +3,7 @@
 > vite --host 0.0.0.0 --port 5173
 
 
-  [32m[1mVITE[22m v6.3.5[39m  [2mready in [0m[1m391[22m[2m[0m ms[22m
+  [32m[1mVITE[22m v6.3.5[39m  [2mready in [0m[1m427[22m[2m[0m ms[22m
 
   [32m➜[39m  [1mLocal[22m:   [36mhttp://localhost:[1m5173[22m/[39m
   [32m➜[39m  [1mNetwork[22m: [36mhttp://192.168.1.69:[1m5173[22m/[39m
-[2m11:40:02 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/@fs/D:\umesh\Portfolio-1\src\app\components\FloatingActionFab.tsx, /src/styles/index.css[22m
-[2m11:40:02 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/styles/index.css[22m
-[2m11:40:02 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/styles/index.css[22m
-[2m11:49:04 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/app/context/UiPreferencesContext.tsx, /src/styles/index.css[22m
-[2m11:49:39 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/app/context/UiPreferencesContext.tsx, /src/styles/index.css[22m
-[2m12:05:27 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/@fs/D:\umesh\Portfolio-1\src\app\pages\PortfolioPage.tsx, /src/styles/index.css[22m
-[2m12:05:56 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/styles/index.css, /src/app/pages/HomePage.tsx, /@fs/D:\umesh\Portfolio-1\src\app\components\NavigationRouter.tsx, /@fs/D:\umesh\Portfolio-1\src\app\components\About.tsx, /@fs/D:\umesh\Portfolio-1\src\app\components\Skills.tsx, /@fs/D:\umesh\Portfolio-1\src\app\components\FloatingActionFab.tsx, /@fs/D:\umesh\Portfolio-1\src\app\components\Footer.tsx, /@fs/D:\umesh\Portfolio-1\src\app\components\Contact.tsx, /@fs/D:\umesh\Portfolio-1\src\app\pages\PortfolioPage.tsx[22m
-[2m12:06:21 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/app/pages/HomePage.tsx, /src/styles/index.css[22m
-[2m12:06:21 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/@fs/D:\umesh\Portfolio-1\src\app\components\About.tsx, /src/styles/index.css[22m
-[2m12:06:22 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/@fs/D:\umesh\Portfolio-1\src\app\components\Contact.tsx, /src/styles/index.css[22m
-[2m12:06:22 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/app/context/UiPreferencesContext.tsx, /src/styles/index.css[22m
-[2m12:06:22 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/app/components/AppErrorBoundary.tsx, /src/styles/index.css[22m
-[2m12:07:31 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/styles/index.css, /src/app/pages/HomePage.tsx, /@fs/D:\umesh\Portfolio-1\src\app\components\NavigationRouter.tsx, /@fs/D:\umesh\Portfolio-1\src\app\components\About.tsx, /@fs/D:\umesh\Portfolio-1\src\app\components\Skills.tsx, /@fs/D:\umesh\Portfolio-1\src\app\components\FloatingActionFab.tsx, /@fs/D:\umesh\Portfolio-1\src\app\components\Footer.tsx, /@fs/D:\umesh\Portfolio-1\src\app\components\Contact.tsx, /@fs/D:\umesh\Portfolio-1\src\app\pages\PortfolioPage.tsx[22m
-[2m12:07:39 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/app/pages/HomePage.tsx, /src/styles/index.css[22m
